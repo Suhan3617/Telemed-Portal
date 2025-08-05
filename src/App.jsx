@@ -7,17 +7,20 @@ import Signup from "./pages/signup.jsx";
 
 
 function App() {
-  const location = useLocation();
-  const hidenavbar = ["/login", "/signup"].includes(window.location.pathname);
+  // const location = useLocation();
+  // const hidenavbar = ["/login", "/signup"].includes(window.location.pathname);
   return (
     <>
-      {!hidenavbar && <Navbar />}
+      <Navbar />
+      {/* {!hidenavbar && <Navbar />} */}
+      {/* 
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
       </Router>
+      */}
     </>
   );
 }
