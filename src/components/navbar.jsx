@@ -9,9 +9,6 @@ const Navbar = () => {
         </div>
         <div className="flex justify-between items-center gap-10 text-white">
           <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
-            About
-          </h1>
-          <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
             Doctors
           </h1>
           <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
