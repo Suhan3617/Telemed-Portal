@@ -8,7 +8,7 @@ const Navbar = () => {
           <h1 className="text-4xl text-white">Telemed Portal</h1>
         </div>
         <div className="flex justify-between align-middle gap-10 text-white">
-          <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
+          <h1 className="hover:-translate-y-2 transition-transform hover:text-gray-200">
             About
           </h1>
           <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
