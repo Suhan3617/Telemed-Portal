@@ -7,22 +7,25 @@ const Navbar = () => {
         <div className="logo">
           <h1 className="text-4xl text-white">Telemed Portal</h1>
         </div>
-        <div className="flex justify-between align-middle gap-10 text-white">
-          <h1 className="hover:-translate-y-2 transition-transform hover:text-gray-200">
+        <div className="flex justify-between items-center gap-10 text-white">
+          <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
             About
           </h1>
           <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
             Doctors
           </h1>
           <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
-            FAQs
+            Contact Us
           </h1>
-          <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
-            Signup
-          </h1>
-          <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
-            Login
-          </h1>
+          {/* Signup and Login buttons bana do idhar hi */}
+          <div className="flex gap-4">
+            <button className="bg-red-500 rounded-xl px-4 py-2 hover:-translate-y-1 transition-transform hover:text-gray-200">
+              Signup
+            </button>
+            <button className="bg-red-500 rounded-xl px-4 py-2 hover:-translate-y-1 transition-transform hover:text-gray-200">
+              Login
+            </button>
+          </div>
         </div>
       </nav>
     </div>
