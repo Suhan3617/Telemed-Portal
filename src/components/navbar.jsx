@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <div className="navbar m-5 rounded-2xl shadow-lg">
@@ -16,12 +16,16 @@ const Navbar = () => {
           </h1>
           {/* Signup and Login buttons bana do idhar hi */}
           <div className="flex gap-4">
-            <button className="bg-red-500 rounded-xl px-4 py-2 hover:-translate-y-1 transition-transform hover:text-gray-200">
-              Signup
-            </button>
-            <button className="bg-red-500 rounded-xl px-4 py-2 hover:-translate-y-1 transition-transform hover:text-gray-200">
-              Login
-            </button>
+            <Link to="/signup">
+              <button className="bg-red-500 rounded-xl px-4 py-2 hover:-translate-y-1 transition-transform hover:text-gray-200">
+                Signup
+              </button>
+            </Link>
+            <Link to="/login">
+              <button className="bg-red-500 rounded-xl px-4 py-2 hover:-translate-y-1 transition-transform hover:text-gray-200">
+                Login
+              </button>
+            </Link>
           </div>
         </div>
       </nav>

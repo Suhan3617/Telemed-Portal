@@ -1,20 +1,43 @@
-import { BrowserRouter as Router , Routes , Route , useLocation} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import "./App.css";
-import React from "react";
 import Navbar from "./components/navbar.jsx";
 import Login from "./pages/login.jsx";
 import Signup from "./pages/signup.jsx";
 
+const Layout = ({ children }) => {
+  const location = useLocation();
 
-function App() {
-  // const location = useLocation();
-  // const hidenavbar = ["/login", "/signup"].includes(window.location.pathname);
+  const hidenavbarroutes = ["/signup" , "/login"];
+
+  const shouldhidenavbar = hidenavbarroutes.includes(location.pathname);
+
   return (
     <>
-      <Navbar />
+      {!shouldhidenavbar && <Navbar />}
+      {children}
+    </>
+  );
+};
+
+function App() {
+  return (
+    <>
+      <Router>
+        <Layout>
+          <Routes>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </Layout>
+      </Router>
       {/* {!hidenavbar && <Navbar />} */}
       {/* 
-      <Router>
+      <Router><
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
