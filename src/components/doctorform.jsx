@@ -77,6 +77,11 @@ const doctorform = () => {
             </a>
           </label>
         </div>
+        <div>
+          <button className="w-full bg-red-500 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-800 my-2">
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );
