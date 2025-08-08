@@ -3,7 +3,7 @@ import React from "react";
 const patientform = () => {
   return (
     <div>
-      <div className=" bg-blue-400">
+      <div className=" bg-blue-500">
         <h1>Patient Signup</h1>
         <h2>Credentials</h2>
         <div>
@@ -56,11 +56,11 @@ const patientform = () => {
           <input type="checkbox" id="privacy" />
           <label htmlFor="privacy" className="ml-2">
             I agree to the{" "}
-            <a href="/privacy" className="text-blue-600 underline">
+            <a href="/privacy" className="text-white  underline">
               Privacy Policy
             </a>{" "}
             and{" "}
-            <a href="/terms" className="text-blue-600 underline">
+            <a href="/terms" className="text-white  underline">
               Terms & Conditions
             </a>
           </label>

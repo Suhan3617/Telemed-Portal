@@ -35,15 +35,6 @@ function App() {
           </Routes>
         </Layout>
       </Router>
-      {/* {!hidenavbar && <Navbar />} */}
-      {/* 
-      <Router><
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-        </Routes>
-      </Router>
-      */}
     </>
   );
 }
