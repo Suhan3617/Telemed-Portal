@@ -2,7 +2,7 @@ import React from "react";
 
 const doctorform = () => {
   return (
-    <div >
+    <div>
       <div className="bg-blue-500">
         <h1>Doctor SignUp</h1>
         <h2>Credentials</h2>
@@ -51,17 +51,17 @@ const doctorform = () => {
           <input
             className="w-full bg-white border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 my-2"
             type="text"
-            placeholder="Years of Experience"
-          />
-          <input
-            className="w-full bg-white border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 my-2"
-            type="text"
             placeholder="Doctor's Unique Identification Number"
           />
           <input
             className="w-full bg-white border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 my-2"
             type="text"
             placeholder="Specialization"
+          />
+          <input
+            className="w-full bg-white border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 my-2"
+            type="text"
+            placeholder="Years of Experience"
           />
         </div>
         <div className="mt-4">
