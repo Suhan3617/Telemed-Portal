@@ -8,6 +8,11 @@ const Navbar = () => {
           <h1 className="text-4xl text-white">Telemed Portal</h1>
         </div>
         <div className="flex justify-between items-center gap-10 text-white">
+          <Link to="/patientdashboard">
+            <button className="hover:-translate-y-1 transition-transform hover:text-gray-200">
+              Patient
+            </button>
+          </Link>
           <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
             Doctors
           </h1>
