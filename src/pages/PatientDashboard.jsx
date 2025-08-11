@@ -80,7 +80,7 @@ const PatientDashboard = () => {
           <PatientDashboardStats />
 
           {/* Appointments */}
-          <section className="bg-white p-6 rounded-xl shadow">
+          <section className="bg-blue-200 p-6 rounded-xl shadow">
             <div className="flex flex-wrap items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-gray-800">
                 Upcoming Appointments
@@ -97,7 +97,7 @@ const PatientDashboard = () => {
           </section>
 
           {/* Medical Records */}
-          <section className="bg-white p-6 rounded-xl shadow">
+          <section className="bg-blue-200 p-6 rounded-xl shadow">
             <div className="flex flex-wrap items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-gray-800">
                 Medical Records
@@ -114,7 +114,7 @@ const PatientDashboard = () => {
           </section>
 
           {/* Messages */}
-          <section className="bg-white p-6 rounded-xl shadow">
+          <section className="bg-blue-200 p-6 rounded-xl shadow">
             <div className="flex flex-wrap items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-gray-800">Messages</h2>
               <button className="bg-red-500 text-white rounded-lg px-4 py-2 hover:bg-red-600 transition">
