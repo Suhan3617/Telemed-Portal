@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Video } from "lucide-react";
 const patientappointmentcard = ({ appt }) => {
   const { date, time, doctor, specialization, type, status } = appt;
   const statusColor =

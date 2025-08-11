@@ -13,7 +13,7 @@ import PatientDashboard from "./pages/PatientDashboard.jsx";
 const Layout = ({ children }) => {
   const location = useLocation();
 
-  const hidenavbarroutes = ["/signup" , "/login"];
+  const hidenavbarroutes = ["/signup" , "/login" , "/patientdashboard"];
 
   const shouldhidenavbar = hidenavbarroutes.includes(location.pathname);
 

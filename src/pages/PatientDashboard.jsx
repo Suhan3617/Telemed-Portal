@@ -23,7 +23,7 @@ const appointments = [
     doctor: "Dr. Michael Chen",
     specialization: "Cardiology",
     type: "In-Person",
-    status: "Upcoming",
+    status: "Completed",
   },
 ];
 
@@ -57,11 +57,11 @@ const PatientDashboard = () => {
         <main>
           <PatientDashboardStats />
           <section>
-            <div className="flex items-center justify-center">
-              <h2 className="text-lg text-white font-semibold">
+            <div className="flex items-center justify-around">
+              <h2 className="text-lg text-black font-semibold">
                 Upcoming Appointments
               </h2>
-              <button className="w-full bg-red-500 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-800 my-2">
+              <button className=" bg-red-500 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-800 my-2">
                 View All
               </button>
             </div>
@@ -72,34 +72,34 @@ const PatientDashboard = () => {
             </div>
           </section>
           <section>
-            <div className="flex items-center justify-center">
-              <h2 className="text-lg text-white font-semibold">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg text-black font-semibold">
                 Medical Records
               </h2 >
-              <button className="w-full bg-red-500 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-800 my-2">
+              <button className=" bg-red-500 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-800 my-2">
                 Upload
               </button>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {
                 records.map((a)=>(
-                  <PatientMedicalRecordCard key={r.id} record={r}/>
+                  <PatientMedicalRecordCard key={a.id} record={a}/>
                 ))
               }
             </div>
           </section>
           <section>
             <div className="flex items-center justify-center">
-              <h2 className="text-lg text-white font-semibold">
+              <h2 className="text-lg text-black font-semibold">
                 Messages
               </h2 >
-              <button className="w-full bg-red-500 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-800 my-2">
+              <button className=" bg-red-500 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-800 my-2">
                 Open Inbox
               </button>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {
-                messages.map((a)=>(
+                messages.map((m)=>(
                   <PatientMessageCard key={m.id} msg={m}/>
                 ))
               }

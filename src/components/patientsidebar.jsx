@@ -13,8 +13,7 @@ const patientsidebar = () => {
   return (
     <aside className="w-72 bg-blue-500 text-white hidden md:flex flex-col">
       <div className="px-6 py-6 border-b border-b-blue-400">
-        <div className="text-2xl font-bold">TeleMed</div>
-        <div className="text-sm text-blue-100 mt-1">Rural Health Portal</div>
+        <div className="text-2xl font-bold">TeleMed Patient</div>
       </div>
       <nav className="flex-1 px-4 py-6 space-y-2">
         {items.map((it) => (
