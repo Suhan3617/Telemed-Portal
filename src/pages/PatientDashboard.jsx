@@ -1,10 +1,10 @@
 import React from "react";
-import PatientMessageCard from "../components/patientMessageCard";
-import Patientheader from "../components/patientheader";
-import Patientsidebar from "../components/patientsidebar";
-import PatientDashboardStats from "../components/patientDashboardStats";
-import PatientMedicalRecordCard from "../components/patientMedicalRecordCard";
-import Patientappointmentcard from "../components/patientappointmentcard";
+import PatientMessageCard from "../components/PatientMessageCard";
+import PatientHeader from "../components/PatientHeader";
+import PatientSidebar from "../components/PatientSidebar";
+import PatientDashboardStats from "../components/PatientDashboardStats";
+import PatientMedicalRecordCard from "../components/PatientMedicalRecordCard";
+import PatientAppointmentCard from "../components/PatientAppointmentCard";
 
 const appointments = [
   {
@@ -50,59 +50,60 @@ const messages = [
 
 const PatientDashboard = () => {
   return (
-    <div className="min-h-screen flex bg-gray-100">
-      <Patientsidebar />
+    <div className="min-h-screen flex bg-gray-50">
+      <PatientSidebar />
       <div className="flex-1 flex flex-col">
-        <Patientheader name="Suhan" />
-        <main>
+        <PatientHeader name="Suhan" />
+        <main className="p-6 space-y-8">
+          {/* Stats */}
           <PatientDashboardStats />
-          <section>
-            <div className="flex items-center justify-around">
-              <h2 className="text-lg text-black font-semibold">
+
+          {/* Appointments */}
+          <section className="bg-white p-6 rounded-xl shadow">
+            <div className="flex flex-wrap items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-800">
                 Upcoming Appointments
               </h2>
-              <button className=" bg-red-500 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-800 my-2">
+              <button className="bg-red-500 text-white rounded-lg px-4 py-2 hover:bg-red-600 transition">
                 View All
               </button>
             </div>
             <div className="grid lg:grid-cols-2 gap-6">
               {appointments.map((a) => (
-                <Patientappointmentcard key={a.id} appt={a} />
+                <PatientAppointmentCard key={a.id} appt={a} />
               ))}
             </div>
           </section>
-          <section>
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg text-black font-semibold">
+
+          {/* Medical Records */}
+          <section className="bg-white p-6 rounded-xl shadow">
+            <div className="flex flex-wrap items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-800">
                 Medical Records
-              </h2 >
-              <button className=" bg-red-500 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-800 my-2">
+              </h2>
+              <button className="bg-red-500 text-white rounded-lg px-4 py-2 hover:bg-red-600 transition">
                 Upload
               </button>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {
-                records.map((a)=>(
-                  <PatientMedicalRecordCard key={a.id} record={a}/>
-                ))
-              }
+              {records.map((r) => (
+                <PatientMedicalRecordCard key={r.id} record={r} />
+              ))}
             </div>
           </section>
-          <section>
-            <div className="flex items-center justify-center">
-              <h2 className="text-lg text-black font-semibold">
-                Messages
-              </h2 >
-              <button className=" bg-red-500 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-800 my-2">
+
+          {/* Messages */}
+          <section className="bg-white p-6 rounded-xl shadow">
+            <div className="flex flex-wrap items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-800">Messages</h2>
+              <button className="bg-red-500 text-white rounded-lg px-4 py-2 hover:bg-red-600 transition">
                 Open Inbox
               </button>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {
-                messages.map((m)=>(
-                  <PatientMessageCard key={m.id} msg={m}/>
-                ))
-              }
+              {messages.map((m) => (
+                <PatientMessageCard key={m.id} msg={m} />
+              ))}
             </div>
           </section>
         </main>

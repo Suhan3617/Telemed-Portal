@@ -1,22 +1,27 @@
 import React from "react";
 
-const patientDashboardStats = () => {
+const PatientDashboardStats = () => {
   const stats = [
-    { id: 1, title: "Upcoming", value: 3 },
-    { id: 2, title: "Completed", value: 28 },
-    { id: 3, title: "Doctors", value: 12 },
+    { id: 1, title: "Upcoming", value: 3, color: "bg-yellow-100 text-yellow-700" },
+    { id: 2, title: "Completed", value: 28, color: "bg-green-100 text-green-700" },
+    { id: 3, title: "Doctors", value: 12, color: "bg-blue-100 text-blue-700" },
   ];
-  //upcoming walo ko yellow karna h aur completed wale ko green badme bana denge
+
   return (
-    <div className="mt-8 ml-5 mr-5 flex items-center justify-around gap-5">
+    <div className="grid sm:grid-cols-3 gap-4">
       {stats.map((s) => (
-        <div key={s.id} className="bg-white p-4 rounded-xl  shadow w-full flex justify-center gap-10">
-          <div className="text-sm text-gray-500">{s.title}</div>
-          <div className="text-sm text-gray-500">{s.value}</div>
+        <div
+          key={s.id}
+          className={`p-5 rounded-xl shadow bg-white flex flex-col items-center justify-center`}
+        >
+          <div className={`px-3 py-1 rounded-full text-sm font-semibold ${s.color}`}>
+            {s.title}
+          </div>
+          <div className="mt-2 text-2xl font-bold">{s.value}</div>
         </div>
       ))}
     </div>
   );
 };
 
-export default patientDashboardStats;
+export default PatientDashboardStats;
