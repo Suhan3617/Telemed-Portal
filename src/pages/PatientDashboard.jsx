@@ -25,6 +25,15 @@ const appointments = [
     type: "In-Person",
     status: "Completed",
   },
+  {
+    id: "a2",
+    date: "15 Aug 2025",
+    time: "02:00 PM",
+    doctor: "Dr. Michael Chen",
+    specialization: "Cardiology",
+    type: "In-Person",
+    status: "Completed",
+  },
 ];
 
 const records = [
@@ -39,6 +48,18 @@ const messages = [
     doctor: "Dr. Sarah Williams",
     message: "Please remember to take your medication regularly.",
     time: "2h ago",
+  },
+  {
+    id: "m2",
+    doctor: "Dr. Michael Chen",
+    message: "Your test results look good. Keep following your diet plan.",
+    time: "1d ago",
+  },
+  {
+    id: "m2",
+    doctor: "Dr. Michael Chen",
+    message: "Your test results look good. Keep following your diet plan.",
+    time: "1d ago",
   },
   {
     id: "m2",
