@@ -1,4 +1,13 @@
 import React from 'react'
+import { LayoutDashboard, CalendarDays, ClipboardList, MessageSquare, User, LogOut } from "lucide-react";
+
+const items = [
+  { label: "Dashboard", icon: <LayoutDashboard size={18} /> },
+  { label: "My Appointments", icon: <CalendarDays size={18} /> },
+  { label: "Medical Records", icon: <ClipboardList size={18} /> },
+  { label: "Messages", icon: <MessageSquare size={18} /> },
+  { label: "Profile", icon: <User size={18} /> },
+];
 
 const patientsidebar = () => {
   return (
