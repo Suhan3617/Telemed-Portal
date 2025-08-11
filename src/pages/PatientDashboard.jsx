@@ -6,6 +6,48 @@ import PatientDashboardStats from "../components/patientDashboardStats";
 import PatientMedicalRecordCard from "../components/patientMedicalRecordCard";
 import Patientappointmentcard from "../components/patientappointmentcard";
 
+const appointments = [
+  {
+    id: "a1",
+    date: "12 Aug 2025",
+    time: "10:30 AM",
+    doctor: "Dr. Sarah Williams",
+    specialization: "Dermatology",
+    type: "Video Consultation",
+    status: "Upcoming",
+  },
+  {
+    id: "a2",
+    date: "15 Aug 2025",
+    time: "02:00 PM",
+    doctor: "Dr. Michael Chen",
+    specialization: "Cardiology",
+    type: "In-Person",
+    status: "Upcoming",
+  },
+];
+
+const records = [
+  { id: "r1", title: "Blood Test Report", date: "05 Aug 2025" },
+  { id: "r2", title: "X-Ray Scan", date: "20 Jul 2025" },
+  { id: "r3", title: "Prescription", date: "12 Jul 2025" },
+];
+
+const messages = [
+  {
+    id: "m1",
+    doctor: "Dr. Sarah Williams",
+    message: "Please remember to take your medication regularly.",
+    time: "2h ago",
+  },
+  {
+    id: "m2",
+    doctor: "Dr. Michael Chen",
+    message: "Your test results look good. Keep following your diet plan.",
+    time: "1d ago",
+  },
+];
+
 const PatientDashboard = () => {
   return (
     <div className="min-h-screen flex bg-gray-100">
