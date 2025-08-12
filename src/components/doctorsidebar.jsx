@@ -1,6 +1,6 @@
 import { Calendar, FileText, Home, MessageSquare, Settings, Users } from "lucide-react";
 import React from "react";
-
+import { Link } from "react-router-dom";
 
 const doctorsidebar = () => {
   const menuitems=[
@@ -16,7 +16,7 @@ const doctorsidebar = () => {
     <div className="bg-blue-500 text-white h-screen w-64 p-5 flex flex-col">
       <h2 className="text-2xl font-bold mb-8">Doctor Portal</h2>
       <nav>
-        {menuitems.map(() => (
+        {menuitems.map((item) => (
           <Link
             key={item.name}
             to={item.path}
