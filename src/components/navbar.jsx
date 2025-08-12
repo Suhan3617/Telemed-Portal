@@ -13,9 +13,11 @@ const Navbar = () => {
               Patient
             </button>
           </Link>
-          <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
-            Doctors
-          </h1>
+          <Link to="/doctordashboard">
+            <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
+              Doctors
+            </h1>
+          </Link>
           <h1 className="hover:-translate-y-1 transition-transform hover:text-gray-200">
             Contact Us
           </h1>
