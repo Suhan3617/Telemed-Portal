@@ -1,11 +1,34 @@
-import React from 'react'
+import { Calendar, FileText, Home, MessageSquare, Settings, Users } from "lucide-react";
+import React from "react";
+
 
 const doctorsidebar = () => {
+  const menuitems=[
+    { name:"Dashboard" , icon:<Home size={18}/> , path:"/"},
+    { name:"Appointments" , icon:<Calendar size={18}/> , path:"/doctorappointment"},
+    { name:"Patients" , icon:<Users size={18}/> , path:"/doctorpatient"},
+    { name:"Messages" , icon:<MessageSquare size={18}/> , path:"/doctormessage"},
+    { name:"Reports" , icon:<FileText size={18}/> , path:"/doctormessages"},
+    { name:"Settings" , icon:<Settings size={18}/> , path:"/doctorsettings"},
+  ]
+  
   return (
-    <div>
-      
+    <div className="bg-blue-500 text-white h-screen w-64 p-5 flex flex-col">
+      <h2 className="text-2xl font-bold mb-8">Doctor Portal</h2>
+      <nav>
+        {menuitems.map(() => (
+          <Link
+            key={item.name}
+            to={item.path}
+            className="flex items-center gap-3 hover:bg-blue-600 p-2 rounded-lg transition"
+          >
+            {item.icon}
+            <span>{item.name}</span>
+          </Link>
+        ))}
+      </nav>
     </div>
-  )
-}
+  );
+};
 
-export default doctorsidebar
+export default doctorsidebar;
