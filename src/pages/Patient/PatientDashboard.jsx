@@ -1,10 +1,10 @@
 import React from "react";
-import PatientMessageCard from "../components/PatientMessageCard";
-import PatientHeader from "../components/PatientHeader";
-import PatientSidebar from "../components/PatientSidebar";
-import PatientDashboardStats from "../components/PatientDashboardStats";
-import PatientMedicalRecordCard from "../components/PatientMedicalRecordCard";
-import PatientAppointmentCard from "../components/PatientAppointmentCard";
+import PatientMessageCard from "../../components/PatientMessageCard";
+import PatientHeader from "../../components/PatientHeader";
+import PatientSidebar from "../../components/PatientSidebar";
+import PatientDashboardStats from "../../components/PatientDashboardStats";
+import PatientMedicalRecordCard from "../../components/PatientMedicalRecordCard";
+import PatientAppointmentCard from "../../components/PatientAppointmentCard";
 
 const appointments = [
   {

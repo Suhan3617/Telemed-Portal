@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import Doctorsidebar from '../components/doctorsidebar'
-import Doctortopbar from '../components/doctortopbar'
-import Doctorappointmentcard from '../components/doctorappointmentcard'
-import Doctorappointmentdetialsmodal from '../components/doctorappointmentdetialsmodal'
+import Doctorsidebar from '../../components/doctorsidebar.jsx'
+import Doctortopbar from '../../components/doctortopbar.jsx'
+import Doctorappointmentcard from '../../components/doctorappointmentcard.jsx'
+import Doctorappointmentdetialsmodal from '../../components/doctorappointmentdetialsmodal.jsx'
 
 const DoctorDashboard = () => {
   const [selectedpatient, setselectedpatient] = useState(null);
