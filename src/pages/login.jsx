@@ -1,6 +1,6 @@
 import React from 'react'
-import Doctorlogin from '../components/doctorlogin.jsx'
-import Patientlogin from '../components/patientlogin.jsx'
+import Doctorlogin from '../components/Doctor/doctorlogin.jsx'
+import Patientlogin from '../components/Patient/patientlogin.jsx'
 import LoginRoleSelector from '../components/LoginRoleSelector.jsx'
 import { useState } from 'react'
 const login = () => {

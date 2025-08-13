@@ -2,7 +2,7 @@ import React from 'react'
 import Doctorpatienthistory from './doctorpatienthistory';
 import Doctorprescriptionlist from './doctorprescriptionlist';
 import Doctorlabrecords from './doctorlabrecords';
-import Doctoractionbuttons from './doctoractionbuttons';
+import doctoractionbuttons from './doctoractionbuttons';
 
 const doctorappointmentdetialsmodal = ({isOpen , patient , onClose}) => {
   if(!isOpen || !patient) return null;

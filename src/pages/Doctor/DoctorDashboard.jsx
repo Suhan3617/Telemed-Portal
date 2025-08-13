@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import Doctorsidebar from '../../components/doctorsidebar.jsx'
-import Doctortopbar from '../../components/doctortopbar.jsx'
-import Doctorappointmentcard from '../../components/doctorappointmentcard.jsx'
-import Doctorappointmentdetialsmodal from '../../components/doctorappointmentdetialsmodal.jsx'
+import React, { useState } from 'react';
+import DoctorSidebar from '../../components/Doctor/doctorsidebar.jsx';
+import DoctorTopbar from '../../components/Doctor/doctortopbar.jsx';
+import DoctorAppointmentCard from '../../components/Doctor/doctorappointmentcard.jsx';
+import Doctorappointmentdetialsmodal from '../../components/Doctor/doctorappointmentdetialsmodal.jsx';
 
 const DoctorDashboard = () => {
   const [selectedpatient, setselectedpatient] = useState(null);
@@ -38,12 +38,12 @@ const DoctorDashboard = () => {
 
   return (
     <div className='flex h-screen'>
-      <Doctorsidebar/>
+      <DoctorSidebar/>
       <div className='flex flex-col flex-1'>
-        <Doctortopbar/>
+        <DoctorTopbar/>
         <div className='p-6 grid gap-5'>
           {patients.map((p,idx)=>(
-              <Doctorappointmentcard
+              <DoctorAppointmentCard
               key={idx}
               patient={p}
               onViewDetails={openDetails}

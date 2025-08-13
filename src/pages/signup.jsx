@@ -1,6 +1,6 @@
 import React from 'react'
-import Doctorform from "../components/doctorform.jsx";
-import Patientform from "../components/patientform.jsx";
+import Doctorform from "../components/Doctor/doctorform.jsx";
+import Patientform from "../components/Patient/patientform.jsx";
 import RoleSelector from '../components/roleselector.jsx';
 import { useState } from 'react';
 const signup = () => {
