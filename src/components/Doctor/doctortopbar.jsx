@@ -1,18 +1,26 @@
+import { Bell } from "lucide-react";
 import React from "react";
 
-const doctortopbar = () => {
+const doctortopbar = ({ name }) => {
   return (
-    <div className="bg-white shadow-md p-4 flex justify-between items-center">
-      <h2 className="text-2xl font-semibold">Welcome Back Dr.Smith</h2>
+    <header className="bg-white shadow px-6 py-4 flex items-center justify-between sticky top-0 z-10">
+      <div>
+        <h1 className="text-lg font-semibold text-gray-800">
+          Welcome back, <span className="text-blue-600">{name}</span>
+        </h1>
+        <p className="text-sm text-gray-500">Here's your schedule for today</p>
+      </div>
       <div className="flex items-center gap-4">
-        
+        <button className="relative p-2 rounded-full hover:bg-gray-100 transition">
+          <Bell size={18} className="text-gray-600" />
+        </button>
         <img
-          src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fstock.adobe.com%2Fsearch%3Fk%3Ddoctor&psig=AOvVaw0H9ziuql5kq9Fcrdo3bCax&ust=1755153149430000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCODD3pGVh48DFQAAAAAdAAAAABAE"
-          alt="Doctor"
-          className="rounded-full w-10 h-10"
+          src="https://i.pravatar.cc/40?img=5"
+          alt="avatar"
+          className="w-10 h-10 rounded-full border"
         />
       </div>
-    </div>
+    </header>
   );
 };
 

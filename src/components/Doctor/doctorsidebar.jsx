@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 const doctorsidebar = () => {
   const menuitems=[
     { name:"Dashboard" , icon:<Home size={18}/> , path:"/"},
-    { name:"Appointments" , icon:<Calendar size={18}/> , path:"/doctorappointment"},
-    { name:"Patients" , icon:<Users size={18}/> , path:"/doctorpatient"},
-    { name:"Messages" , icon:<MessageSquare size={18}/> , path:"/doctormessage"},
-    { name:"Reports" , icon:<FileText size={18}/> , path:"/doctormessages"},
-    { name:"Settings" , icon:<Settings size={18}/> , path:"/doctorsettings"},
+    { name:"Appointments" , icon:<Calendar size={18}/> , path:"/doctor/appointments"},
+    { name:"Patients" , icon:<Users size={18}/> , path:"/doctor/patients"},
+    { name:"Messages" , icon:<MessageSquare size={18}/> , path:"/doctor/messages"},
+    { name:"Reports" , icon:<FileText size={18}/> , path:"/doctor/records"},
+    { name:"Settings" , icon:<Settings size={18}/> , path:"/doctor/settings"},
   ]
   
   return (
