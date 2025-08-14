@@ -39,10 +39,10 @@ const doctorsidebar = () => {
       </div>
       <nav className="flex-1 px-4 py-6 space-y-2">
         {menuitems.map((it) => (
-          <div key={it.name}  to={it.path} className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-800 cursor-pointer transition">
+          <Link key={it.name}  to={it.path} className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-800 cursor-pointer transition">
             <div className="text-white/90">{it.icon}</div>
             <div className="font-medium">{it.name}</div>
-          </div>
+          </Link>
         ))}
       </nav>
       <div className="px-4 py-6 border-t border-blue-500">
