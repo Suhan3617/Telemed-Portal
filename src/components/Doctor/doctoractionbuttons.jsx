@@ -24,6 +24,7 @@ const doctoractionbuttons = () => {
     <div className="bg-white p-6 rounded-xl shadow flex flex-wrap gap-4">
       {actions.map((a) => (
         <button
+          key={a.label}
           className={`flex items-center gap-2 text-white px-4 py-2 rounded-lg transition ${a.color}`}
         >
           {a.icon}
