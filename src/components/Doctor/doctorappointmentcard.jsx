@@ -3,7 +3,7 @@ import React from "react";
 
 const doctorappointmentcard = ({ appt, onViewDetails }) => {
   return (
-    <div className="bg-white hover:shadow-lg rounded-xl p-5 flex flex-col justify-between">
+    <div className="bg-white hover:shadow-2xl rounded-xl p-5 flex flex-col justify-between">
       <div className="flex items-center gap-3">
         <img src={appt.patientphoto} alt={appt.patientname} className="w-12 h-12 rounded-full border" />
         <div>

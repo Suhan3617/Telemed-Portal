@@ -59,7 +59,7 @@ const DoctorDashboard = () => {
 
           <Doctoractionbuttons />
 
-          <section className="bg-white p-6 rounded-xl shadow">
+          <section className="bg-blue-100 p-6 rounded-xl shadow">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">
               Today's Appointments
             </h2>
