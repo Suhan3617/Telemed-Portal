@@ -1,33 +1,57 @@
-import { Calendar, FileText, Home, MessageSquare, Settings, Users } from "lucide-react";
+import {
+  CalendarDays,
+  ClipboardList,
+  FileText,
+  Home,
+  LogOut,
+  User,
+  Users,
+} from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 
 const doctorsidebar = () => {
-  const menuitems=[
-    { name:"Dashboard" , icon:<Home size={18}/> , path:"/"},
-    { name:"Appointments" , icon:<Calendar size={18}/> , path:"/doctor/appointments"},
-    { name:"Patients" , icon:<Users size={18}/> , path:"/doctor/patients"},
-    { name:"Messages" , icon:<MessageSquare size={18}/> , path:"/doctor/messages"},
-    { name:"Reports" , icon:<FileText size={18}/> , path:"/doctor/records"},
-    { name:"Settings" , icon:<Settings size={18}/> , path:"/doctor/settings"},
-  ]
-  
+  const menuitems = [
+    { name: "Dashboard", icon: <Home size={18} />, path: "/" },
+    {
+      name: "Appointments",
+      icon: <CalendarDays size={18} />,
+      path: "/doctor/appointments",
+    },
+    { name: "Patients", icon: <Users size={18} />, path: "/doctor/patients" },
+    {
+      name: "Write Prescription",
+      icon: <FileText  size={18} />,
+      path: "/doctor/messages",
+    },
+    { name: "Medical Reports", icon: <ClipboardList size={18} />, path: "/doctor/records" },
+    {
+      name: "Profile & Settings",
+      icon: <User size={18} />,
+      path: "/doctor/settings",
+    },
+  ];
+
   return (
-    <div className="bg-blue-500 text-white h-screen w-64 p-5 flex flex-col">
-      <h2 className="text-2xl font-bold mb-8">Doctor Portal</h2>
-      <nav>
-        {menuitems.map((item) => (
-          <Link
-            key={item.name}
-            to={item.path}
-            className="flex items-center gap-3 hover:bg-blue-600 p-2 rounded-lg transition"
-          >
-            {item.icon}
-            <span>{item.name}</span>
-          </Link>
+    <aside className="bg-blue-600 w-72 text-white hidden md:flex flex-col">
+      <div className="px-6 py-6 border-b border-blue-600">
+        <div className="text-2xl font-semibold">Telemed Doctor</div>
+      </div>
+      <nav className="flex-1 px-4 py-6 space-y-2">
+        {menuitems.map((it) => (
+          <div key={it.name}  to={it.path} className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-800 cursor-pointer transition">
+            <div className="text-white/90">{it.icon}</div>
+            <div className="font-medium">{it.name}</div>
+          </div>
         ))}
       </nav>
-    </div>
+      <div className="px-4 py-6 border-t border-blue-500">
+        <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-700 transition">
+          <LogOut size={16} />
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
   );
 };
 
