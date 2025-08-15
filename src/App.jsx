@@ -20,7 +20,7 @@ import Doctorprescription from "./pages/Doctor/doctorwriteprescription.jsx";
 const Layout = ({ children }) => {
   const location = useLocation();
 
-  const hidenavbarroutes = ["/signup" , "/login" , "/patientdashboard", "/doctor/overview"];
+  const hidenavbarroutes = ["/signup" , "/login" , "/patientdashboard", "/doctor/overview" , "/doctor/messages" , "/doctor/patients" , "/doctor/appointments" , "/doctor/records" , "/doctor/settings" , "/doctor/prescription" ];
 
   const shouldhidenavbar = hidenavbarroutes.includes(location.pathname);
 
@@ -43,8 +43,7 @@ function App() {
             <Route path="/patientdashboard" element={<PatientDashboard />} />
             <Route path="/doctor/overview" element={<DoctorDashboard />} />
             <Route path="/doctor/messages" element={<Doctormessages />} />
-            <Route path="/doctor/patients" element={<Doctormessages />} />
-            <Route path="/doctor/messages" element={<Doctorpatients />} />
+            <Route path="/doctor/patients" element={<Doctorpatients />} />
             <Route path="/doctor/appointments" element={<Doctorappointments />} />
             <Route path="/doctor/records" element={<Doctorreports />} />
             <Route path="/doctor/settings" element={<Doctorsettings />} />
