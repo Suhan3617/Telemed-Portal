@@ -5,7 +5,7 @@ const doctorappointmentcard = ({ appt, onViewDetails }) => {
   return (
     <div className="bg-white hover:shadow-2xl rounded-xl p-5 flex flex-col justify-between">
       <div className="flex items-center gap-3">
-        <img src={appt.patientphoto} alt={appt.patientname} className="w-12 h-12 rounded-full border" />
+        <img src={appt.patientPhoto} alt={appt.patientname} className="w-12 h-12 rounded-full border" />
         <div>
           <div>{appt.patientname}</div>
           <div>{appt.date} • {appt.time}</div>
