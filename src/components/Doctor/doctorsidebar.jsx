@@ -34,8 +34,8 @@ const doctorsidebar = () => {
 
   return (
     <aside className="bg-blue-600 w-72 text-white hidden md:flex flex-col">
-      <div className="px-6 py-6 border-b border-blue-600">
-        <div className="text-2xl font-semibold">Telemed Doctor</div>
+      <div className="px-6 py-6 border-b border-blue-500">
+        <div className="text-2xl font-bold">TeleMed Doctor</div>
       </div>
       <nav className="flex-1 px-4 py-6 space-y-2">
         {menuitems.map((it) => (
