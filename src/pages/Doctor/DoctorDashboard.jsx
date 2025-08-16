@@ -5,7 +5,7 @@ import Doctorstats from "../../components/Doctor/doctorstats.jsx";
 import DoctorAppointmentCard from "../../components/Doctor/doctorappointmentcard.jsx";
 import Doctoractionbuttons from "../../components/Doctor/doctoractionbuttons.jsx";
 import Doctorappointmentdetialsmodal from "../../components/Doctor/doctorappointmentdetialsmodal.jsx";
-import { appointments } from "../../data/mockdata.js";
+import { appointments } from "../../data/doctor/mockdata.js";
 
 
 const DoctorDashboard = () => {
