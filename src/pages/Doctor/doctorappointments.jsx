@@ -5,6 +5,9 @@ import SearchInput from "../../components/Common/searchinput";
 import { appointments } from "../../data/doctor/mockdata";
 import { patients } from "../../data/doctor/mockdata";
 import { prescriptions } from "../../data/doctor/mockdata";
+import Badge from "../../components/Common/Badge";
+import Modal from "../../components/Common/Modal";
+import doctorappointmentcard from "../../components/Doctor/doctorappointmentcard";
 
 const doctorappointments = () => {
   const [q, setq] = useState("");
