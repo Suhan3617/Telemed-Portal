@@ -16,26 +16,50 @@ const doctorappointments = () => {
   const [open, setopen] = useState(false);
   const [current, setcurrent] = useState(null);
 
-  const list = useMemo(()=>{
-    return appointments.filter(a=>{
+  const list = useMemo(() => {
+    return appointments.filter((a) => {
       const matchQ = a.patientName.toLowerCase().includes(q.toLowerCase());
-      const matchtype=type==="All" || a.type===type;
-      const matchrange=true;
+      const matchtype = type === "All" || a.type === type;
+      const matchrange = true;
       return matchQ && matchtype && matchrange;
-    })
-  } , [q,type,range])
+    });
+  }, [q, type, range]);
 
-  const openDetails=(appt)=>{
-    const patient = patients.filter(p=>p.id===appt.patientId);
-    const Prescriptions = prescriptions.filter(pr=>pr.patientId===appt.patientId);
-    setcurrent({appt,patient,prescriptions});
+  const openDetails = (appt) => {
+    const patient = patients.filter((p) => p.id === appt.patientId);
+    const Prescriptions = prescriptions.filter(
+      (pr) => pr.patientId === appt.patientId
+    );
+    setcurrent({ appt, patient, prescriptions });
     setopen(true);
-  }
+  };
   return (
     <>
       <FiltersBar>
         <div className="flex gap-2 flex-wrap">
-          <SearchInput />
+          <SearchInput
+            value={q}
+            onChange={setq}
+            placeholder="Search patient..."
+          />
+          <select
+            className="border rounded-lg px-3 py-2"
+            value={type}
+            onChange={(e) => settype(e.target.value)}
+          >
+            <option>All</option>
+            <option>Video Consultation</option>
+            <option>In-person</option>
+          </select>
+          <select
+            className="border rounded-lg px-3 py-2"
+            value={range}
+            onChange={(e) => setrange(e.target.value)}
+          >
+            <option>Today</option>
+            <option>Upcoming</option>
+            <option>Past</option>
+          </select>
         </div>
       </FiltersBar>
     </>
