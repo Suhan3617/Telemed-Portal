@@ -19,7 +19,7 @@ const doctorappointments = () => {
   const list = useMemo(()=>{
     return appointments.filter(a=>{
       const matchQ = a.patientName.toLowerCase().includes(q.toLowerCase());
-      const matchtype=type="All" || a.type===type;
+      const matchtype=type==="All" || a.type===type;
       const matchrange=true;
       return matchQ && matchtype && matchrange;
     })
