@@ -2,6 +2,7 @@
 export const appointments = [
   {
     id: "ap1",
+    patientId: "p1",   
     patientName: "John Doe",
     patientPhoto: "https://i.pravatar.cc/50?img=1",
     date: "13 Aug 2025",
@@ -33,6 +34,7 @@ export const appointments = [
   },
   {
     id: "ap2",
+    patientId: "p2",   
     patientName: "Jane Smith",
     patientPhoto: "https://i.pravatar.cc/50?img=2",
     date: "14 Aug 2025",
@@ -58,6 +60,7 @@ export const appointments = [
   },
   {
     id: "ap3",
+    patientId: "p3",   
     patientName: "Michael Brown",
     patientPhoto: "https://i.pravatar.cc/50?img=3",
     date: "15 Aug 2025",
@@ -83,6 +86,7 @@ export const appointments = [
   },
   {
     id: "ap4",
+    patientId: "p4", 
     patientName: "Emily Johnson",
     patientPhoto: "https://i.pravatar.cc/50?img=4",
     date: "16 Aug 2025",
@@ -108,6 +112,7 @@ export const appointments = [
   },
   {
     id: "ap5",
+    patientId: "p5", 
     patientName: "David Wilson",
     patientPhoto: "https://i.pravatar.cc/50?img=5",
     date: "17 Aug 2025",
@@ -133,6 +138,7 @@ export const appointments = [
   },
   {
     id: "ap6",
+    patientId: "p6", 
     patientName: "Sophia Martinez",
     patientPhoto: "https://i.pravatar.cc/50?img=6",
     date: "18 Aug 2025",
