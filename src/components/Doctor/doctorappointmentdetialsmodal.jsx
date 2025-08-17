@@ -120,19 +120,6 @@ const doctorappointmentdetialsmodal = ({ appointment, onClose }) => {
               </div>
             ))}
           </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-wrap gap-3 justify-end">
-            <button className="px-4 py-2 rounded-lg bg-blue-500 text-white shadow hover:bg-blue-600 transition">
-              Start VC
-            </button>
-            <button className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 transition">
-              Add Notes
-            </button>
-            <button className="px-4 py-2 rounded-lg bg-green-500 text-white shadow hover:bg-green-600 transition">
-              Issue Prescription
-            </button>
-          </div>
         </div>
       </div>
     </div>
