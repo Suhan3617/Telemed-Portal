@@ -1,7 +1,11 @@
 import React, { useState, useMemo } from "react";
 import FiltersBar from "../../components/Doctor/doctorfilterbar";
 import SearchInput from "../../components/Common/searchinput";
-import { appointments, patients, prescriptions } from "../../data/doctor/mockdata";
+import {
+  appointments,
+  patients,
+  prescriptions,
+} from "../../data/doctor/mockdata";
 import Badge from "../../components/Common/Badge";
 import Modal from "../../components/Common/Modal";
 import Doctorappointmentcard from "../../components/Doctor/doctorappointmentcard";
@@ -27,7 +31,7 @@ const DoctorAppointments = () => {
     const patientPrescriptions = prescriptions.filter(
       (pr) => pr.patientId === appt.patientId
     );
-    setcurrent({ appt, patient, prescriptions: patientPrescriptions });
+    setcurrent({ appt, patient, patientPrescriptions });
     setopen(true);
   };
 
@@ -69,7 +73,7 @@ const DoctorAppointments = () => {
             key={a.id}
             appt={a}
             onStartVC={() => alert("Start VC")}
-            onDetails={() => openDetails(a)}
+            onViewDetails={() => openDetails(a)}
             onReschedule={() => alert("Reschedule")}
             onCancel={() => alert("Cancel")}
           />
@@ -77,7 +81,11 @@ const DoctorAppointments = () => {
       </div>
 
       {/* Modal for Details */}
-      <Modal open={open} onClose={() => setopen(false)} title="Appointment Details">
+      <Modal
+        open={open}
+        onClose={() => setopen(false)}
+        title="Appointment Details"
+      >
         {current && (
           <div className="space-y-6">
             {/* Patient Info */}
@@ -117,20 +125,24 @@ const DoctorAppointments = () => {
               </h4>
               <ul className="list-disc list-inside text-gray-700 bg-gray-50 p-3 rounded-lg space-y-1">
                 <li>
-                  <b>Chronic:</b>{" "}
-                  {current.patient.history.chronicIllnesses.join(", ") || "—"}
+                  <b>Chronic : </b>
+                  {current.patient?.history?.chronicIllnesses?.join(", ") ||
+                    "-"}{" "}
                 </li>
                 <li>
-                  <b>Allergies:</b>{" "}
-                  {current.patient.history.allergies.join(", ") || "—"}
+                  <b>Allergies : </b>
+                  {current.patient?.history?.allergies?.join(", ") ||
+                    "-"}{" "}
                 </li>
                 <li>
-                  <b>Surgeries:</b>{" "}
-                  {current.patient.history.surgeries.join(", ") || "—"}
+                  <b>Surgeries : </b>
+                  {current.patient?.history?.surgeries?.join(", ") ||
+                    "-"}{" "}
                 </li>
                 <li>
-                  <b>Family:</b>{" "}
-                  {current.patient.history.familyHistory.join(", ") || "—"}
+                  <b>Family : </b>
+                  {current.patient?.history?.familyHistory?.join(", ") ||
+                    "-"}{" "}
                 </li>
               </ul>
             </div>
@@ -151,7 +163,7 @@ const DoctorAppointments = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {current.prescriptions.map((p, i) => (
+                    {current.patientPrescriptions.map((p, i) => (
                       <tr key={i} className="hover:bg-blue-50 transition">
                         <td className="p-2 border">{p.date}</td>
                         <td className="p-2 border">{p.medicine}</td>
