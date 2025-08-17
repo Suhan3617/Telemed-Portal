@@ -82,7 +82,7 @@ const doctorappointmentdetialsmodal = ({ appointment, onClose }) => {
             <h4 className="font-semibold text-lg text-blue-600 mb-2">
               Previous Prescriptions
             </h4>
-            <div className="overflow-x-auto rounded-lg shadow">
+            <div className="overflow-x-auto shadow">
               <table className="w-full border border-gray-200 text-sm">
                 <thead>
                   <tr className="bg-blue-100 text-blue-700">
