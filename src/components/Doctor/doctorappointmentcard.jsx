@@ -13,7 +13,7 @@ const doctorappointmentcard = ({ appt, onViewDetails }) => {
       : "gray";
 
   return (
-    <div className="bg-white shadow hover:shadow-2xl rounded-xl p-5 flex flex-col justify-between">
+    <div className="bg-white shadow hover:shadow-2xl transition-transform transform hover:scale-105 rounded-xl p-5 flex flex-col justify-between">
       <div className="flex items-center gap-3">
         <img
           src={appt.patientPhoto}
