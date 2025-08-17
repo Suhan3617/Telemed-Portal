@@ -6,7 +6,7 @@ const DoctorPatientCard = ({ patient }) => {
   return (
     <Link
       to={`/doctor/patients/${patient.id}`}
-      className="bg-white p-5 rounded-2xl shadow-md hover:shadow-xl transition-transform transform hover:scale-105 flex items-center gap-4 border border-blue-100"
+      className="bg-white p-5 rounded-2xl shadow-md hover:shadow-xl transition-transform transform hover:scale-103 flex items-center gap-4 border border-blue-100"
     >
       {/* Patient Photo */}
       <img
@@ -23,7 +23,7 @@ const DoctorPatientCard = ({ patient }) => {
         </div>
         <div className="text-sm text-gray-500 flex items-center gap-2 mt-1">
           <Calendar className="w-4 h-4 text-blue-400" />
-          Last Visit: <span className="font-medium">{patient.lastvisit}</span>
+          Last Visit: <span className="font-medium">{patient.lastVisit}</span>
         </div>
       </div>
 
