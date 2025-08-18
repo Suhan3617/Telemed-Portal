@@ -16,13 +16,18 @@ import Doctorappointments from "./pages/Doctor/doctorappointments.jsx";
 import Doctorreports from "./pages/Doctor/doctorreports.jsx";
 import Doctorsettings from "./pages/Doctor/doctorsettings.jsx";
 import Doctorprescription from "./pages/Doctor/doctorwriteprescription.jsx";
+import Doctorpatientprofile from "./pages/Doctor/doctorpatientprofile.jsx";
 
 const Layout = ({ children }) => {
   const location = useLocation();
 
-  const hidenavbarroutes = ["/signup" , "/login" , "/patientdashboard", "/doctor/overview" , "/doctor/messages" , "/doctor/patients" , "/doctor/appointments" , "/doctor/records" , "/doctor/settings" , "/doctor/prescription" ];
+  const hidenavbarroutes = ["/signup" , "/login" , "/patientdashboard", "/doctor/overview" , "/doctor/messages" , "/doctor/patients" , "/doctor/appointments" , "/doctor/records" , "/doctor/settings" , "/doctor/prescription" , "/doctor/patients/:patientId" ];
 
-  const shouldhidenavbar = hidenavbarroutes.includes(location.pathname);
+
+
+  const shouldhidenavbar =
+    hidenavbarroutes.includes(location.pathname) ||
+    location.pathname.startsWith("/doctor/patients/"); // 👈 dynamic match
 
   return (
     <>
@@ -48,6 +53,7 @@ function App() {
             <Route path="/doctor/records" element={<Doctorreports />} />
             <Route path="/doctor/settings" element={<Doctorsettings />} />
             <Route path="/doctor/prescription" element={<Doctorprescription />} />
+            <Route path="/doctor/patients/:patientId" element={<Doctorpatientprofile />} />
           </Routes>
         </Layout>
       </Router>

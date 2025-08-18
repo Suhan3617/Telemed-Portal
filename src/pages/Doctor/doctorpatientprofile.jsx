@@ -5,10 +5,8 @@ import { patients, records, appointments } from "../../data/doctor/mockdata";
 const doctorpatientprofile = () => {
   const { patientId } = useParams();
   const patient = patients.find((p) => p.id === patientId);
-  const prescriptions = appointments.prescriptions.filter(
-    (pr) => pr.patients === patientId
-  );
-  const records = records.filter((r) => r.patientId === patientId);
+  const prescriptions = appointments.filter((a) => a.patientId === patientId);
+  const Records = records.filter((r) => r.patientId === patientId);
 
   if (!patient) {
     return (
@@ -67,7 +65,7 @@ const doctorpatientprofile = () => {
                 </tr>
               </thead>
               <tbody>
-                {appointments.prescriptions.map((p, i) => (
+                {prescriptions.map((p, i) => (
                   <tr key={i} className="text-sm">
                     <td className="p-2 border">{p.date}</td>
                     <td className="p-2 border">{p.medicine}</td>
@@ -82,7 +80,7 @@ const doctorpatientprofile = () => {
         <div className="bg-white p-6 rounded-xl shadow lg:col-span-2">
           <h3 className="font-semibold mb-3">Lab Reports</h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {records.map((r) => (
+            {Records.map((r) => (
               <div key={r.id} className="p-4 rounded-xl border bg-gray-50">
                 <div className="font-semibold">{r.title}</div>
                 <div className="text-sm text-gray-500">

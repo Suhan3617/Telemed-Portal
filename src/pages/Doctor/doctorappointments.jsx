@@ -27,7 +27,7 @@ const DoctorAppointments = () => {
 
   const openDetails = (appt) => {
     const patient = patients.find((p) => p.id === appt.patientId);
-    const patientPrescriptions = prescriptions.filter(
+    const patientPrescriptions = appt.prescriptions.filter(
       (pr) => pr.patientId === appt.patientId
     );
     setcurrent({ appt, patient, patientPrescriptions });
