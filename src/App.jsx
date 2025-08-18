@@ -21,7 +21,7 @@ import Doctorpatientprofile from "./pages/Doctor/doctorpatientprofile.jsx";
 const Layout = ({ children }) => {
   const location = useLocation();
 
-  const hidenavbarroutes = ["/signup" , "/login" , "/patientdashboard", "/doctor/overview" , "/doctor/messages" , "/doctor/patients" , "/doctor/appointments" , "/doctor/records" , "/doctor/settings" , "/doctor/prescription" , "/doctor/patients/:patientId" ];
+  const hidenavbarroutes = ["/signup" , "/login" , "/patientdashboard", "/doctor/overview" , "/doctor/messages" , "/doctor/patients" , "/doctor/appointments" , "/doctor/records" , "/doctor/settings" , "/doctor/prescription" , "/doctor/patients/:patientId" , "/doctor/consultation" ];
 
 
 

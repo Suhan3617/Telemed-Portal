@@ -26,16 +26,6 @@ const doctorsidebar = () => {
       path: "/doctor/messages",
     },
     {
-      name: "Write Prescription",
-      icon: <FileText size={18} />,
-      path: "/doctor/prescription",
-    },
-    {
-      name: "Medical Reports",
-      icon: <ClipboardList size={18} />,
-      path: "/doctor/records",
-    },
-    {
       name: "Profile & Settings",
       icon: <User size={18} />,
       path: "/doctor/settings",
