@@ -35,10 +35,13 @@ const DoctorAppointments = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white p-6">
+    <div className="min-h-screen bg-gradient-to-b from-blue-200 to-white p-6">
+      <h1 className="text-3xl font-bold text-blue-700 mb-6 text-center">
+        Appointments Records
+      </h1>
       {/* Filters */}
       <FiltersBar>
-        <div className="flex gap-3 flex-wrap items-center">
+        <div className="flex flex-wrap gap-3 items-center w-full justify-center">
           <SearchInput
             value={q}
             onChange={setq}
