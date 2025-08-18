@@ -2,7 +2,7 @@
 export const appointments = [
   {
     id: "ap1",
-    patientId: "p1",   
+    patientId: "p1",
     patientName: "John Doe",
     patientPhoto: "https://i.pravatar.cc/50?img=1",
     date: "13 Aug 2025",
@@ -34,9 +34,9 @@ export const appointments = [
   },
   {
     id: "ap2",
-    patientId: "p2",   
-    patientName: "Jane Smith",
-    patientPhoto: "https://i.pravatar.cc/50?img=2",
+    patientId: "p2",
+    patientName: "Aisha Khan",
+    patientPhoto: "https://i.pravatar.cc/80?img=5",
     date: "14 Aug 2025",
     time: "3:00 PM",
     type: "In-person Consultation",
@@ -60,9 +60,9 @@ export const appointments = [
   },
   {
     id: "ap3",
-    patientId: "p3",   
-    patientName: "Michael Brown",
-    patientPhoto: "https://i.pravatar.cc/50?img=3",
+    patientId: "p3",
+    patientName: "Michael Smith",
+    patientPhoto: "https://i.pravatar.cc/80?img=8",
     date: "15 Aug 2025",
     time: "9:30 AM",
     type: "Video Consultation",
@@ -86,9 +86,9 @@ export const appointments = [
   },
   {
     id: "ap4",
-    patientId: "p4", 
-    patientName: "Emily Johnson",
-    patientPhoto: "https://i.pravatar.cc/50?img=4",
+    patientId: "p4",
+    patientName: "Priya Sharma",
+    patientPhoto: "https://i.pravatar.cc/80?img=15",
     date: "16 Aug 2025",
     time: "2:15 PM",
     type: "In-person Consultation",
@@ -96,7 +96,7 @@ export const appointments = [
     reason: "Follow-up for knee pain",
     history: {
       chronicIllnesses: ["Arthritis"],
-      allergies: ["Pollen"],
+      allergies: ["Pollenn"],
       surgeries: ["Knee Arthroscopy - 2020"],
       familyHistory: ["Arthritis"],
     },
@@ -112,9 +112,9 @@ export const appointments = [
   },
   {
     id: "ap5",
-    patientId: "p5", 
-    patientName: "David Wilson",
-    patientPhoto: "https://i.pravatar.cc/50?img=5",
+    patientId: "p5",
+    patientName: "David Johnson",
+    patientPhoto: "https://i.pravatar.cc/80?img=20",
     date: "17 Aug 2025",
     time: "5:00 PM",
     type: "Video Consultation",
@@ -138,9 +138,9 @@ export const appointments = [
   },
   {
     id: "ap6",
-    patientId: "p6", 
-    patientName: "Sophia Martinez",
-    patientPhoto: "https://i.pravatar.cc/50?img=6",
+    patientId: "p6",
+    patientName: "Meera Patel",
+    patientPhoto: "https://i.pravatar.cc/80?img=32",
     date: "18 Aug 2025",
     time: "10:00 AM",
     type: "In-person Consultation",
@@ -148,7 +148,7 @@ export const appointments = [
     reason: "Routine health check-up",
     history: {
       chronicIllnesses: ["None"],
-      allergies: ["None"],
+      allergies: ["Latex"],
       surgeries: ["None"],
       familyHistory: ["Diabetes"],
     },
@@ -176,7 +176,7 @@ export const patients = [
     history: {
       chronicIllnesses: ["Diabetes"],
       allergies: ["Penicillin"],
-      surgeries: ["Appendectomy (2015)"],
+      surgeries: ["Appendectomy - 2015"],
       familyHistory: ["Heart Disease"],
     },
   },
@@ -190,8 +190,8 @@ export const patients = [
     history: {
       chronicIllnesses: ["Hypertension"],
       allergies: ["None"],
-      surgeries: [],
-      familyHistory: ["Hypertension"],
+      surgeries: ["None"],
+      familyHistory: ["Migraine"],
     },
   },
   {
@@ -203,9 +203,9 @@ export const patients = [
     photo: "https://i.pravatar.cc/80?img=8",
     history: {
       chronicIllnesses: ["Asthma"],
-      allergies: ["Dust", "Peanuts"],
-      surgeries: ["Knee Replacement (2022)"],
-      familyHistory: ["Arthritis"],
+      allergies: ["Dust"],
+      surgeries: ["Tonsillectomy - 2017"],
+      familyHistory: ["None"],
     },
   },
   {
@@ -216,10 +216,10 @@ export const patients = [
     lastVisit: "10 Jul 2025",
     photo: "https://i.pravatar.cc/80?img=15",
     history: {
-      chronicIllnesses: ["Thyroid Disorder"],
-      allergies: ["Seafood"],
-      surgeries: [],
-      familyHistory: ["Diabetes"],
+      chronicIllnesses: ["Arthritis"],
+      allergies: ["Pollen"],
+      surgeries: ["Knee Arthroscopy - 2020"],
+      familyHistory: ["Arthritis"],
     },
   },
   {
@@ -230,10 +230,10 @@ export const patients = [
     lastVisit: "28 May 2025",
     photo: "https://i.pravatar.cc/80?img=20",
     history: {
-      chronicIllnesses: ["High Cholesterol"],
-      allergies: ["None"],
-      surgeries: ["Gallbladder Removal (2018)"],
-      familyHistory: ["Stroke"],
+      chronicIllnesses: ["None"],
+      allergies: ["Pollen", "Peanuts"],
+      surgeries: ["None"],
+      familyHistory: ["Allergies"],
     },
   },
   {
@@ -244,95 +244,14 @@ export const patients = [
     lastVisit: "02 Aug 2025",
     photo: "https://i.pravatar.cc/80?img=32",
     history: {
-      chronicIllnesses: [],
+      chronicIllnesses: ["None"],
       allergies: ["Latex"],
-      surgeries: [],
-      familyHistory: ["Asthma"],
-    },
-  },
-  {
-    id: "p7",
-    name: "Carlos Garcia",
-    age: 41,
-    gender: "Male",
-    lastVisit: "15 Jul 2025",
-    photo: "https://i.pravatar.cc/80?img=44",
-    history: {
-      chronicIllnesses: ["Obesity"],
-      allergies: ["Shellfish"],
-      surgeries: ["Back Surgery (2019)"],
-      familyHistory: ["Diabetes", "Hypertension"],
-    },
-  },
-  {
-    id: "p8",
-    name: "Sakura Tanaka",
-    age: 33,
-    gender: "Female",
-    lastVisit: "09 Jun 2025",
-    photo: "https://i.pravatar.cc/80?img=55",
-    history: {
-      chronicIllnesses: ["Migraine"],
-      allergies: ["None"],
-      surgeries: [],
-      familyHistory: ["Breast Cancer"],
-    },
-  },
-  {
-    id: "p9",
-    name: "Omar Abdullah",
-    age: 60,
-    gender: "Male",
-    lastVisit: "01 Aug 2025",
-    photo: "https://i.pravatar.cc/80?img=66",
-    history: {
-      chronicIllnesses: ["COPD", "Hypertension"],
-      allergies: ["Sulfa Drugs"],
-      surgeries: ["Bypass Surgery (2020)"],
-      familyHistory: ["Lung Disease"],
-    },
-  },
-  {
-    id: "p10",
-    name: "Elena Rossi",
-    age: 48,
-    gender: "Female",
-    lastVisit: "25 Jul 2025",
-    photo: "https://i.pravatar.cc/80?img=70",
-    history: {
-      chronicIllnesses: ["Rheumatoid Arthritis"],
-      allergies: ["Pollen"],
-      surgeries: ["Hip Replacement (2021)"],
-      familyHistory: ["Arthritis", "Diabetes"],
+      surgeries: ["None"],
+      familyHistory: ["Diabetes"],
     },
   },
 ];
 
-
-// Prescriptions
-export const prescriptions = [
-  {
-    patientId: "p1",
-    date: "12 Jul 2025",
-    medicine: "Cetirizine 10mg",
-    duration: "5 days",
-    notes: "After food",
-  },
-  {
-    patientId: "p1",
-    date: "20 Jun 2025",
-    medicine: "Amoxicillin 500mg",
-    duration: "7 days",
-    notes: "With water",
-  },
-  {
-    patientId: "p2",
-    date: "18 Jun 2025",
-    medicine: "Amlodipine 5mg",
-    duration: "30 days",
-    notes: "Morning",
-  },
-];
 
 // Medical Records
 export const records = [

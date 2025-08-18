@@ -163,7 +163,7 @@ const DoctorAppointments = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {current.patientPrescriptions.map((p, i) => (
+                    {current.appt.prescriptions.map((p, i) => (
                       <tr key={i} className="hover:bg-blue-50 transition">
                         <td className="p-2 border">{p.date}</td>
                         <td className="p-2 border">{p.medicine}</td>
