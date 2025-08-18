@@ -4,7 +4,6 @@ import SearchInput from "../../components/Common/searchinput";
 import {
   appointments,
   patients,
-  prescriptions,
 } from "../../data/doctor/mockdata";
 import Badge from "../../components/Common/Badge";
 import Modal from "../../components/Common/Modal";
