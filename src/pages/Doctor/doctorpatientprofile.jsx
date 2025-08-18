@@ -26,7 +26,7 @@ const doctorpatientprofile = () => {
             src={patient.photo}
             className="w-16 h-16 rounded-full border-blue-500 border-4"
           />
-          <div className="flex-1">
+          <div className="flex-1 justify-center">
             <div className="text-xl font-semibold text-blue-500">
               {patient.name}
             </div>

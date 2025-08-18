@@ -17,7 +17,7 @@ const DoctorDashboard = () => {
   };
 
   return ( 
-    <div className="flex min-h-screen bg-gradient-to-bl from-blue-300 to-white">
+    <div className="flex min-h-screen bg-gradient-to-b from-blue-300 to-white">
       <DoctorSidebar />
       <div className="flex flex-col flex-1">
         <DoctorTopbar name="Dr. Smith" />
