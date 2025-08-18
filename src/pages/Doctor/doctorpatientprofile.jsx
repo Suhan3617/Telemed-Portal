@@ -20,21 +20,23 @@ const doctorpatientprofile = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-blue-100 flex justify-between m-5 py-4 px-6 rounded-2xl">
-        <img src={patient.photo} className="w-16 h-16 rounded-2xl border" />
-        <div className="flex justify-center">
-          <div className="text-xl font-semibold">{patient.name}</div>
+      <div className="bg-blue-100 shadow-xl flex justify-between m-5 py-4 px-6 rounded-2xl">
+        <div className="flex gap-4">
+        <img src={patient.photo} className="w-16 h-16 rounded-full border-blue-500 border-4" />
+        <div className="flex-1">
+          <div className="text-xl font-semibold text-blue-500">{patient.name}</div>
           <div className="text-gray-500 text-sm">
-            {patient.gender} • {patient.age}
+            {patient.gender} • {patient.age}yrs
           </div>
+        </div>
         </div>
         <button className="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600">
           Message
         </button>
       </div>
       <div className="grid lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow">
-          <h3 className="font-semibold mb-3">Medical History</h3>
+        <div className="bg-gray-100 p-6 rounded-xl m-5 shadow-lg">
+          <h3 className="font-semibold text-lg mb-3 text-blue-500">Medical History</h3>
           <ul className="list-disc list-inside text-gray-700 space-y-1">
             <li>
               <b>Chronic : </b>
@@ -54,13 +56,13 @@ const doctorpatientprofile = () => {
             </li>
           </ul>
         </div>
-        <div className="bg-white p-6 rounded-xl shadow">
-          <h3 className="font-semibold mb-3">Previous Prescriptions</h3>
+        <div className="bg-gray-100 p-6 rounded-xl m-5 shadow-lg">
+          <h3 className="font-semibold mb-3 text-blue-500 text-lg">Previous Prescriptions</h3>
           <div className="overflow-x-auto">
             <table>
               <thead>
-                <tr className="bg-gray-100">
-                  <th className="p-2 border">Date</th>
+                <tr className="bg-blue-100 ">
+                  <th className="p-2 border ">Date</th>
                   <th className="p-2 border"> Medicine</th>
                   <th className="p-2 border"> Duration</th>
                   <th className="p-2 border"> Notes</th>
@@ -79,8 +81,8 @@ const doctorpatientprofile = () => {
             </table>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-xl shadow lg:col-span-2">
-          <h3 className="font-semibold mb-3">Lab Reports</h3>
+        <div className="bg-gray-100 m-5 p-6 rounded-xl shadow-lg lg:col-span-2">
+          <h3 className="font-semibold mb-3 text-blue-500 text-lg">Lab Reports</h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {Records.map((r) => (
               <div key={r.id} className="p-4 rounded-xl border bg-gray-50">
@@ -92,7 +94,7 @@ const doctorpatientprofile = () => {
                   <button className="px-3 py-2 rounded-lg bg-gray-200 hover:bg-gray-300">
                     View
                   </button>
-                  <button className="px-3 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600">
+                  <button className="px-3 py-2 rounded-lg shadow-xl bg-blue-500 text-white hover:bg-blue-600">
                     Download
                   </button>
                 </div>
@@ -100,8 +102,8 @@ const doctorpatientprofile = () => {
             ))}
           </div>
         </div>
-        <div className="bg-white p-6 rounded-xl shadow lg:col-span-2">
-          <h3 className="font-semibold mb-3">Doctor Notes</h3>
+        <div className="bg-gray-100 p-6 m-5 rounded-xl shadow-lg lg:col-span-2">
+          <h3 className="font-semibold mb-3 text-blue-500 text-lg">Doctor Notes</h3>
           <textarea
             className="w-full border rounded-lg px-3 py-2 min-h-[120px]"
             placeholder="Add private notes..."
