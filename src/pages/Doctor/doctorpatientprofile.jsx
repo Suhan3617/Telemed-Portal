@@ -5,7 +5,9 @@ import { patients, records, appointments } from "../../data/doctor/mockdata";
 const doctorpatientprofile = () => {
   const { patientId } = useParams();
   const patient = patients.find((p) => p.id === patientId);
-  const prescriptions = appointments.filter((a) => a.patientId === patientId);
+ const prescriptions = appointments
+  .filter((a) => a.patientId === patientId)
+  .flatMap((a) => a.prescriptions || []);
   const Records = records.filter((r) => r.patientId === patientId);
 
   if (!patient) {
