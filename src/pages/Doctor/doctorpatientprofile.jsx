@@ -20,9 +20,9 @@ const doctorpatientprofile = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white">
+      <div className="bg-blue-100 flex justify-between m-5 py-4 px-6 rounded-2xl">
         <img src={patient.photo} className="w-16 h-16 rounded-2xl border" />
-        <div className="flex-1">
+        <div className="flex justify-center">
           <div className="text-xl font-semibold">{patient.name}</div>
           <div className="text-gray-500 text-sm">
             {patient.gender} • {patient.age}
