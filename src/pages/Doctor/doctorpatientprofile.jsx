@@ -19,7 +19,7 @@ const doctorpatientprofile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-200 to-white p-6 space-y-6">
+    <div className="min-h-screen bg-gradient-to-b from-blue-200 to-white p-3 space-y-6">
       <div className="bg-blue-100 shadow-xl flex justify-between m-5 py-4 px-6 rounded-2xl">
         <div className="flex gap-4">
           <img
