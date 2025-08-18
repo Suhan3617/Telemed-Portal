@@ -19,8 +19,8 @@ const doctorpatientprofile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-200 to-white p-3 space-y-6">
-      <div className="bg-blue-100 shadow-xl flex justify-between m-5 py-4 px-6 rounded-2xl">
+    <div className="min-h-screen bg-gradient-to-b from-blue-200 to-white p-2 space-y-6">
+      <div className="bg-blue-100 shadow-xl flex justify-between m-3 py-4 px-6 rounded-2xl">
         <div className="flex gap-4">
           <img
             src={patient.photo}
@@ -35,12 +35,12 @@ const doctorpatientprofile = () => {
             </div>
           </div>
         </div>
-        <button className="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600">
+        <button className="px-3 py-0.5 rounded-lg bg-blue-500 text-white hover:bg-blue-600">
           Message
         </button>
       </div>
       <div className="grid lg:grid-cols-2 gap-6">
-        <div className="bg-gray-100 p-6 rounded-xl m-5 shadow-lg">
+        <div className="bg-gray-100 p-6 rounded-xl mx-3 mt-5 shadow-lg">
           <h3 className="font-semibold text-lg mb-3 text-blue-500">
             Medical History
           </h3>
@@ -63,7 +63,7 @@ const doctorpatientprofile = () => {
             </li>
           </ul>
         </div>
-        <div className="bg-gray-100 p-6 rounded-xl m-5 shadow-lg">
+        <div className="bg-gray-100 p-6 rounded-xl mx-3 lg:mt-5 shadow-lg">
           <h3 className="font-semibold mb-3 text-blue-500 text-lg">
             Previous Prescriptions
           </h3>
@@ -90,7 +90,7 @@ const doctorpatientprofile = () => {
             </table>
           </div>
         </div>
-        <div className="bg-gray-100 m-5 p-6 rounded-xl shadow-lg lg:col-span-2">
+        <div className="bg-gray-100 mx-3 p-6 rounded-xl shadow-lg lg:col-span-2">
           <h3 className="font-semibold mb-3 text-blue-500 text-lg">
             Lab Reports
           </h3>
@@ -113,7 +113,7 @@ const doctorpatientprofile = () => {
             ))}
           </div>
         </div>
-        <div className="bg-gray-100 p-6 m-5 rounded-xl shadow-lg lg:col-span-2">
+        <div className="bg-gray-100 p-6 mx-3 rounded-xl shadow-lg lg:col-span-2">
           <h3 className="font-semibold mb-3 text-blue-500 text-lg">
             Doctor Notes
           </h3>
