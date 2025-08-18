@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { patients } from "../../data/doctor/mockdata";
 const doctorprescriptionform = () => {
   const [form, setform] = useState({
     patientId: "",

@@ -28,7 +28,7 @@ const doctorsidebar = () => {
     {
       name: "Write Prescription",
       icon: <FileText size={18} />,
-      path: "/doctor/messages",
+      path: "/doctor/prescription",
     },
     {
       name: "Medical Reports",
