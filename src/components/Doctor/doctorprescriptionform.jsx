@@ -34,13 +34,15 @@ const Doctorprescriptionform = ({ patients, onSubmit }) => {
       onSubmit={handleSubmit}
       className="bg-white/90 backdrop-blur-md shadow-xl rounded-2xl p-8 space-y-6 border border-blue-100"
     >
-      <h2 className="text-2xl font-semibold text-blue-600 mb-2 text-center">
-        📝 New Prescription
+      <h2 className="text-3xl font-semibold text-blue-600 mb-2 text-center">
+        New Prescription
       </h2>
 
       {/* Patient Selector */}
       <div>
-        <label className="block text-sm font-medium text-gray-700">Patient</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Patient
+        </label>
         <select
           name="patientId"
           value={form.patientId}
@@ -71,7 +73,9 @@ const Doctorprescriptionform = ({ patients, onSubmit }) => {
 
       {/* Medicine */}
       <div>
-        <label className="block text-sm font-medium text-gray-700">Medicine</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Medicine
+        </label>
         <input
           type="text"
           name="medicine"
@@ -85,7 +89,9 @@ const Doctorprescriptionform = ({ patients, onSubmit }) => {
 
       {/* Duration */}
       <div>
-        <label className="block text-sm font-medium text-gray-700">Duration</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Duration
+        </label>
         <input
           type="text"
           name="duration"
@@ -114,7 +120,7 @@ const Doctorprescriptionform = ({ patients, onSubmit }) => {
         type="submit"
         className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold text-lg shadow-md transition transform hover:scale-[1.02]"
       >
-        💾 Save Prescription
+        Save Prescription
       </button>
     </form>
   );
