@@ -1,13 +1,11 @@
 import React, { useState, useMemo } from "react";
 import FiltersBar from "../../components/Doctor/doctorfilterbar";
 import SearchInput from "../../components/Common/searchinput";
-import {
-  appointments,
-  patients,
-} from "../../data/doctor/mockdata";
+import { appointments, patients } from "../../data/doctor/mockdata";
 import Badge from "../../components/Common/Badge";
 import Modal from "../../components/Common/Modal";
 import Doctorappointmentcard from "../../components/Doctor/doctorappointmentcard";
+import { Link } from "react-router-dom";
 
 const DoctorAppointments = () => {
   const [q, setq] = useState("");
@@ -133,13 +131,11 @@ const DoctorAppointments = () => {
                 </li>
                 <li>
                   <b>Allergies : </b>
-                  {current.patient?.history?.allergies?.join(", ") ||
-                    "-"}{" "}
+                  {current.patient?.history?.allergies?.join(", ") || "-"}{" "}
                 </li>
                 <li>
                   <b>Surgeries : </b>
-                  {current.patient?.history?.surgeries?.join(", ") ||
-                    "-"}{" "}
+                  {current.patient?.history?.surgeries?.join(", ") || "-"}{" "}
                 </li>
                 <li>
                   <b>Family : </b>
@@ -186,9 +182,13 @@ const DoctorAppointments = () => {
               <button className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 transition">
                 Add Notes
               </button>
-              <button className="px-4 py-2 rounded-lg bg-green-500 text-white shadow hover:bg-green-600 transition">
+              <Link
+                to="/doctor/prescription"
+                state={{ patientId: current.patient.id }}
+                className="px-4 py-2 rounded-lg bg-green-500 text-white shadow hover:bg-green-600 transition"
+              >
                 Issue Prescription
-              </button>
+              </Link>
             </div>
           </div>
         )}

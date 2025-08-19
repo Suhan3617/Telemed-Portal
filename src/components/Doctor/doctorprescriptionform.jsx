@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-const Doctorprescriptionform = ({ patients, onSubmit }) => {
+const Doctorprescriptionform = ({ patients, onSubmit , defaultPatientId}) => {
   const [form, setForm] = useState({
-    patientId: "",
+    patientId: defaultPatientId || "",
     date: new Date().toISOString().split("T")[0],
     medicine: "",
     duration: "",
