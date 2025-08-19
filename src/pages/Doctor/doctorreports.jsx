@@ -53,15 +53,17 @@ const DoctorReports = () => {
       </FiltersBar>
 
       {/* Reports Grid */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-        {list.map((r) => (
-          <div
-            key={r.id}
-            className="transform transition duration-300 hover:scale-105"
-          >
-            <Doctorlabrecords record={r} />
-          </div>
-        ))}
+      <div className="container mx-auto mt-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {list.map((r) => (
+            <div
+              key={r.id}
+              className="transform transition duration-300 hover:scale-103"
+            >
+              <Doctorlabrecords record={r} />
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Empty State */}
