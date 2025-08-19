@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const DoctorProfileSettings = () => {
   const [doctor, setDoctor] = useState({
-    name: "Dr. John Doe",
+    name: "Dr.Smith",
     specialization: "Cardiologist",
     email: "dr.john@example.com",
     phone: "+91 9876543210",

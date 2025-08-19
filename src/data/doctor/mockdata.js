@@ -267,11 +267,44 @@ export const records = [
     id: "r2",
     patientId: "p2",
     patientName: "Aisha Khan",
-    title: "X-Ray Scan",
+    title: "MRI Brain Scan",
     type: "Imaging",
-    date: "15 Jun 2025",
+    date: "05 Aug 2025",
+  },
+  {
+    id: "r3",
+    patientId: "p3",
+    patientName: "Michael Smith",
+    title: "Chest X-ray",
+    type: "Imaging",
+    date: "12 Aug 2025",
+  },
+  {
+    id: "r4",
+    patientId: "p4",
+    patientName: "Priya Sharma",
+    title: "Knee MRI Scan",
+    type: "Imaging",
+    date: "09 Aug 2025",
+  },
+  {
+    id: "r5",
+    patientId: "p5",
+    patientName: "David Johnson",
+    title: "Allergy Test",
+    type: "Lab Result",
+    date: "14 Aug 2025",
+  },
+  {
+    id: "r6",
+    patientId: "p6",
+    patientName: "Meera Patel",
+    title: "Full Body Blood Test",
+    type: "Lab Result",
+    date: "18 Aug 2025",
   },
 ];
+
 
 // Messages
 export const messages = {
