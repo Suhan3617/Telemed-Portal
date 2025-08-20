@@ -1,47 +1,15 @@
 import React from "react";
-import { Video } from "lucide-react";
-
-const PatientAppointmentCard = ({ appt }) => {
-  const { date, time, doctor, specialization, type, status } = appt;
-  const statusColor =
-    status === "Upcoming"
-      ? "bg-yellow-100 text-yellow-700"
-      : status === "Completed"
-      ? "bg-green-100 text-green-700"
-      : "bg-red-100 text-red-700";
-
-  return (
-    <div className="bg-white p-5 rounded-xl shadow hover:shadow-lg transition flex flex-col justify-between">
-      <div>
-        <div className="text-gray-600 text-sm">{date} • {time}</div>
-        <div className="font-semibold text-lg">{doctor}</div>
-        <div className="text-gray-500">{specialization}</div>
-        <div className={`inline-block mt-3 px-3 py-1 rounded-full text-sm ${statusColor}`}>
-          {status}
-        </div>
-      </div>
-
-      <div className="flex flex-col items-end mt-4 gap-2">
-        <div className="text-sm text-blue-500">{type}</div>
-        {type === "Video Consultation" && status === "Upcoming" ? (
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600"
-            onClick={(e) => {
-              e.preventDefault();
-              alert("Join call placeholder — integrate Jitsi/WebRTC here");
-            }}
-          >
-            <Video size={16} /> Join Call
-          </a>
-        ) : (
-          <button className="w-full bg-red-500 text-white rounded-lg px-4 py-2 hover:bg-red-600">
-            Details
-          </button>
-        )}
-      </div>
-    </div>
+import PatientAppointmentCard from "./patientAppointmentCard";
+import { appointments } from "../../data/patient/mockdata";
+const patientupcomingappts = ({ patientId }) => {
+  const upcoming = useMemo(
+    () =>
+      appointments
+        .filter((a) => a.patientId === patientId && a.status === "Scheduled")
+        .slice(0, 3),
+    [patientId]
   );
+  return <div></div>;
 };
 
-export default PatientAppointmentCard;
+export default patientupcomingappts;

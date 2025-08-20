@@ -2,7 +2,7 @@ import React from 'react';
 import PatientHeader from '../../components/Patient/patientheader';
 import PatientSidebar from '../../components/Patient/patientsidebar';
 import PatientDashboardStats from '../../components/Patient/patientDashboardStats';
-import PatientAppointmentCard from '../../components/Patient/patientupcomingappts';
+import Patientupcomingappts from '../../components/Patient/patientupcomingappts';
 import PatientMedicalRecordCard from '../../components/Patient/patientrecentrecords';
 import PatientMessageCard from '../../components/Patient/patientMessageCard';
 
@@ -18,7 +18,7 @@ export default function PatientDashboard(){
           <PatientDashboardStats patientId={patientId}/>
 
           <div className='grid md:grid-cols-2 gap-6'>
-            <PatientAppointmentCard patientId={patientId}/>
+            <Patientupcomingappts patientId={patientId}/>
             <PatientMedicalRecordCard patientId={patientId}/>
             <PatientMessageCard patientId={patientId}/>
           </div>
