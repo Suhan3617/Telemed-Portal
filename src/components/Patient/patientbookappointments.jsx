@@ -26,7 +26,7 @@ const patientbookappointments = () => {
           type="text"
           name="specialization"
           value={form.specialization}
-          onChange={handleChange}
+          onChange={handlechange}
           placeholder="Specialization (e.g. Cardiology)"
           className="w-full border p-2 rounded-lg"
         />
@@ -36,14 +36,14 @@ const patientbookappointments = () => {
             type="date"
             name="date"
             value={form.date}
-            onChange={handleChange}
+            onChange={handlechange}
             className="flex-1 border p-2 rounded-lg"
           />
           <input
             type="time"
             name="time"
             value={form.time}
-            onChange={handleChange}
+            onChange={handlechange}
             className="flex-1 border p-2 rounded-lg"
           />
         </div>
@@ -51,7 +51,7 @@ const patientbookappointments = () => {
         <select
           name="type"
           value={form.type}
-          onChange={handleChange}
+          onChange={handlechange}
           className="w-full border p-2 rounded-lg"
         >
           <option>Video Consultation</option>
