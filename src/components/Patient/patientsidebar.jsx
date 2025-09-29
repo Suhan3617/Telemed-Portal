@@ -1,13 +1,13 @@
 import React from 'react';
 import { LayoutDashboard, CalendarDays, ClipboardList, MessageSquare, User, LogOut , BookUser } from "lucide-react";
-
+import { Link } from 'react-router-dom';
 const items = [
-  { label: "Dashboard", icon: <LayoutDashboard size={18} /> },
-  { label: "Book Appointment", icon: <BookUser size={18} /> },
-  { label: "My Appointments", icon: <CalendarDays size={18} /> },
-  { label: "Messages", icon: <MessageSquare size={18} /> },
-  { label: "Medical Records", icon: <ClipboardList size={18} /> },
-  { label: "Profile", icon: <User size={18} /> },
+  { label: "Dashboard", icon: <LayoutDashboard size={18}/>, path:"/" },
+  { label: "Book Appointment", icon: <BookUser size={18} />, path:"/patient/bookappointment" },
+  { label: "My Appointments", icon: <CalendarDays size={18} />,path:"/patient/appointments" },
+  { label: "Messages", icon: <MessageSquare size={18} />,path:"/patient/messages" },
+  { label: "Medical Records", icon: <ClipboardList size={18} />,path:"/patient/medicalrecords" },
+  { label: "Profile", icon: <User size={18} /> , path:"/patient/profile" },
 ];
 
 const PatientSidebar = () => {
@@ -21,13 +21,14 @@ const PatientSidebar = () => {
       {/* Navigation */}
       <nav className="flex-1 px-4 py-6 space-y-2">
         {items.map((it) => (
-          <div
+          <Link
             key={it.label}
+            to={it.path}
             className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-blue-700 cursor-pointer transition"
           >
             <div className="text-white/90">{it.icon}</div>
             <div className="font-medium">{it.label}</div>
-          </div>
+          </Link>
         ))}
       </nav>
 

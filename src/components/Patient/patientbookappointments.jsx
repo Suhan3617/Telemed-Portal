@@ -1,5 +1,7 @@
 import React from "react";
 import SearchInput from "../Common/searchinput";
+import { useState } from "react";
+import Button from "../Common/Button";
 
 const patientbookappointments = () => {
   const [form, setform] = useState({
@@ -7,7 +9,6 @@ const patientbookappointments = () => {
     specialization: "",
     date: "",
     time: "",
-    ty,
   });
   const handlechange = (e) => {
     setform({ ...form, [e.target.name]: e.target.value });

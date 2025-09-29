@@ -9,6 +9,13 @@ import Navbar from "./components/navbar.jsx";
 import Login from "./pages/login.jsx";
 import Signup from "./pages/signup.jsx";
 import PatientDashboard from "./pages/Patient/PatientDashboard.jsx";
+import PatientBookAppointment from "./pages/Patient/BookAppointment.jsx";
+import PatientMedicalRecordspage from "./pages/Patient/PatientMedicalRecordspage.jsx";
+import PatientProfilepage from "./pages/Patient/PatientProfilepage.jsx";
+import PatientsAppointmentspage from "./pages/Patient/PatientsAppointmentspage.jsx";
+import PatientsMessagespage from "./pages/Patient/PatientsMessagespage.jsx";
+
+
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard.jsx";
 import Doctormessages from "./pages/Doctor/doctormessages.jsx";
 import Doctorpatients from "./pages/Doctor/doctorpatients.jsx";
@@ -17,6 +24,7 @@ import Doctorreports from "./pages/Doctor/doctorreports.jsx";
 import Doctorsettings from "./pages/Doctor/doctorsettings.jsx";
 import Doctorprescription from "./pages/Doctor/doctorwriteprescription.jsx";
 import Doctorpatientprofile from "./pages/Doctor/doctorpatientprofile.jsx";
+
 
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -46,6 +54,11 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/patientdashboard" element={<PatientDashboard />} />
+            <Route path="/patient/bookappointment" element={<PatientBookAppointment />} />
+            <Route path="/patient/appointments" element={<PatientsAppointmentspage />} />
+            <Route path="/patient/messages" element={<PatientsMessagespage />} />
+            <Route path="/patient/medicalrecords" element={<PatientMedicalRecordspage />} />
+            <Route path="/patient/profile" element={<PatientProfilepage />} />
             <Route path="/doctor/overview" element={<DoctorDashboard />} />
             <Route path="/doctor/messages" element={<Doctormessages />} />
             <Route path="/doctor/patients" element={<Doctorpatients />} />
