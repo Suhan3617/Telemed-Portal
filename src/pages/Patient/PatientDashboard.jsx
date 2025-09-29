@@ -4,7 +4,6 @@ import PatientSidebar from '../../components/Patient/patientsidebar';
 import PatientDashboardStats from '../../components/Patient/patientDashboardStats';
 import Patientupcomingappts from '../../components/Patient/patientupcomingappts';
 import PatientMedicalRecordCard from '../../components/Patient/patientrecentrecords';
-import PatientMessageCard from '../../components/Patient/patientMessageCard';
 
 export default function PatientDashboard(){
   const patientId="p1";
@@ -20,7 +19,6 @@ export default function PatientDashboard(){
           <div className='grid md:grid-cols-2 gap-6'>
             <Patientupcomingappts patientId={patientId}/>
             <PatientMedicalRecordCard patientId={patientId}/>
-            <PatientMessageCard patientId={patientId}/>
           </div>
         </main>
 
