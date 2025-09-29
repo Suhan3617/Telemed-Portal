@@ -6,10 +6,7 @@ import Patientbookappointments from "../../components/Patient/patientbookappoint
 const BookAppointment = () => {
   return (
     <div className="flex h-screen bg-gray-50">
-      <PatientSidebar />
       <div className="flex-1 flex flex-col">
-        \
-        <PatientHeader />
         <div className="flex-1 p-6 overflow-y-auto">
           <Patientbookappointments />
         </div>

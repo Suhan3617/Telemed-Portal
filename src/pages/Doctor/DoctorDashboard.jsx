@@ -17,12 +17,12 @@ const DoctorDashboard = () => {
   };
 
   return ( 
-    <div className="flex min-h-screen bg-gradient-to-b from-blue-300 to-white">
+    <div className="flex min-h-screen bg-gradient-to-b from-blue-400 to-blue-100">
       <DoctorSidebar />
       <div className="flex flex-col flex-1">
         <DoctorTopbar name="Dr. Smith" />
 
-        <main className="p-6 space-y-8">
+        <main className="p-6 space-y-10">
           <Doctorstats />
 
           <Doctoractionbuttons />
