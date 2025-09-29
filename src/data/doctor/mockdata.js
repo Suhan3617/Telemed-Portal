@@ -318,3 +318,85 @@ export const messages = {
   ],
   p2: [{ from: "patient", text: "Can I upload my report?", time: "09:20" }],
 };
+
+// Doctors
+export const doctors = [
+  {
+    id: "d1",
+    name: "Dr. Rakesh Verma",
+    specialization: "Dermatologist",
+    photo: "https://i.pravatar.cc/80?img=45",
+    experience: "12 years",
+    hospital: "City Skin Clinic",
+    consultationTypes: ["Video Consultation", "In-person Consultation"],
+    fee: { video: 500, inperson: 700 },
+    availability: [
+      { day: "Monday", slots: ["10:00 AM", "11:30 AM", "4:00 PM"] },
+      { day: "Wednesday", slots: ["2:00 PM", "3:30 PM"] },
+      { day: "Friday", slots: ["9:00 AM", "11:00 AM", "5:00 PM"] },
+    ],
+    patientsHandled: ["p1"], // John Doe (Skin rash & itching)
+  },
+  {
+    id: "d2",
+    name: "Dr. Kavita Rao",
+    specialization: "Neurologist",
+    photo: "https://i.pravatar.cc/80?img=46",
+    experience: "15 years",
+    hospital: "Metro Neuro Center",
+    consultationTypes: ["In-person Consultation", "Video Consultation"],
+    fee: { video: 600, inperson: 900 },
+    availability: [
+      { day: "Tuesday", slots: ["10:00 AM", "1:00 PM"] },
+      { day: "Thursday", slots: ["3:00 PM", "5:30 PM"] },
+    ],
+    patientsHandled: ["p2"], // Aisha Khan (Migraines)
+  },
+  {
+    id: "d3",
+    name: "Dr. Rajesh Khanna",
+    specialization: "General Physician",
+    photo: "https://i.pravatar.cc/80?img=47",
+    experience: "8 years",
+    hospital: "HealthCare Clinic",
+    consultationTypes: ["Video Consultation", "In-person Consultation"],
+    fee: { video: 400, inperson: 600 },
+    availability: [
+      { day: "Monday", slots: ["9:00 AM", "11:00 AM", "6:00 PM"] },
+      { day: "Wednesday", slots: ["10:30 AM", "1:00 PM"] },
+      { day: "Saturday", slots: ["2:00 PM", "4:00 PM"] },
+    ],
+    patientsHandled: ["p3", "p5"], 
+    // Michael Smith (Cough/fever), David Johnson (Allergies)
+  },
+  {
+    id: "d4",
+    name: "Dr. Neha Sharma",
+    specialization: "Orthopedic Specialist",
+    photo: "https://i.pravatar.cc/80?img=48",
+    experience: "10 years",
+    hospital: "Bone & Joint Care Hospital",
+    consultationTypes: ["In-person Consultation"],
+    fee: { inperson: 1000 },
+    availability: [
+      { day: "Monday", slots: ["2:00 PM", "4:00 PM"] },
+      { day: "Thursday", slots: ["11:00 AM", "1:00 PM"] },
+    ],
+    patientsHandled: ["p4"], // Priya Sharma (Knee pain follow-up)
+  },
+  {
+    id: "d5",
+    name: "Dr. Sameer Iqbal",
+    specialization: "General Physician",
+    photo: "https://i.pravatar.cc/80?img=49",
+    experience: "11 years",
+    hospital: "Lung & Chest Institute",
+    consultationTypes: ["Video Consultation", "In-person Consultation"],
+    fee: { video: 450, inperson: 650 },
+    availability: [
+      { day: "Tuesday", slots: ["10:00 AM", "12:00 PM"] },
+      { day: "Friday", slots: ["3:00 PM", "5:00 PM"] },
+    ],
+    patientsHandled: ["p6"], // Meera Patel (Health check-up)
+  },
+];
