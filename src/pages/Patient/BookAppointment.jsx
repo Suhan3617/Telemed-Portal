@@ -28,11 +28,11 @@ const BookAppointment = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-blue-50">
+    <div className="flex min-h-screen bg-blue-100">
       <div className="flex-1 flex flex-col">
 
         <main className="p-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+          <h2 className="text-3xl font-bold text-gray-800 mb-6">
             Book Appointment
           </h2>
           <div className="grid lg:grid-cols-2 gap-6">
@@ -62,7 +62,7 @@ const BookAppointment = () => {
                         className="w-12 h-12 rounded-full"
                       />
                       <div>
-                        <p className="font-semibold">{doc.name}</p>
+                        <p className="font-semibold text-2xl">{doc.name}</p>
                         <p className="text-sm">{doc.specialization}</p>
                         <p className="text-xs">{doc.experience}</p>
                         <p className="text-xs">{doc.hospital}</p>
@@ -78,12 +78,12 @@ const BookAppointment = () => {
               onSubmit={handleSubmit}
               className="bg-white p-6 rounded-xl shadow space-y-4"
             >
-              <h3 className="text-lg font-semibold">Select Appointment</h3>
+              <h3 className="text-2xl font-semibold">Select Appointment</h3>
 
               {/* Step 1: Consultation Type */}
               {selectedDoctor && (
                 <div>
-                  <p className="font-medium mb-2">Consultation Type</p>
+                  <p className="text-lg font-medium mb-2">Consultation Type</p>
                   <div className="flex gap-3 flex-wrap">
                     {selectedDoctor.consultationTypes.map((type, idx) => (
                       <button
@@ -114,7 +114,7 @@ const BookAppointment = () => {
               {/* Step 2: Day Selection */}
               {consultationType && (
                 <div>
-                  <p className="font-medium mb-2">Available Days</p>
+                  <p className="text-lg font-medium mb-2">Available Days</p>
                   <div className="flex gap-3 flex-wrap">
                     {selectedDoctor.availability.map((dayObj, idx) => (
                       <button
@@ -140,7 +140,7 @@ const BookAppointment = () => {
               {/* Step 3: Slot Selection */}
               {selectedDay && (
                 <div>
-                  <p className="font-medium mb-2">Available Slots</p>
+                  <p className="text-lg font-medium mb-2">Available Slots</p>
                   <div className="grid grid-cols-2 gap-3">
                     {selectedDoctor.availability
                       .find((d) => d.day === selectedDay)
