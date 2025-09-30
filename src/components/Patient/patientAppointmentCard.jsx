@@ -35,7 +35,7 @@ const PatientAppointmentCard = ({ appt }) => {
             <Video size={16} /> Join Call
           </a>
         ) : (
-          <button className="w-full bg-red-500 text-white rounded-lg px-4 py-2 hover:bg-red-600">
+          <button className="w-full bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600">
             Details
           </button>
         )}
