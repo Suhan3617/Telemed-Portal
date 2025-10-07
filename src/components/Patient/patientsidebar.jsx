@@ -5,6 +5,7 @@ const items = [
   { label: "Dashboard", icon: <LayoutDashboard size={18}/>, path:"/" },
   { label: "Book Appointment", icon: <BookUser size={18} />, path:"/patient/bookappointment" },
   { label: "My Appointments", icon: <CalendarDays size={18} />,path:"/patient/appointments" },
+  { label: "Doctors", icon: <CalendarDays size={18} />,path:"/patient/doctors" },
   { label: "Messages", icon: <MessageSquare size={18} />,path:"/patient/messages" },
   { label: "Medical Records", icon: <ClipboardList size={18} />,path:"/patient/medicalrecords" },
   { label: "Profile", icon: <User size={18} /> , path:"/patient/profile" },

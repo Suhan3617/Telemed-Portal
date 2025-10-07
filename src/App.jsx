@@ -14,7 +14,7 @@ import PatientMedicalRecordspage from "./pages/Patient/PatientMedicalRecordspage
 import PatientProfilepage from "./pages/Patient/PatientProfilepage.jsx";
 import PatientsAppointmentspage from "./pages/Patient/PatientsAppointmentspage.jsx";
 import PatientsMessagespage from "./pages/Patient/PatientsMessagespage.jsx";
-
+import Patientdoctor from "./pages/Patient/patientdoctor.jsx";
 
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard.jsx";
 import Doctormessages from "./pages/Doctor/doctormessages.jsx";
@@ -29,7 +29,7 @@ import Doctorpatientprofile from "./pages/Doctor/doctorpatientprofile.jsx";
 const Layout = ({ children }) => {
   const location = useLocation();
 
-  const hidenavbarroutes = ["/signup" , "/login" , "/patientdashboard", "/patient/bookappointment", "/patient/appointments", "/patient/messages" , "/patient/medicalrecords" , "/patient/profile" ,"/doctor/overview" , "/doctor/messages" , "/doctor/patients" , "/doctor/appointments" , "/doctor/records" , "/doctor/settings" , "/doctor/prescription" , "/doctor/patients/:patientId" , "/doctor/consultation" ];
+  const hidenavbarroutes = ["/signup" , "/login" , "/patientdashboard", "/patient/bookappointment", "/patient/appointments", "/patient/messages" , "/patient/medicalrecords" , "/patient/profile" ,"/doctor/overview" , "/doctor/messages" , "/doctor/patients" , "/doctor/appointments" , "/doctor/records" , "/doctor/settings" , "/doctor/prescription" , "/doctor/patients/:patientId" , "/doctor/consultation" , "/patient/doctors"];
 
 
 
@@ -56,6 +56,7 @@ function App() {
             <Route path="/patientdashboard" element={<PatientDashboard />} />
             <Route path="/patient/bookappointment" element={<PatientBookAppointment />} />
             <Route path="/patient/appointments" element={<PatientsAppointmentspage />} />
+            <Route path="/patient/doctors" element={<Patientdoctor />} />
             <Route path="/patient/messages" element={<PatientsMessagespage />} />
             <Route path="/patient/medicalrecords" element={<PatientMedicalRecordspage />} />
             <Route path="/patient/profile" element={<PatientProfilepage />} />
