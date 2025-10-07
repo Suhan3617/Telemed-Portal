@@ -1,19 +1,20 @@
 import React from 'react'
 
-const appointmentinfo = ({appointment}) => {
+const AppointmentInfo = ({ appointment }) => {
+  if (!appointment) {
+    return <p className="text-red-500">No appointment data found.</p>;
+  }
+
   return (
     <div className="space-y-3">
       <p>
         <span className="font-semibold text-gray-700">Date:</span> {appointment.date}
       </p>
       <p>
-        <span className="font-semibold text-gray-700">Time:</span> {appointment.slot}
+        <span className="font-semibold text-gray-700">Time:</span> {appointment.time}
       </p>
       <p>
-        <span className="font-semibold text-gray-700">Consultation Type:</span> {appointment.mode}
-      </p>
-      <p>
-        <span className="font-semibold text-gray-700">Fees:</span> ₹{appointment.fee}
+        <span className="font-semibold text-gray-700">Consultation Type:</span> {appointment.type}
       </p>
       <p>
         <span className="font-semibold text-gray-700">Status:</span>{" "}
@@ -21,7 +22,7 @@ const appointmentinfo = ({appointment}) => {
           className={`px-2 py-1 rounded text-white ${
             appointment.status === "Completed"
               ? "bg-green-500"
-              : appointment.status === "Upcoming"
+              : appointment.status === "Scheduled"
               ? "bg-blue-500"
               : "bg-red-500"
           }`}
@@ -37,4 +38,4 @@ const appointmentinfo = ({appointment}) => {
   )
 }
 
-export default appointmentinfo
+export default AppointmentInfo
