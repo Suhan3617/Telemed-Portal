@@ -1,6 +1,6 @@
 import React from "react";
 import { appointments, doctors } from "../../data/patient/mockdata";
-
+import { Link } from "react-router-dom";
 const PatientAppointments = () => {
   const getDoctor = (id) => doctors.find((d) => d.id === id);
 
@@ -39,7 +39,8 @@ const PatientAppointments = () => {
               {/* Appointment Details */}
               <div className="bg-blue-50 rounded-lg p-3 shadow-inner">
                 <p className="text-gray-700 font-medium">
-                  {appt.date} <span className="text-blue-600">•</span> {appt.time}
+                  {appt.date} <span className="text-blue-600">•</span>{" "}
+                  {appt.time}
                 </p>
                 <p className="text-sm text-gray-500 mt-1">
                   {appt.type} <span className="text-blue-600">•</span>{" "}
@@ -48,9 +49,13 @@ const PatientAppointments = () => {
               </div>
 
               {/* Button */}
-              <button className="self-start mt-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
+
+              <Link
+                to="/patient/appointmentdetails"
+                className="self-start mt-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
                 View Details
-              </button>
+              </Link>
             </div>
           );
         })}

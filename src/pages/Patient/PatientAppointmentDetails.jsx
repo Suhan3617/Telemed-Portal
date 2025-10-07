@@ -25,6 +25,11 @@ const PatientAppointmentDetails = () => {
   const appointment = appointments.find((a)=>a.id===id);
   const doctor = doctors.find((d)=>d.id===appointment?.doctorId)
 
+  const handleConfirmCancel = () => {
+    alert("Appointment Cancelled");
+    setshowCancel(false);
+  };
+
   const handlesavechanges = (updated) =>{
     alert(`Updated Date: ${updated.date}, Slot:${updated.slot}`)
     setshowedit(false);

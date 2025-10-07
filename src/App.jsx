@@ -15,6 +15,7 @@ import PatientProfilepage from "./pages/Patient/PatientProfilepage.jsx";
 import PatientsAppointmentspage from "./pages/Patient/PatientsAppointmentspage.jsx";
 import PatientsMessagespage from "./pages/Patient/PatientsMessagespage.jsx";
 import Patientdoctor from "./pages/Patient/patientdoctor.jsx";
+import PatientAppointmentDetails from "./pages/Patient/PatientAppointmentDetails.jsx";
 
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard.jsx";
 import Doctormessages from "./pages/Doctor/doctormessages.jsx";
@@ -25,13 +26,30 @@ import Doctorsettings from "./pages/Doctor/doctorsettings.jsx";
 import Doctorprescription from "./pages/Doctor/doctorwriteprescription.jsx";
 import Doctorpatientprofile from "./pages/Doctor/doctorpatientprofile.jsx";
 
-
 const Layout = ({ children }) => {
   const location = useLocation();
 
-  const hidenavbarroutes = ["/signup" , "/login" , "/patientdashboard", "/patient/bookappointment", "/patient/appointments", "/patient/messages" , "/patient/medicalrecords" , "/patient/profile" ,"/doctor/overview" , "/doctor/messages" , "/doctor/patients" , "/doctor/appointments" , "/doctor/records" , "/doctor/settings" , "/doctor/prescription" , "/doctor/patients/:patientId" , "/doctor/consultation" , "/patient/doctors"];
-
-
+  const hidenavbarroutes = [
+    "/signup",
+    "/login",
+    "/patientdashboard",
+    "/patient/bookappointment",
+    "/patient/appointments",
+    "/patient/messages",
+    "/patient/medicalrecords",
+    "/patient/profile",
+    "/doctor/overview",
+    "/doctor/messages",
+    "/doctor/patients",
+    "/doctor/appointments",
+    "/doctor/records",
+    "/doctor/settings",
+    "/doctor/prescription",
+    "/doctor/patients/:patientId",
+    "/doctor/consultation",
+    "/patient/doctors",
+    "/patient/appointmentdetails",
+  ];
 
   const shouldhidenavbar =
     hidenavbarroutes.includes(location.pathname) ||
@@ -54,20 +72,45 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/patientdashboard" element={<PatientDashboard />} />
-            <Route path="/patient/bookappointment" element={<PatientBookAppointment />} />
-            <Route path="/patient/appointments" element={<PatientsAppointmentspage />} />
+            <Route
+              path="/patient/bookappointment"
+              element={<PatientBookAppointment />}
+            />
+            <Route
+              path="/patient/appointments"
+              element={<PatientsAppointmentspage />}
+            />
+            <Route
+              path="/patient/appointmentdetails"
+              element={<PatientAppointmentDetails />}
+            />
             <Route path="/patient/doctors" element={<Patientdoctor />} />
-            <Route path="/patient/messages" element={<PatientsMessagespage />} />
-            <Route path="/patient/medicalrecords" element={<PatientMedicalRecordspage />} />
+            <Route
+              path="/patient/messages"
+              element={<PatientsMessagespage />}
+            />
+            <Route
+              path="/patient/medicalrecords"
+              element={<PatientMedicalRecordspage />}
+            />
             <Route path="/patient/profile" element={<PatientProfilepage />} />
             <Route path="/doctor/overview" element={<DoctorDashboard />} />
             <Route path="/doctor/messages" element={<Doctormessages />} />
             <Route path="/doctor/patients" element={<Doctorpatients />} />
-            <Route path="/doctor/appointments" element={<Doctorappointments />} />
+            <Route
+              path="/doctor/appointments"
+              element={<Doctorappointments />}
+            />
             <Route path="/doctor/records" element={<Doctorreports />} />
             <Route path="/doctor/settings" element={<Doctorsettings />} />
-            <Route path="/doctor/prescription" element={<Doctorprescription />} />
-            <Route path="/doctor/patients/:patientId" element={<Doctorpatientprofile />} />
+            <Route
+              path="/doctor/prescription"
+              element={<Doctorprescription />}
+            />
+            <Route
+              path="/doctor/patients/:patientId"
+              element={<Doctorpatientprofile />}
+            />
           </Routes>
         </Layout>
       </Router>
