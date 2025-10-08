@@ -1,7 +1,7 @@
 import React from 'react'
 import Recordfilter from './recordfilter';
 import Recordcasrd from './recordcasrd';
-
+import { useState } from 'react';
 const recordlist = ({records}) => {
   const [filter, setFilter] = useState("All");
 
