@@ -5,8 +5,11 @@ import Pageheader from '../../components/Common/pageheader'
 
 const PatientMedicalRecordspage = () => {
   return (
-    <div className="p-6">
-      <Pageheader title="My Medical Reports" subtitle="View or download your past medical files" />
+    <div className="p-6 min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      <Pageheader 
+        title="My Medical Reports" 
+        subtitle="Access and download your past medical files easily" 
+      />
       <Recordlist records={medicalRecords} />
     </div>
   )
