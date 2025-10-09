@@ -1,5 +1,6 @@
 import React from "react";
 import { Video } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const PatientAppointmentCard = ({ appt }) => {
   const { date, time, doctor, specialization, type, status } = appt;
@@ -35,9 +36,10 @@ const PatientAppointmentCard = ({ appt }) => {
             <Video size={16} /> Join Call
           </a>
         ) : (
-          <button className="w-full bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600">
+          <Link to={`/patient/appointmentdetails/${appt.id}`} 
+          className="w-full bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-blue-600">
             Details
-          </button>
+          </Link>
         )}
       </div>
     </div>
