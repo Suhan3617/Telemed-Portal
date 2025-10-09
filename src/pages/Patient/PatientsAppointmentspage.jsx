@@ -1,14 +1,18 @@
 import React from "react";
 import { appointments, doctors } from "../../data/patient/mockdata";
 import { Link } from "react-router-dom";
+import Pageheader from "../../components/Common/pageheader";
+
 const PatientAppointments = () => {
   const getDoctor = (id) => doctors.find((d) => d.id === id);
 
   return (
     <div className="p-6 min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100">
-      <h1 className="text-3xl font-extrabold text-blue-700 mb-10 text-center">
-        My Appointments
-      </h1>
+      <Pageheader
+        title="Appointments"
+        subtitle="View and manage your booked consultation"
+        breadcrumb={["Dashboard", "Appointments"]}
+      />
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {appointments.map((appt) => {
