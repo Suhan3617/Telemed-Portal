@@ -1,73 +1,77 @@
-import React from 'react'
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { appointments } from '../../data/patient/mockdata'
-import { doctors } from '../../data/patient/mockdata'
-
-
-import Appointmentheader from '../../components/Patient/appointmentdetails/appointmentheader'
-import Doctorinfocard from '../../components/Patient/appointmentdetails/doctorinfocard'
-import Appointmentinfo from '../../components/Patient/appointmentdetails/appointmentinfo'
-import Appointmentactions from '../../components/Patient/appointmentdetails/appointmentactions'
-import Cancelappointmentmodal from '../../components/Patient/appointmentdetails/cancelappointmentmodal'
-import Editappointmentmodal from '../../components/Patient/appointmentdetails/editappointmentmodal'
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { appointments, doctors } from "../../data/patient/mockdata";
+import Pageheader from "../../components/Common/pageheader";
+import AppointmentHeader from "../../components/Patient/appointmentdetails/AppointmentHeader";
+import DoctorInfoCard from "../../components/Patient/appointmentdetails/DoctorInfoCard";
+import AppointmentInfo from "../../components/Patient/appointmentdetails/AppointmentInfo";
+import AppointmentActions from "../../components/Patient/appointmentdetails/AppointmentActions";
+import CancelAppointmentModal from "../../components/Patient/appointmentdetails/CancelAppointmentModal";
+import EditAppointmentModal from "../../components/Patient/appointmentdetails/EditAppointmentModal";
 
 const PatientAppointmentDetails = () => {
-
   const { id } = useParams();
-  const [showCancel, setshowCancel] = useState(false)
-  const [showedit, setshowedit] = useState(false)
+  const [showCancel, setShowCancel] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
-  const handlecancel = ()=> setshowCancel(true);
-  const handleedit = () => setshowedit(true);
-  const handlejoin = () => alert("Joining Meeting...");
+  const appointment = appointments.find((a) => a.id === id);
+  const doctor = doctors.find((d) => d.id === appointment?.doctorId);
 
-  const appointment = appointments.find((a)=>a.id===id);
-  const doctor = doctors.find((d)=>d.id===appointment?.doctorId)
+  const handleCancel = () => setShowCancel(true);
+  const handleEdit = () => setShowEdit(true);
+  const handleJoin = () => alert("Joining meeting...");
 
   const handleConfirmCancel = () => {
-    alert("Appointment Cancelled");
-    setshowCancel(false);
+    alert("Appointment cancelled successfully.");
+    setShowCancel(false);
   };
 
-  const handlesavechanges = (updated) =>{
-    alert(`Updated Date: ${updated.date}, Slot:${updated.slot}`)
-    setshowedit(false);
-  }
+  const handleSaveChanges = (updated) => {
+    alert(`Updated Date: ${updated.date}, Slot: ${updated.slot}`);
+    setShowEdit(false);
+  };
 
   return (
-    <div className="p-6">
-      <Appointmentheader />
+    <div className="min-h-screen bg-gray-50 p-6">
+      <Pageheader
+        title="Appointment Details"
+        subtitle="View and manage your booked consultation"
+        breadcrumb={["Dashboard", "Appointments", "Details"]}
+      />
 
-      <div className="bg-white shadow-lg rounded-xl p-6 max-w-2xl">
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">
-          Appointment Details
-        </h2>
+      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8 border border-blue-100">
+        <AppointmentHeader />
 
-        <Doctorinfocard doctor={doctor} />
-        <Appointmentinfo appointment={appointment} />
-        <Appointmentactions
-          onCancel={handlecancel}
-          onEdit={handleedit}
-          onJoin={handlejoin}
-        />
+        <DoctorInfoCard doctor={doctor} />
+
+        <div className="mt-6 border-t pt-4">
+          <AppointmentInfo appointment={appointment} />
+        </div>
+
+        <div className="mt-8 border-t pt-4">
+          <AppointmentActions
+            onCancel={handleCancel}
+            onEdit={handleEdit}
+            onJoin={handleJoin}
+          />
+        </div>
       </div>
 
       {/* Modals */}
-      <Cancelappointmentmodal
+      <CancelAppointmentModal
         show={showCancel}
-        onClose={() => setshowCancel(false)}
+        onClose={() => setShowCancel(false)}
         onConfirm={handleConfirmCancel}
       />
 
-      <Editappointmentmodal
-        show={showedit}
+      <EditAppointmentModal
+        show={showEdit}
         appointment={appointment}
-        onClose={() => setshowedit(false)}
-        onSave={handlesavechanges}
+        onClose={() => setShowEdit(false)}
+        onSave={handleSaveChanges}
       />
     </div>
-  )
-}
+  );
+};
 
-export default PatientAppointmentDetails
+export default PatientAppointmentDetails;
