@@ -1,55 +1,66 @@
-import React from 'react'
-import { useState } from 'react';
-const editappointmentmodal = ({ show, appointment, onClose, onSave }) => {
-  const [date, setdate] = useState(appointment.date);
-  const [slot, setslot] = useState(appointment.slot);
+import React, { useState } from 'react';
+import { CalendarDays, Clock, Save } from 'lucide-react';
 
-  if(!show) return null;
+const EditAppointmentModal = ({ show, appointment, onClose, onSave }) => {
+  const [date, setDate] = useState(appointment?.date || '');
+  const [slot, setSlot] = useState(appointment?.slot || '');
+
+  if (!show) return null;
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl p-6 w-[90%] max-w-md shadow-lg">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-          Reschedule Appointment
+    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 backdrop-blur-sm">
+      <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-xl border-t-4 border-blue-500 animate-fadeIn">
+        <h2 className="text-xl font-semibold text-gray-800 mb-5 flex items-center gap-2">
+          <CalendarDays className="text-blue-500 w-6 h-6" /> Reschedule Appointment
         </h2>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           <div>
-            <label className="block text-sm text-gray-600">Date</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1">
+              Select New Date
+            </label>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="border rounded-lg p-2 w-full"
+              className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-blue-400 outline-none"
             />
           </div>
+
           <div>
-            <label className="block text-sm text-gray-600">Time Slot</label>
-            <input
-              type="text"
-              value={slot}
-              onChange={(e) => setSlot(e.target.value)}
-              className="border rounded-lg p-2 w-full"
-            />
+            <label className="block text-sm font-medium text-gray-600 mb-1">
+              Time Slot
+            </label>
+            <div className="flex items-center border rounded-lg p-2 focus-within:ring-2 focus-within:ring-blue-400">
+              <Clock className="text-gray-400 w-5 h-5 mr-2" />
+              <input
+                type="text"
+                value={slot}
+                onChange={(e) => setSlot(e.target.value)}
+                placeholder="e.g., 10:30 AM"
+                className="w-full outline-none"
+              />
+            </div>
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 mt-5">
+        <div className="flex justify-end gap-3 mt-6">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg border hover:bg-gray-100"
+            className="px-4 py-2 rounded-lg border text-gray-600 hover:bg-gray-100 transition"
           >
             Cancel
           </button>
           <button
             onClick={() => onSave({ date, slot })}
-            className="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition shadow-md"
           >
-            Save Changes
+            <Save className="w-5 h-5" /> Save Changes
           </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default editappointmentmodal
+export default EditAppointmentModal;
