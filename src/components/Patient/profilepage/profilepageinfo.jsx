@@ -11,7 +11,7 @@ const Profilepageinfo = ({ patient }) => {
       className="relative bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
     >
       {/* Gradient Circle Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-blue-200 to-transparent rounded-2xl opacity-50 pointer-events-none" />
+      <div className="absolute inset-0 bg-white to-transparent rounded-2xl opacity-50 pointer-events-none" />
 
       {/* Profile Image */}
       <div className="relative z-10">
