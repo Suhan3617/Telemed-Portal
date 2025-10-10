@@ -28,27 +28,51 @@ export const doctors = [
     id: "d1",
     name: "Dr. Priya Sharma",
     specialization: "Cardiologist",
-    photo: "https://i.pravatar.cc/100?img=32",
+    photo: "https://i.pravatar.cc/80?img=45",
     experience: "12 years",
-    hospital: "Apollo Hospital, Delhi",
+    hospital: "City Skin Clinic",
+    consultationTypes: ["Video Consultation", "In-person Consultation"],
+    fee: { video: 500, inperson: 700 },
+    availability: [
+      { day: "Monday", slots: ["10:00 AM", "11:30 AM", "4:00 PM"] },
+      { day: "Wednesday", slots: ["2:00 PM", "3:30 PM"] },
+      { day: "Friday", slots: ["9:00 AM", "11:00 AM", "5:00 PM"] },
+    ],
+    patientsHandled: ["p1"], // John Doe (Skin rash & itching)
   },
   {
     id: "d2",
     name: "Dr. Arjun Mehta",
     specialization: "Dermatologist",
-    photo: "https://i.pravatar.cc/100?img=45",
-    experience: "8 years",
-    hospital: "Fortis Hospital, Mumbai",
+    photo: "https://i.pravatar.cc/80?img=46",
+    experience: "15 years",
+    hospital: "Metro Neuro Center",
+    consultationTypes: ["In-person Consultation", "Video Consultation"],
+    fee: { video: 600, inperson: 900 },
+    availability: [
+      { day: "Tuesday", slots: ["10:00 AM", "1:00 PM"] },
+      { day: "Thursday", slots: ["3:00 PM", "5:30 PM"] },
+    ],
+    patientsHandled: ["p2"],
   },
   {
     id: "d3",
     name: "Dr. Neha Kapoor",
     specialization: "Neurologist",
-    photo: "https://i.pravatar.cc/100?img=56",
-    experience: "10 years",
-    hospital: "AIIMS, Delhi",
+    photo: "https://i.pravatar.cc/80?img=47",
+    experience: "8 years",
+    hospital: "HealthCare Clinic",
+    consultationTypes: ["Video Consultation", "In-person Consultation"],
+    fee: { video: 400, inperson: 600 },
+    availability: [
+      { day: "Monday", slots: ["9:00 AM", "11:00 AM", "6:00 PM"] },
+      { day: "Wednesday", slots: ["10:30 AM", "1:00 PM"] },
+      { day: "Saturday", slots: ["2:00 PM", "4:00 PM"] },
+    ],
+    patientsHandled: ["p3", "p5"], 
   },
 ];
+
 
 // ===================== APPOINTMENTS =====================
 export const appointments = [

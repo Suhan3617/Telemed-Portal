@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { doctors } from "../../data/doctor/mockdata";
+import { doctors } from "../../data/patient/mockdata";
 import Pageheader from "../../components/Common/pageheader";
 import DoctorList from "../../components/Patient/BookAppointment/doctorlist";
 import AppointmentForm from "../../components/Patient/BookAppointment/appointmentform";
