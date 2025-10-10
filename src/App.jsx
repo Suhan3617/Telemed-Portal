@@ -45,11 +45,11 @@ const Layout = ({ children }) => {
     "/doctor/records",
     "/doctor/settings",
     "/doctor/prescription",
-    "/patient/doctors",
+    "/patient/doctors"
   ];
 
   // Add special handling for dynamic routes
-  const dynamicRoutes = ["/doctor/patients/", "/patient/appointmentdetails/"];
+  const dynamicRoutes = ["/doctor/patients/", "/patient/appointmentdetails/" , "/book-appointment/"];
 
   const shouldhidenavbar =
     hidenavbarroutes.includes(location.pathname) ||
