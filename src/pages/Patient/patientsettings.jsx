@@ -1,18 +1,21 @@
-import React from 'react'
-import Pageheader from '../../components/Common/pageheader'
-import ThemeSettings from '../../components/Patient/settings/themesettings'
-import AccountSettings from '../../components/Patient/settings/accountsettings'
-import NotificationSettings from '../../components/Patient/settings/notificationsettings'
+import React from "react";
+import Pageheader from "../../components/Common/pageheader";
+import ThemeSettings from "../../components/Patient/settings/themesettings";
+import AccountSettings from "../../components/Patient/settings/accountsettings";
+import NotificationSettings from "../../components/Patient/settings/notificationsettings";
 
-const patientsettings = () => {
+const PatientSettings = () => {
   return (
-    <div className="p-6 space-y-6">
+    <div className="min-h-screen bg-blue-50 px-6 py-8">
       <Pageheader title="Settings" subtitle="Customize your experience" />
-      <ThemeSettings />
-      <NotificationSettings />
-      <AccountSettings />
-    </div>
-  )
-}
 
-export default patientsettings
+      <div className="grid lg:grid-cols-2 gap-6 mt-6">
+        <ThemeSettings />
+        <NotificationSettings />
+        <AccountSettings />
+      </div>
+    </div>
+  );
+};
+
+export default PatientSettings;
