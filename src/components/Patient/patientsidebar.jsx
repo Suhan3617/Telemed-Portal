@@ -9,6 +9,7 @@ const items = [
   { label: "Messages", icon: <MessageSquare size={18} />,path:"/patient/messages" },
   { label: "Medical Records", icon: <ClipboardList size={18} />,path:"/patient/medicalrecords" },
   { label: "Profile", icon: <User size={18} /> , path:"/patient/profile" },
+  { label: "Settings", icon: <User size={18} /> , path:"/patient/settings" },
 ];
 
 const PatientSidebar = () => {

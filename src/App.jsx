@@ -8,6 +8,7 @@ import "./App.css";
 import Navbar from "./components/navbar.jsx";
 import Login from "./pages/login.jsx";
 import Signup from "./pages/signup.jsx";
+
 import PatientDashboard from "./pages/Patient/PatientDashboard.jsx";
 import PatientBookAppointment from "./pages/Patient/BookAppointment.jsx";
 import PatientMedicalRecordspage from "./pages/Patient/PatientMedicalRecordspage.jsx";
@@ -16,6 +17,7 @@ import PatientsAppointmentspage from "./pages/Patient/PatientsAppointmentspage.j
 import PatientsMessagespage from "./pages/Patient/PatientsMessagespage.jsx";
 import Patientdoctor from "./pages/Patient/patientdoctor.jsx";
 import PatientAppointmentDetails from "./pages/Patient/PatientAppointmentDetails.jsx";
+import Patientsettings from "./pages/Patient/patientsettings.jsx";
 
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard.jsx";
 import Doctormessages from "./pages/Doctor/doctormessages.jsx";
@@ -45,7 +47,8 @@ const Layout = ({ children }) => {
     "/doctor/records",
     "/doctor/settings",
     "/doctor/prescription",
-    "/patient/doctors"
+    "/patient/doctors",
+    "/patient/settings"
   ];
 
   // Add special handling for dynamic routes
@@ -71,6 +74,8 @@ function App() {
           <Routes>
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+
+            {/* Patient Routing */}
             <Route path="/patientdashboard" element={<PatientDashboard />} />
             <Route
               path="/patient/bookappointment"
@@ -98,6 +103,9 @@ function App() {
               element={<PatientMedicalRecordspage />}
             />
             <Route path="/patient/profile" element={<PatientProfilepage />} />
+            <Route path="/patient/settings" element={<Patientsettings />} />
+
+            {/* Doctor routing */}
             <Route path="/doctor/overview" element={<DoctorDashboard />} />
             <Route path="/doctor/messages" element={<Doctormessages />} />
             <Route path="/doctor/patients" element={<Doctorpatients />} />
