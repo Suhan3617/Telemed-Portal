@@ -8,7 +8,7 @@ const PatientDoctor = () => {
   const navigate = useNavigate();
   const currentPatientId = "p3"; // assume logged-in patient
   const [filters, setFilters] = useState({
-    name:"",
+    name: "",
     specialization: "",
     experience: "",
     visited: "",
@@ -22,7 +22,7 @@ const PatientDoctor = () => {
       const expYears = parseInt(doc.experience);
       const hasVisited = doc.patientsHandled.includes(currentPatientId);
 
-       const nameMatch =
+      const nameMatch =
         !filters.name ||
         doc.name.toLowerCase().includes(filters.name.toLowerCase());
 
@@ -57,7 +57,7 @@ const PatientDoctor = () => {
         filters={filters}
         setFilters={setFilters}
         onClearFilters={() =>
-          setFilters({ specialization: "", experience: "", visited: "" })
+          setFilters({ name: "", specialization: "", experience: "", visited: "" })
         }
       />
 
@@ -72,37 +72,43 @@ const PatientDoctor = () => {
             return (
               <div
                 key={doc.id}
-                className="bg-white rounded-xl shadow-md p-4 hover:shadow-xl transition"
+                className="bg-white rounded-2xl shadow-md hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 border border-blue-100 overflow-hidden"
               >
-                <img
-                  src={doc.photo}
-                  alt={doc.name}
-                  className="w-20 h-20 rounded-full mx-auto border-2 border-blue-400"
-                />
-                <h2 className="mt-3 text-center font-bold text-gray-800 text-lg">
-                  {doc.name}
-                </h2>
-                <p className="text-sm text-center text-blue-600">
-                  {doc.specialization}
-                </p>
-                <p className="text-xs text-center text-gray-400">{doc.experience}</p>
-                <p className="text-xs text-center text-gray-400">{doc.hospital}</p>
-                {hasVisited && (
-                  <p className="text-xs text-green-600 text-center mt-1 font-medium">
-                    ✔ Visited Earlier
-                  </p>
-                )}
+                {/* Image with blue border gradient */}
+                <div className="p-4 bg-gradient-to-r from-blue-50 to-blue-100 flex justify-center">
+                  <img
+                    src={doc.photo}
+                    alt={doc.name}
+                    className="w-24 h-24 rounded-full border-4 border-blue-400 shadow-lg"
+                  />
+                </div>
 
-                <div className="mt-4 flex flex-col gap-2">
+                {/* Doctor Info */}
+                <div className="p-4 text-center">
+                  <h2 className="text-xl font-bold text-gray-800">{doc.name}</h2>
+                  <p className="text-sm text-blue-600 mt-1">{doc.specialization}</p>
+                  <p className="text-xs text-gray-400 mt-1">{doc.experience}</p>
+                  <p className="text-xs text-gray-400">{doc.hospital}</p>
+
+                  {/* Visited Badge */}
+                  {hasVisited && (
+                    <span className="inline-block mt-2 px-3 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
+                      ✔ Visited Earlier
+                    </span>
+                  )}
+                </div>
+
+                {/* Action Buttons */}
+                <div className="p-4 flex flex-col gap-3">
                   <button
                     onClick={() => navigate(`/book-appointment/${doc.id}`)}
-                    className="bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+                    className="bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 rounded-xl shadow-md hover:from-blue-600 hover:to-blue-700 transition-all duration-200 font-semibold"
                   >
                     Book Appointment
                   </button>
                   <button
                     onClick={() => navigate(`/doctors/${doc.id}`)}
-                    className="border border-blue-500 text-blue-600 py-2 rounded-lg hover:bg-blue-50 transition"
+                    className="border border-blue-500 text-blue-600 py-2 rounded-xl hover:bg-blue-50 transition-all duration-200 font-medium"
                   >
                     More Details
                   </button>
