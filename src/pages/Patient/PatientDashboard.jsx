@@ -6,7 +6,8 @@ import Patientupcomingappts from "../../components/Patient/patientupcomingappts"
 import PatientMedicalRecordCard from "../../components/Patient/patientrecentrecords";
 import PatientAppointmentCard from "../../components/Patient/patientAppointmentCard";
 import Button from "../../components/Common/Button";
-import { appointments ,medicalRecords } from "../../data/patient/mockdata";
+import { appointments, medicalRecords } from "../../data/patient/mockdata";
+import { Link } from "react-router-dom";
 
 export default function PatientDashboard() {
   const patientId = "p1";
@@ -24,7 +25,12 @@ export default function PatientDashboard() {
               <h2 className="text-lg font-semibold text-gray-800">
                 Upcoming Appointments
               </h2>
-              <Button>View All</Button>
+              <Link
+                to="/patient/appointments"
+                className="inline-flex items-center justify-center px-4 py-2 rounded-lg text-white bg-blue-500 hover:bg-blue-600 transition"
+              >
+                View All
+              </Link>
             </div>
             <div className="grid lg:grid-cols-2 gap-6">
               {appointments.slice(0, 2).map((a) => (
@@ -38,14 +44,17 @@ export default function PatientDashboard() {
             </div>
           </section>
 
-           <section className="bg-blue-100 p-6 rounded-xl shadow">
+          <section className="bg-blue-100 p-6 rounded-xl shadow">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-lg font-semibold text-gray-800">
                 Medical Records
               </h2>
-              <Button>
+              <Link
+                to="/patient/medicalrecords"
+                className="inline-flex items-center justify-center px-4 py-2 rounded-lg text-white bg-blue-500 hover:bg-blue-600 transition"
+              >
                 View All
-              </Button>
+              </Link>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {medicalRecords.slice(0, 3).map((r) => (
