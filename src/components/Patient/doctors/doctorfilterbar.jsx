@@ -69,9 +69,6 @@ const PatientDoctorFilterBar = ({
               </option>
             ))}
           </select>
-          <span className="absolute right-3 top-2.5 text-blue-500 pointer-events-none">
-            ▼
-          </span>
         </div>
       </div>
 
@@ -97,9 +94,6 @@ const PatientDoctorFilterBar = ({
             <option value="6-10">6–10 Years</option>
             <option value="10+">10+ Years</option>
           </select>
-          <span className="absolute right-3 top-2.5 text-blue-500 pointer-events-none">
-            ▼
-          </span>
         </div>
       </div>
 
@@ -124,9 +118,6 @@ const PatientDoctorFilterBar = ({
             <option value="yes">Yes</option>
             <option value="no">No</option>
           </select>
-          <span className="absolute right-3 top-2.5 text-blue-500 pointer-events-none">
-            ▼
-          </span>
         </div>
       </div>
 
