@@ -3,7 +3,7 @@ import { Info, Calendar } from "lucide-react";
 
 const DoctorCard = ({ doctor, onBook, onViewDetails }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-md p-5 hover:shadow-2xl transition transform hover:-translate-y-1 border-t-4 border-blue-500">
+    <div className="bg-white rounded-2xl shadow-md p-5 hover:shadow-2xl transition transform hover:-translate-y-1 ">
       <img
         src={doctor.photo}
         alt={doctor.name}
