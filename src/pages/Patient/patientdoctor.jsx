@@ -1,39 +1,56 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { doctors } from "../../data/patient/mockdata";
 import Pageheader from "../../components/Common/pageheader";
-import DoctorCard from "../../components/Patient/doctors/doctorcard";
-import DoctorDetailsModal from "../../components/Patient/doctors/doctordetailsmodal";
 
 const PatientDoctor = () => {
   const navigate = useNavigate();
-  const [selectedDoctor, setSelectedDoctor] = useState(null);
 
   return (
     <div className="p-6 bg-blue-50 min-h-screen">
       <Pageheader
         title="Our Doctors"
-        subtitle="Book appointments with trusted specialists"
+        subtitle="Book appointments with top specialists"
         breadcrumb={["Home", "Doctors"]}
       />
 
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 gap-6 mt-4">
+      <div className="grid md:grid-cols-3 gap-6">
         {doctors.map((doc) => (
-          <DoctorCard
+          <div
             key={doc.id}
-            doctor={doc}
-            onBook={() => navigate(`/book-appointment/${doc.id}`)}
-            onViewDetails={() => setSelectedDoctor(doc)}
-          />
+            className="bg-white rounded-xl shadow-md p-4 hover:shadow-xl transition"
+          >
+            <img
+              src={doc.photo}
+              alt={doc.name}
+              className="w-20 h-20 rounded-full mx-auto border-2 border-blue-400"
+            />
+            <h2 className="mt-3 text-center font-bold text-gray-800 text-lg">
+              {doc.name}
+            </h2>
+            <p className="text-sm text-center text-blue-600">
+              {doc.specialization}
+            </p>
+            <p className="text-xs text-center text-gray-400">{doc.experience}</p>
+            <p className="text-xs text-center text-gray-400">{doc.hospital}</p>
+
+            <div className="mt-4 flex flex-col gap-2">
+              <button
+                onClick={() => navigate(`/book-appointment/${doc.id}`)}
+                className="bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+              >
+                Book Appointment
+              </button>
+              <button
+                onClick={() => navigate(`/patient/doctors/${doc.id}`)}
+                className="border border-blue-500 text-blue-600 py-2 rounded-lg hover:bg-blue-50 transition"
+              >
+                More Details
+              </button>
+            </div>
+          </div>
         ))}
       </div>
-
-      {selectedDoctor && (
-        <DoctorDetailsModal
-          doctor={selectedDoctor}
-          onClose={() => setSelectedDoctor(null)}
-        />
-      )}
     </div>
   );
 };

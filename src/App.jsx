@@ -18,6 +18,7 @@ import PatientsMessagespage from "./pages/Patient/PatientsMessagespage.jsx";
 import Patientdoctor from "./pages/Patient/patientdoctor.jsx";
 import PatientAppointmentDetails from "./pages/Patient/PatientAppointmentDetails.jsx";
 import Patientsettings from "./pages/Patient/patientsettings.jsx";
+import Patientdoctordetails from "./pages/Patient/PatientDoctorDetails.jsx";
 
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard.jsx";
 import Doctormessages from "./pages/Doctor/doctormessages.jsx";
@@ -48,11 +49,16 @@ const Layout = ({ children }) => {
     "/doctor/settings",
     "/doctor/prescription",
     "/patient/doctors",
-    "/patient/settings"
+    "/patient/settings",
   ];
 
   // Add special handling for dynamic routes
-  const dynamicRoutes = ["/doctor/patients/", "/patient/appointmentdetails/" , "/book-appointment/"];
+  const dynamicRoutes = [
+    "/doctor/patients/",
+    "/patient/appointmentdetails/",
+    "/book-appointment/",
+    "/patient/doctors/",
+  ];
 
   const shouldhidenavbar =
     hidenavbarroutes.includes(location.pathname) ||
@@ -90,6 +96,10 @@ function App() {
               element={<PatientAppointmentDetails />}
             />
             <Route path="/patient/doctors" element={<Patientdoctor />} />
+            <Route
+              path="/patient/doctors/:id"
+              element={<Patientdoctordetails />}
+            />
             <Route
               path="/book-appointment/:doctorId"
               element={<PatientBookAppointment />}

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { doctors } from "../../data/patient/mockdata";
 import Pageheader from "../../components/Common/pageheader";
-import DoctorInfoSection from "../../components/Patient/doctors/DoctorInfoSection";
+import DoctorInfoSection from "../../components/Patient/doctors/doctorinfosec";
 import ReviewList from "../../components/Patient/doctors/reviewlist";
 import AddReviewForm from "../../components/Patient/doctors/addreviewform";
 
-const DoctorDetails = () => {
+const Patientdoctordetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const doctor = doctors.find((doc) => doc.id === id);
@@ -64,4 +64,4 @@ const DoctorDetails = () => {
   );
 };
 
-export default DoctorDetails;
+export default Patientdoctordetails;
