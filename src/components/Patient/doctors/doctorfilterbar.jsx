@@ -1,5 +1,11 @@
 import React from "react";
-import { Stethoscope, Briefcase, Clock, RotateCcw } from "lucide-react";
+import {
+  Stethoscope,
+  Briefcase,
+  Clock,
+  RotateCcw,
+  Search,
+} from "lucide-react";
 
 const PatientDoctorFilterBar = ({
   specializations,
@@ -10,10 +16,35 @@ const PatientDoctorFilterBar = ({
   const dropdownClass =
     "border border-blue-300 bg-white text-gray-700 rounded-xl px-4 py-2 shadow-sm w-full transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 cursor-pointer";
 
-  const labelClass = "flex items-center gap-2 text-sm font-semibold text-blue-700 mb-1";
+  const labelClass =
+    "flex items-center gap-2 text-sm font-semibold text-blue-700 mb-1";
+
+  const inputClass =
+    "border border-blue-300 bg-white text-gray-700 rounded-xl px-10 py-2 shadow-sm w-full transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-400 outline-none";
 
   return (
     <div className="bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-2xl shadow-lg p-6 mb-6 flex flex-wrap gap-6 justify-between items-end transition-all duration-300">
+      {/* Name Filter */}
+      <div className="flex flex-col w-64 relative">
+        <label className={labelClass}>
+          <Search size={18} className="text-blue-500" />
+          Doctor Name
+        </label>
+        <input
+          type="text"
+          placeholder="Search by name..."
+          value={filters.name}
+          onChange={(e) =>
+            setFilters((prev) => ({ ...prev, name: e.target.value }))
+          }
+          className={inputClass}
+        />
+        <Search
+          size={18}
+          className="absolute left-3 top-9 text-blue-500 pointer-events-none"
+        />
+      </div>
+
       {/* Specialization Filter */}
       <div className="flex flex-col w-56">
         <label className={labelClass}>
@@ -24,7 +55,10 @@ const PatientDoctorFilterBar = ({
           <select
             value={filters.specialization}
             onChange={(e) =>
-              setFilters((prev) => ({ ...prev, specialization: e.target.value }))
+              setFilters((prev) => ({
+                ...prev,
+                specialization: e.target.value,
+              }))
             }
             className={dropdownClass}
           >
@@ -35,6 +69,9 @@ const PatientDoctorFilterBar = ({
               </option>
             ))}
           </select>
+          <span className="absolute right-3 top-2.5 text-blue-500 pointer-events-none">
+            ▼
+          </span>
         </div>
       </div>
 
@@ -48,7 +85,10 @@ const PatientDoctorFilterBar = ({
           <select
             value={filters.experience}
             onChange={(e) =>
-              setFilters((prev) => ({ ...prev, experience: e.target.value }))
+              setFilters((prev) => ({
+                ...prev,
+                experience: e.target.value,
+              }))
             }
             className={dropdownClass}
           >
@@ -57,6 +97,9 @@ const PatientDoctorFilterBar = ({
             <option value="6-10">6–10 Years</option>
             <option value="10+">10+ Years</option>
           </select>
+          <span className="absolute right-3 top-2.5 text-blue-500 pointer-events-none">
+            ▼
+          </span>
         </div>
       </div>
 
@@ -70,7 +113,10 @@ const PatientDoctorFilterBar = ({
           <select
             value={filters.visited}
             onChange={(e) =>
-              setFilters((prev) => ({ ...prev, visited: e.target.value }))
+              setFilters((prev) => ({
+                ...prev,
+                visited: e.target.value,
+              }))
             }
             className={dropdownClass}
           >
@@ -78,10 +124,13 @@ const PatientDoctorFilterBar = ({
             <option value="yes">Yes</option>
             <option value="no">No</option>
           </select>
+          <span className="absolute right-3 top-2.5 text-blue-500 pointer-events-none">
+            ▼
+          </span>
         </div>
       </div>
 
-      {/* Clear Filters */}
+      {/* Clear Filters Button */}
       <button
         onClick={onClearFilters}
         className="flex items-center gap-2 bg-blue-500 text-white font-semibold text-sm px-5 py-2.5 rounded-xl 
