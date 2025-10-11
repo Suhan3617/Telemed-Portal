@@ -8,6 +8,7 @@ const PatientDoctor = () => {
   const navigate = useNavigate();
   const currentPatientId = "p3"; // assume logged-in patient
   const [filters, setFilters] = useState({
+    name:"",
     specialization: "",
     experience: "",
     visited: "",
@@ -20,6 +21,10 @@ const PatientDoctor = () => {
     return doctors.filter((doc) => {
       const expYears = parseInt(doc.experience);
       const hasVisited = doc.patientsHandled.includes(currentPatientId);
+
+       const nameMatch =
+        !filters.name ||
+        doc.name.toLowerCase().includes(filters.name.toLowerCase());
 
       const expMatch =
         !filters.experience ||
@@ -35,7 +40,7 @@ const PatientDoctor = () => {
         (filters.visited === "yes" && hasVisited) ||
         (filters.visited === "no" && !hasVisited);
 
-      return expMatch && specMatch && visitedMatch;
+      return nameMatch && expMatch && specMatch && visitedMatch;
     });
   }, [filters]);
 
