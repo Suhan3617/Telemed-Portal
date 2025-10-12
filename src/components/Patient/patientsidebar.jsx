@@ -3,7 +3,7 @@ import { LayoutDashboard, CalendarDays, ClipboardList, MessageSquare, User, LogO
 import { Link } from 'react-router-dom';
 const items = [
   { label: "Dashboard", icon: <LayoutDashboard size={18}/>, path:"/" },
-  { label: "Book Appointment", icon: <BookUser size={18} />, path:"/patient/bookappointment" },
+  // { label: "Book Appointment", icon: <BookUser size={18} />, path:"/patient/bookappointment" },
   { label: "My Appointments", icon: <CalendarDays size={18} />,path:"/patient/appointments" },
   { label: "Doctors", icon: <CalendarDays size={18} />,path:"/patient/doctors" },
   { label: "Messages", icon: <MessageSquare size={18} />,path:"/patient/messages" },

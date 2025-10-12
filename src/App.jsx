@@ -83,10 +83,10 @@ function App() {
 
             {/* Patient Routing */}
             <Route path="/patientdashboard" element={<PatientDashboard />} />
-            <Route
+            {/* <Route
               path="/patient/bookappointment"
               element={<PatientBookAppointment />}
-            />
+            /> */}
             <Route
               path="/patient/appointments"
               element={<PatientsAppointmentspage />}
