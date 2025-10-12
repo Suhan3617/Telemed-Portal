@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Recordfilter from "./recordfilter";
-import Recordcard from "./recordcard";
+import Recordcard from "./recordcasrd";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Recordlist = ({ records }) => {
