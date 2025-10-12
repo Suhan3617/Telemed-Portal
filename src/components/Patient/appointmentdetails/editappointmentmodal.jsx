@@ -8,8 +8,8 @@ const EditAppointmentModal = ({ show, appointment, onClose, onSave }) => {
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-xl border-t-4 border-blue-500 animate-fadeIn">
+    <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
+      <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-xl animate-fadeIn">
         <h2 className="text-xl font-semibold text-gray-800 mb-5 flex items-center gap-2">
           <CalendarDays className="text-blue-500 w-6 h-6" /> Reschedule Appointment
         </h2>

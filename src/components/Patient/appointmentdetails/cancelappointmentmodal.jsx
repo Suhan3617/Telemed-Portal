@@ -5,8 +5,8 @@ const CancelAppointmentModal = ({ show, onClose, onConfirm }) => {
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl p-6 w-[90%] max-w-sm shadow-xl border-t-4 border-red-500 animate-fadeIn">
+    <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50 backdrop-blur-sm">
+      <div className="bg-white rounded-2xl p-6 w-[90%] max-w-sm shadow-xl animate-fadeIn">
         <div className="flex items-center gap-3 mb-4">
           <AlertTriangle className="text-red-500 w-6 h-6" />
           <h2 className="text-xl font-semibold text-gray-800">
