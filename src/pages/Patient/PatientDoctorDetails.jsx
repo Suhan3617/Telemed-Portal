@@ -33,7 +33,7 @@ const Patientdoctordetails = () => {
       {/* Back button */}
       <button
         onClick={() => navigate(-1)}
-        className="mb-4 text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1"
+        className="mb-4 text-blue-600 hover:text-blue-800 hover:underline cursor-pointer font-medium flex items-center gap-1"
       >
         ← Back to Doctors
       </button>
