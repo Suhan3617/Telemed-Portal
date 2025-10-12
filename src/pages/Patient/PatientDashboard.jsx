@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { HeartPulse, CalendarDays, ClipboardList } from "lucide-react";
 import PatientHeader from "../../components/Patient/patientheader";
@@ -10,12 +10,39 @@ import { appointments, medicalRecords } from "../../data/patient/mockdata";
 
 export default function PatientDashboard() {
   const patientId = "p1";
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-br from-blue-400 via-blue-100 to-white overflow-hidden">
-      <PatientSidebar />
+    <div className="min-h-screen flex bg-gradient-to-br from-blue-400 via-blue-100 to-white overflow-hidden relative">
+      
+      {/* Desktop Sidebar */}
+      <PatientSidebar className="hidden md:block" />
+
+      {/* Mobile Sidebar Drawer only when open */}
+      {sidebarOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
+            onClick={() => setSidebarOpen(false)}
+          />
+
+          {/* Sidebar sliding in */}
+          <div className="fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 translate-x-0">
+            <PatientSidebar />
+          </div>
+        </>
+      )}
 
       <div className="flex-1 flex flex-col relative">
+        {/* Mobile Hamburger / Close Toggle Button */}
+        <button
+          className="md:hidden absolute top-4 left-4 p-2 bg-blue-500 text-white rounded-lg z-50 shadow-lg"
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+        >
+          {sidebarOpen ? "×" : "☰"}
+        </button>
+
         {/* Animated Background */}
         <div className="absolute top-10 right-10 w-96 h-96 bg-blue-300/40 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-200/40 rounded-full blur-3xl animate-pulse" />
