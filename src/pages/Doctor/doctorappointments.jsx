@@ -34,7 +34,7 @@ const DoctorAppointments = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-200 to-white p-6">
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white p-6">
       {/* Page Header */}
       <Pageheader
         title="Appointments Records"
@@ -44,14 +44,20 @@ const DoctorAppointments = () => {
 
       {/* Filters */}
       <FiltersBar>
-        <div className="flex flex-wrap gap-3 items-center w-full justify-center">
-          <SearchInput
-            value={q}
-            onChange={setq}
-            placeholder="Search patient..."
-          />
+        <div className="flex flex-wrap gap-4 items-center justify-center mt-4">
+          {/* Search */}
+          <div className="flex-1 min-w-[200px]">
+            <SearchInput
+              value={q}
+              onChange={setq}
+              placeholder="Search patient..."
+              className="backdrop-blur-sm bg-white/70 shadow-md rounded-xl border border-blue-200 placeholder-gray-400 focus:ring-2 focus:ring-blue-400 transition"
+            />
+          </div>
+
+          {/* Type Filter */}
           <select
-            className="border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="px-4 py-2 rounded-xl border border-blue-200 bg-white/70 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-700 font-medium transition"
             value={type}
             onChange={(e) => settype(e.target.value)}
           >
@@ -59,8 +65,10 @@ const DoctorAppointments = () => {
             <option>Video Consultation</option>
             <option>In-person</option>
           </select>
+
+          {/* Range Filter */}
           <select
-            className="border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="px-4 py-2 rounded-xl border border-blue-200 bg-white/70 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-blue-700 font-medium transition"
             value={range}
             onChange={(e) => setrange(e.target.value)}
           >
@@ -90,18 +98,16 @@ const DoctorAppointments = () => {
         {current && (
           <div className="space-y-6">
             {/* Patient Info */}
-            <div className="flex items-center gap-4 p-4 bg-blue-50 rounded-xl">
+            <div className="flex items-center gap-4 p-4 bg-blue-50 rounded-2xl shadow-md">
               <img
                 src={current.appt.patientPhoto}
-                className="w-16 h-16 rounded-full border-4 border-blue-500 shadow-md"
+                className="w-16 h-16 rounded-full border-4 border-blue-500 shadow-lg"
               />
               <div>
-                <div className="font-semibold text-xl text-blue-700">
+                <div className="font-extrabold text-xl text-blue-700">
                   {current.appt.patientName}
                 </div>
-                <div className="text-gray-600">
-                  {current.appt.date} • {current.appt.time}
-                </div>
+                <div className="text-gray-600">{current.appt.date} • {current.appt.time}</div>
                 <div className="mt-2 flex gap-2">
                   <Badge color="blue">{current.appt.type}</Badge>
                   <Badge color="yellow">{current.appt.status}</Badge>
@@ -114,7 +120,7 @@ const DoctorAppointments = () => {
               <h4 className="font-semibold text-lg text-blue-600 mb-2">
                 Reason for Visit
               </h4>
-              <p className="text-gray-700 bg-gray-50 p-3 rounded-lg">
+              <p className="text-gray-700 bg-gray-50 p-3 rounded-xl shadow-sm">
                 {current.appt.reason}
               </p>
             </div>
@@ -124,22 +130,22 @@ const DoctorAppointments = () => {
               <h4 className="font-semibold text-lg text-blue-600 mb-2">
                 Patient Medical History
               </h4>
-              <ul className="list-disc list-inside text-gray-700 bg-gray-50 p-3 rounded-lg space-y-1">
+              <ul className="list-disc list-inside text-gray-700 bg-gray-50 p-3 rounded-xl shadow-sm space-y-1">
                 <li>
-                  <b>Chronic : </b>
-                  {current.patient?.history?.chronicIllnesses?.join(", ") || "-"}{" "}
+                  <b>Chronic: </b>
+                  {current.patient?.history?.chronicIllnesses?.join(", ") || "-"}
                 </li>
                 <li>
-                  <b>Allergies : </b>
-                  {current.patient?.history?.allergies?.join(", ") || "-"}{" "}
+                  <b>Allergies: </b>
+                  {current.patient?.history?.allergies?.join(", ") || "-"}
                 </li>
                 <li>
-                  <b>Surgeries : </b>
-                  {current.patient?.history?.surgeries?.join(", ") || "-"}{" "}
+                  <b>Surgeries: </b>
+                  {current.patient?.history?.surgeries?.join(", ") || "-"}
                 </li>
                 <li>
-                  <b>Family : </b>
-                  {current.patient?.history?.familyHistory?.join(", ") || "-"}{" "}
+                  <b>Family: </b>
+                  {current.patient?.history?.familyHistory?.join(", ") || "-"}
                 </li>
               </ul>
             </div>
@@ -149,10 +155,10 @@ const DoctorAppointments = () => {
               <h4 className="font-semibold text-lg text-blue-600 mb-2">
                 Previous Prescriptions
               </h4>
-              <div className="overflow-x-auto shadow">
-                <table className="w-full border border-gray-200 text-sm">
-                  <thead>
-                    <tr className="bg-blue-100 text-blue-700">
+              <div className="overflow-x-auto shadow-md rounded-xl">
+                <table className="w-full border border-gray-200 text-sm rounded-xl overflow-hidden">
+                  <thead className="bg-blue-100 text-blue-700">
+                    <tr>
                       <th className="p-2 border">Date</th>
                       <th className="p-2 border">Medicine</th>
                       <th className="p-2 border">Duration</th>
@@ -175,16 +181,16 @@ const DoctorAppointments = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-3 justify-end">
-              <button className="px-4 py-2 rounded-lg bg-blue-500 text-white shadow hover:bg-blue-600 transition">
+              <button className="px-5 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg hover:from-indigo-500 hover:to-blue-500 hover:scale-105 transition transform duration-300">
                 Start VC
               </button>
-              <button className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 transition">
+              <button className="px-5 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 transition">
                 Add Notes
               </button>
               <Link
                 to="/doctor/prescription"
                 state={{ patientId: current.patient.id }}
-                className="px-4 py-2 rounded-lg bg-green-500 text-white shadow hover:bg-green-600 transition"
+                className="px-5 py-2 rounded-xl bg-green-500 text-white shadow-lg hover:bg-green-600 transition"
               >
                 Issue Prescription
               </Link>
