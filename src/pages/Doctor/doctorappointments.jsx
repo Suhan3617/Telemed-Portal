@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import Pageheader from "../../components/Common/pageheader";
 import FiltersBar from "../../components/Doctor/doctorfilterbar";
 import SearchInput from "../../components/Common/searchinput";
 import { appointments, patients } from "../../data/doctor/mockdata";
@@ -34,9 +35,13 @@ const DoctorAppointments = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-200 to-white p-6">
-      <h1 className="text-3xl font-bold text-blue-700 mb-6 text-center">
-        Appointments Records
-      </h1>
+      {/* Page Header */}
+      <Pageheader
+        title="Appointments Records"
+        subtitle="Manage and view your patient appointments"
+        breadcrumb={["Dashboard", "Appointments"]}
+      />
+
       {/* Filters */}
       <FiltersBar>
         <div className="flex flex-wrap gap-3 items-center w-full justify-center">
@@ -81,11 +86,7 @@ const DoctorAppointments = () => {
       </div>
 
       {/* Modal for Details */}
-      <Modal
-        open={open}
-        onClose={() => setopen(false)}
-        title="Appointment Details"
-      >
+      <Modal open={open} onClose={() => setopen(false)} title="Appointment Details">
         {current && (
           <div className="space-y-6">
             {/* Patient Info */}
@@ -126,8 +127,7 @@ const DoctorAppointments = () => {
               <ul className="list-disc list-inside text-gray-700 bg-gray-50 p-3 rounded-lg space-y-1">
                 <li>
                   <b>Chronic : </b>
-                  {current.patient?.history?.chronicIllnesses?.join(", ") ||
-                    "-"}{" "}
+                  {current.patient?.history?.chronicIllnesses?.join(", ") || "-"}{" "}
                 </li>
                 <li>
                   <b>Allergies : </b>
@@ -139,8 +139,7 @@ const DoctorAppointments = () => {
                 </li>
                 <li>
                   <b>Family : </b>
-                  {current.patient?.history?.familyHistory?.join(", ") ||
-                    "-"}{" "}
+                  {current.patient?.history?.familyHistory?.join(", ") || "-"}{" "}
                 </li>
               </ul>
             </div>
