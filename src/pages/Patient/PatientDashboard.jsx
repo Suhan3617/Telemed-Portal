@@ -1,29 +1,56 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { HeartPulse, CalendarDays, ClipboardList } from "lucide-react";
 import PatientHeader from "../../components/Patient/patientheader";
 import PatientSidebar from "../../components/Patient/patientsidebar";
 import PatientDashboardStats from "../../components/Patient/patientDashboardStats";
-import Patientupcomingappts from "../../components/Patient/patientupcomingappts";
-import PatientMedicalRecordCard from "../../components/Patient/patientrecentrecords";
 import PatientAppointmentCard from "../../components/Patient/patientAppointmentCard";
-import Button from "../../components/Common/Button";
+import PatientMedicalRecordCard from "../../components/Patient/patientrecentrecords";
 import { appointments, medicalRecords } from "../../data/patient/mockdata";
-import { Link } from "react-router-dom";
 
 export default function PatientDashboard() {
   const patientId = "p1";
 
   return (
-    <div className="min-h-screen flex bg-gradient-to-b from-blue-400 to-blue-100">
+    <div className="min-h-screen flex bg-gradient-to-br from-blue-400 via-blue-100 to-white overflow-hidden">
       <PatientSidebar />
-      <div className="flex-1 flex flex-col">
-        <PatientHeader name="Suhan" />
-        <main className="p-6 space-y-6">
-          <PatientDashboardStats patientId={patientId} />
 
-          <section className="bg-blue-100 p-6 rounded-2xl shadow-xl">
+      <div className="flex-1 flex flex-col relative">
+        {/* Animated Background */}
+        <div className="absolute top-10 right-10 w-96 h-96 bg-blue-300/40 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-200/40 rounded-full blur-3xl animate-pulse" />
+
+        <PatientHeader name="Suhan" />
+
+        <main className="relative z-10 p-8 space-y-10">
+          {/* Hero Section */}
+          <section className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-3xl shadow-2xl p-8 flex flex-col md:flex-row items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold mb-2">Good Morning, Suhan 👋</h1>
+              <p className="text-blue-100 text-sm">
+                Manage your health, track appointments, and view your records — all in one place.
+              </p>
+            </div>
+            <img
+              src="https://cdn3d.iconscout.com/3d/premium/thumb/doctor-consultation-3d-illustration-download-in-png-blend-fbx-gltf-file-formats--healthcare-medicine-medical-pack-illustrations-4929970.png"
+              alt="Dashboard"
+              className="w-44 md:w-56 mt-4 md:mt-0 drop-shadow-lg"
+            />
+          </section>
+
+          {/* Stats */}
+          <section>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+              <HeartPulse className="text-blue-600" size={22} /> Overview
+            </h2>
+            <PatientDashboardStats patientId={patientId} />
+          </section>
+
+          {/* Upcoming Appointments */}
+          <section className="backdrop-blur-lg bg-white/60 p-6 rounded-3xl shadow-xl border border-blue-100">
             <div className="flex justify-between items-center mb-5">
-              <h2 className="text-lg font-semibold text-gray-800">
-                Upcoming Appointments
+              <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                <CalendarDays className="text-blue-600" size={20} /> Upcoming Appointments
               </h2>
               <Link
                 to="/patient/appointments"
@@ -32,11 +59,12 @@ export default function PatientDashboard() {
                 View All
               </Link>
             </div>
+
             <div className="grid lg:grid-cols-2 gap-6">
               {appointments.slice(0, 2).map((a) => (
                 <div
                   key={a.id}
-                  className="shadow-xl transition-transform transform hover:scale-105 hover:shadow-3xl cursor-pointer"
+                  className="transform hover:scale-[1.03] transition duration-300"
                 >
                   <PatientAppointmentCard appt={a} />
                 </div>
@@ -44,10 +72,11 @@ export default function PatientDashboard() {
             </div>
           </section>
 
-          <section className="bg-blue-100 p-6 rounded-xl shadow">
+          {/* Medical Records */}
+          <section className="backdrop-blur-lg bg-white/60 p-6 rounded-3xl shadow-xl border border-blue-100">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-800">
-                Medical Records
+              <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+                <ClipboardList className="text-blue-600" size={20} /> Medical Records
               </h2>
               <Link
                 to="/patient/medicalrecords"
@@ -56,11 +85,25 @@ export default function PatientDashboard() {
                 View All
               </Link>
             </div>
+
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {medicalRecords.slice(0, 3).map((r) => (
-                <PatientMedicalRecordCard key={r.id} record={r} />
+                <div
+                  key={r.id}
+                  className="transform hover:scale-[1.03] transition duration-300"
+                >
+                  <PatientMedicalRecordCard record={r} />
+                </div>
               ))}
             </div>
+          </section>
+
+          {/* Tip Section */}
+          <section className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-3xl shadow-lg text-center mt-10">
+            <h3 className="text-lg font-semibold mb-2">💙 Health Tip of the Day</h3>
+            <p className="text-blue-100">
+              “Small healthy habits daily bring the biggest results.”
+            </p>
           </section>
         </main>
       </div>
