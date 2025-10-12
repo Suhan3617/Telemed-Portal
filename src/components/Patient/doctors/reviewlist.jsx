@@ -13,7 +13,7 @@ const ReviewList = ({ reviews }) => {
           className="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-xl shadow-sm border border-blue-200 hover:shadow-md transition-all duration-200"
         >
           <div className="flex items-center justify-between mb-2">
-            <h4 className="font-semibold text-gray-800">{r.name}</h4>
+            <h4 className="font-semibold text-lg text-gray-800">{r.name}</h4>
             <div className="flex">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star
