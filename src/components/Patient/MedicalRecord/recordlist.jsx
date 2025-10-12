@@ -1,31 +1,32 @@
-import React, { useState } from 'react'
-import Recordfilter from './recordfilter'
-import Recordcard from './recordcasrd'
-import { motion, AnimatePresence } from 'framer-motion'
+import React, { useState } from "react";
+import Recordfilter from "./recordfilter";
+import Recordcard from "./recordcard";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Recordlist = ({ records }) => {
-  const [filter, setFilter] = useState("All")
+  const [filter, setFilter] = useState("All");
 
   const filteredRecords =
-    filter === "All" ? records : records.filter((r) => r.type === filter)
+    filter === "All" ? records : records.filter((r) => r.type === filter);
 
   return (
-    <div className="mt-6">
+    <div className="mt-8">
       <Recordfilter filter={filter} setFilter={setFilter} />
 
-      <motion.div 
+      <motion.div
         layout
-        className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6"
+        className="grid sm:grid-cols-2 xl:grid-cols-3 gap-8 mt-8 place-items-center"
       >
         <AnimatePresence>
           {filteredRecords.map((record) => (
             <motion.div
               key={record.id}
               layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 40 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="w-full"
             >
               <Recordcard record={record} />
             </motion.div>
@@ -33,7 +34,7 @@ const Recordlist = ({ records }) => {
         </AnimatePresence>
       </motion.div>
     </div>
-  )
-}
+  );
+};
 
-export default Recordlist
+export default Recordlist;
