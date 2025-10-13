@@ -1,8 +1,9 @@
 import React from 'react'
 import { CalendarClock, FileText, Video } from "lucide-react";
 import { motion } from "framer-motion";
-import Badge from "../Common/Badge";
-import Button from "../Common/Button";
+import Badge from '../../Common/Badge.jsx';
+import Button from '../../Common/Button.jsx';
+
 
 const doctorappointmentcard = ({ appt, onViewDetails }) => {
   const statusColor =
