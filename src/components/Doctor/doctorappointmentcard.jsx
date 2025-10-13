@@ -1,7 +1,7 @@
 import { CalendarClock, FileText, Video } from "lucide-react";
 import React from "react";
-import Badge from "../../Common/Badge";
-import Button from "../../Common/Button";
+// import Badge from "../../Common/Badge";
+// import Button from "../../Common/Button";
 const doctorappointmentcard = ({ appt, onViewDetails }) => {
   const statuscolor =
     appt.status === "Scheduled"

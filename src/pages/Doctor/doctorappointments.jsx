@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import { appointments, patients } from "../../data/doctor/mockdata";
 import Pageheader from "../../components/Common/pageheader";
 import Doctorfilterpanel from "../../components/Doctor/appointments_page/doctorfilterpanel";
-import Doctorappointmentcard from "../../components/Doctor/appointments_page/doctorappointmentcard";
+import DoctorAppointmentCard from "../../components/Doctor/appointments_page/doctorappointmentcard";
 import Doctordetailsmodal from "../../components/Doctor/appointments_page/doctordetailsmodal";
 import { motion } from "framer-motion";
 
@@ -51,7 +51,7 @@ const DoctorAppointments = () => {
         className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
         {list.map((a, i) => (
-          <Doctorappointmentcard
+          <DoctorAppointmentCard
             key={i}
             appt={a}
             onViewDetails={() => openDetails(a)}
