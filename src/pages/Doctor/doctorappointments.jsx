@@ -4,7 +4,7 @@ import Pageheader from "../../components/Common/pageheader";
 import Doctorfilterpanel from "../../components/Doctor/appointments_page/doctorfilterpanel";
 import DoctorAppointmentCard from "../../components/Doctor/appointments_page/doctorappointmentcard";
 import Doctordetailsmodal from "../../components/Doctor/appointments_page/doctordetailsmodal";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const DoctorAppointments = () => {
   const [q, setQ] = useState("");
@@ -38,25 +38,44 @@ const DoctorAppointments = () => {
         breadcrumb={["Dashboard", "Appointments"]}
       />
 
+      {/* Filter panel animation */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Doctorfilterpanel q={q} setQ={setQ} type={type} setType={setType} range={range} setRange={setRange} />
+        <Doctorfilterpanel
+          q={q}
+          setQ={setQ}
+          type={type}
+          setType={setType}
+          range={range}
+          setRange={setRange}
+        />
       </motion.div>
 
+      {/* Animated cards grid */}
       <motion.div
         layout
         className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
-        {list.map((a, i) => (
-          <DoctorAppointmentCard
-            key={i}
-            appt={a}
-            onViewDetails={() => openDetails(a)}
-          />
-        ))}
+        <AnimatePresence>
+          {list.map((a) => (
+            <motion.div
+              key={a.id}
+              layout
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <DoctorAppointmentCard
+                appt={a}
+                onViewDetails={() => openDetails(a)}
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
       </motion.div>
 
       {open && (
