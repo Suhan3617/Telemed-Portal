@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const AppointmentInfo = ({ appointment }) => {
   if (!appointment)
@@ -12,7 +13,9 @@ const AppointmentInfo = ({ appointment }) => {
       : "bg-red-500";
 
   return (
-    <div className="space-y-3 text-gray-700">
+    <motion.div initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="space-y-4 text-gray-700">
       <p>
         <span className="font-semibold">Date:</span> {appointment.date}
       </p>
@@ -35,7 +38,7 @@ const AppointmentInfo = ({ appointment }) => {
         <span className="font-semibold">Notes:</span>{" "}
         {appointment.notes || "—"}
       </p>
-    </div>
+    </motion.div>
   );
 };
 
