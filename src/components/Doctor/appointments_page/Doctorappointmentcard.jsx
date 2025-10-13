@@ -76,7 +76,7 @@ const DoctorAppointmentCard = ({ appt, onViewDetails }) => {
         )}
         <Button
           onClick={onViewDetails}
-          className="bg-gray-100 text-blue-600 hover:bg-blue-50 hover:text-blue-700 border border-blue-200 font-medium flex items-center justify-center gap-2"
+          className="bg-gray-400 text-blue-600 hover:bg-blue-500 hover:text-white border border-blue-200 font-medium flex items-center justify-center gap-2"
         >
           <FileText size={18} /> Details
         </Button>
