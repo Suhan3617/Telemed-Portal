@@ -1,7 +1,21 @@
-import { Bell, ChevronDown } from "lucide-react";
-import React from "react";
+import { Bell, ChevronDown, LogOut, Settings, User } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
 
 const DoctorTopbar = ({ name }) => {
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <header className="relative bg-gradient-to-r from-blue-500/90 via-blue-600/80 to-indigo-500/90
                        backdrop-blur-lg shadow-lg border-b border-white/20
@@ -18,22 +32,40 @@ const DoctorTopbar = ({ name }) => {
       </div>
 
       {/* Right Side */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 relative">
         {/* Notification Bell */}
-        <button className="relative p-3 rounded-full bg-white/10 hover:bg-white/20
-                           text-white shadow-inner transition duration-300">
+        <button className="relative p-3 rounded-full bg-white/10 hover:bg-white/20 text-white shadow-inner transition duration-300">
           <Bell size={20} />
           <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full shadow-md animate-pulse"></span>
         </button>
 
-        {/* Profile */}
-        <div className="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full shadow-inner cursor-pointer hover:bg-white/20 transition">
-          <img
-            src="https://i.pravatar.cc/40?img=5"
-            alt="Doctor Avatar"
-            className="w-10 h-10 rounded-full border-2 border-white/60 shadow-md"
-          />
-          <ChevronDown size={18} className="text-white opacity-80" />
+        {/* Profile Dropdown */}
+        <div ref={dropdownRef} className="relative">
+          <button
+            onClick={() => setOpen(!open)}
+            className="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full shadow-inner cursor-pointer hover:bg-white/20 transition"
+          >
+            <img
+              src="https://i.pravatar.cc/40?img=5"
+              alt="Doctor Avatar"
+              className="w-10 h-10 rounded-full border-2 border-white/60 shadow-md"
+            />
+            <ChevronDown size={18} className="text-white opacity-80" />
+          </button>
+
+          {open && (
+            <div className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg border border-blue-100 overflow-hidden z-50">
+              <button className="w-full flex items-center gap-2 px-4 py-3 hover:bg-blue-50 text-gray-700 transition">
+                <User size={18} /> Profile
+              </button>
+              <button className="w-full flex items-center gap-2 px-4 py-3 hover:bg-blue-50 text-gray-700 transition">
+                <Settings size={18} /> Settings
+              </button>
+              <button className="w-full flex items-center gap-2 px-4 py-3 bg-red-500 text-white font-semibold hover:bg-red-600 transition">
+                <LogOut size={18} /> Logout
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>
