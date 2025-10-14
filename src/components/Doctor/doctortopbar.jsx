@@ -1,12 +1,12 @@
-import { Bell, ChevronDown, LogOut, Settings, User } from "lucide-react";
+import { Bell, ChevronDown, LogOut, Settings, User, Menu, X } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const DoctorTopbar = ({ name }) => {
+const DoctorTopbar = ({ name, onToggleSidebar, isSidebarOpen }) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Close dropdown when clicking outside
+  // Close profile dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
@@ -21,15 +21,25 @@ const DoctorTopbar = ({ name }) => {
     <header className="relative bg-gradient-to-r from-blue-500/90 via-blue-600/80 to-indigo-500/90
                        backdrop-blur-lg shadow-lg border-b border-white/20
                        px-6 py-4 flex items-center justify-between sticky top-0 z-30">
-      {/* Left Side */}
-      <div>
-        <h1 className="text-xl font-bold text-white drop-shadow-sm">
-          Welcome back,&nbsp;
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-white">
-            {name}
-          </span>
-        </h1>
-        <p className="text-sm text-blue-100 mt-1">Here’s your schedule for today</p>
+      {/* Left: Hamburger + Title */}
+      <div className="flex items-center gap-4">
+        {/* Hamburger for mobile < 760px */}
+        <button
+          className="md:hidden p-2 rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-600 transition"
+          onClick={onToggleSidebar}
+        >
+          {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+
+        <div>
+          <h1 className="text-xl font-bold text-white drop-shadow-sm">
+            Welcome back,&nbsp;
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-white">
+              {name}
+            </span>
+          </h1>
+          <p className="text-sm text-blue-100 mt-1">Here’s your schedule for today</p>
+        </div>
       </div>
 
       {/* Right Side */}
@@ -56,6 +66,8 @@ const DoctorTopbar = ({ name }) => {
 
           {open && (
             <div className="absolute right-0 mt-2 w-44 bg-gradient-to-b from-blue-50 to-blue-100 rounded-xl shadow-2xl border border-blue-200 overflow-hidden z-50">
+              <div className="absolute -top-2 right-4 w-3 h-3 bg-gradient-to-b from-blue-50 to-blue-100 rotate-45 border-l border-t border-blue-200"></div>
+
               <Link
                 to="" // Add Profile URL
                 className="w-full flex items-center gap-2 px-4 py-3 hover:bg-blue-200 transition text-blue-700 font-medium"
