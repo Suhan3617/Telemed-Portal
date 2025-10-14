@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DoctorSidebar from "../../components/Doctor/doctorsidebar.jsx";
 import DoctorTopbar from "../../components/Doctor/doctortopbar.jsx";
 import Doctorstats from "../../components/Doctor/doctorstats.jsx";
-import DoctorAppointmentCard from "../../components/Doctor/doctorappointmentcard.jsx";
+import DoctorAppointmentCard from "../../components/Doctor/appointments_page/doctorappointmentcard.jsx";
 import Doctoractionbuttons from "../../components/Doctor/doctoractionbuttons.jsx";
 import Doctorappointmentdetialsmodal from "../../components/Doctor/doctorappointmentdetialsmodal.jsx";
 import { appointments } from "../../data/doctor/mockdata.js";
