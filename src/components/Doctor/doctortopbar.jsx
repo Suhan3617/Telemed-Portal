@@ -1,5 +1,6 @@
 import { Bell, ChevronDown, LogOut, Settings, User } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const DoctorTopbar = ({ name }) => {
   const [open, setOpen] = useState(false);
@@ -54,14 +55,20 @@ const DoctorTopbar = ({ name }) => {
           </button>
 
           {open && (
-            <div className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg border border-blue-100 overflow-hidden z-50">
-              <button className="w-full flex items-center gap-2 px-4 py-3 hover:bg-blue-50 text-gray-700 transition">
+            <div className="absolute right-0 mt-2 w-44 bg-gradient-to-b from-blue-50 to-blue-100 rounded-xl shadow-2xl border border-blue-200 overflow-hidden z-50">
+              <Link
+                to="" // Add Profile URL
+                className="w-full flex items-center gap-2 px-4 py-3 hover:bg-blue-200 transition text-blue-700 font-medium"
+              >
                 <User size={18} /> Profile
-              </button>
-              <button className="w-full flex items-center gap-2 px-4 py-3 hover:bg-blue-50 text-gray-700 transition">
+              </Link>
+              <Link
+                to="" // Add Settings URL
+                className="w-full flex items-center gap-2 px-4 py-3 hover:bg-blue-200 transition text-blue-700 font-medium"
+              >
                 <Settings size={18} /> Settings
-              </button>
-              <button className="w-full flex items-center gap-2 px-4 py-3 bg-red-500 text-white font-semibold hover:bg-red-600 transition">
+              </Link>
+              <button className="w-full flex items-center gap-2 px-4 py-3 bg-red-500 hover:bg-red-600 text-white font-semibold transition">
                 <LogOut size={18} /> Logout
               </button>
             </div>
