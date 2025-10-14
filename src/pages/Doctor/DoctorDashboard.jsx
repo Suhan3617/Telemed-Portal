@@ -1,85 +1,90 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import DoctorSidebar from "../../components/Doctor/doctorsidebar";
-import DoctorTopbar from "../../components/Doctor/doctortopbar";
-import DoctorStats from "../../components/Doctor/doctorstats";
-import DoctorActionButtons from "../../components/Doctor/doctoractionbuttons";
-import DoctorAppointmentCard from "../../components/Doctor/appointments_page/doctorappointmentcard";
-import DoctorAppointmentDetailsModal from "../../components/Doctor/doctorappointmentdetialsmodal";
-import { appointments } from "../../data/doctor/mockdata";
+import { CalendarDays, Users, MessageCircle, ClipboardList } from "lucide-react";
+
+import DoctorSidebar from "../../components/Doctor/doctorsidebar.jsx";
+import DoctorTopbar from "../../components/Doctor/doctortopbar.jsx";
+import DoctorStats from "../../components/Doctor/doctorstats.jsx";
+import DoctorActionButtons from "../../components/Doctor/doctoractionbuttons.jsx";
+import DoctorAppointmentCard from "../../components/Doctor/appointments_page/doctorappointmentcard.jsx";
+import DoctorAppointmentDetailsModal from "../../components/Doctor/doctorappointmentdetialsmodal.jsx";
+import { appointments } from "../../data/doctor/mockdata.js";
 
 const DoctorDashboard = () => {
-  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [SelectedAppointment, setSelectedAppointment] = useState(null);
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-blue-100 via-blue-200 to-blue-50 text-gray-800">
+    <div className="flex min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       {/* Sidebar */}
       <DoctorSidebar />
 
-      {/* Main Content */}
+      {/* Main Section */}
       <div className="flex flex-col flex-1">
-        <DoctorTopbar name="Dr. Arjun Mehta" />
+        <DoctorTopbar name="Dr. Smith" />
 
-        {/* Main Section */}
-        <main className="p-6 space-y-8 overflow-y-auto">
-          
-          {/* Stats Cards */}
+        <main className="p-6 space-y-10">
+
+          {/* Stats */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
+            transition={{ delay: 0.1, duration: 0.25 }}
           >
             <DoctorStats />
           </motion.div>
 
           {/* Action Buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
+            transition={{ delay: 0.2, duration: 0.25 }}
           >
             <DoctorActionButtons />
           </motion.div>
 
-          {/* Today's Appointments */}
+          {/* Appointments Section */}
           <motion.section
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="bg-white/70 backdrop-blur-sm border border-blue-100 p-6 rounded-2xl shadow-lg"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.25, duration: 0.25, ease: "easeOut" }}
+            className="bg-white/80 backdrop-blur-sm border border-blue-100 p-6 rounded-2xl shadow-lg"
           >
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-blue-800">
-                Today’s Appointments
+              <h2 className="text-lg font-semibold text-blue-800 flex items-center gap-2">
+                <ClipboardList className="text-blue-600 w-5 h-5" /> Today’s Appointments
               </h2>
-              <span className="text-sm text-gray-500">
-                {appointments.length} Scheduled
+              <span className="text-sm text-gray-500 flex items-center gap-1">
+                <Users size={15} /> {appointments.length} Scheduled
               </span>
             </div>
 
-            {appointments.length === 0 ? (
-              <div className="text-center py-10 text-gray-500">
-                No appointments scheduled for today
-              </div>
-            ) : (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {appointments.map((appt) => (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {appointments.map((a) => (
+                <motion.div
+                  key={a.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25 }}
+                  whileHover={{
+                    scale: 1.04,
+                    boxShadow: "0px 4px 15px rgba(59,130,246,0.25)",
+                  }}
+                >
                   <DoctorAppointmentCard
-                    key={appt.id}
-                    appt={appt}
-                    onViewDetails={() => setSelectedAppointment(appt)}
+                    appt={a}
+                    onViewDetails={() => setSelectedAppointment(a)}
                   />
-                ))}
-              </div>
-            )}
+                </motion.div>
+              ))}
+            </div>
           </motion.section>
         </main>
       </div>
 
-      {/* Appointment Details Modal */}
-      {selectedAppointment && (
+      {/* Appointment Modal */}
+      {SelectedAppointment && (
         <DoctorAppointmentDetailsModal
-          appointment={selectedAppointment}
+          appointment={SelectedAppointment}
           onClose={() => setSelectedAppointment(null)}
         />
       )}
