@@ -4,15 +4,13 @@ import {
   Home,
   Users,
   FileText,
-  Menu,
   X,
 } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-const DoctorSidebar = () => {
+const DoctorSidebar = ({ mobileOpen, setMobileOpen }) => {
   const { pathname } = useLocation();
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   const menuitems = [
     { name: "Dashboard", icon: <Home size={18} />, path: "/" },
@@ -24,16 +22,15 @@ const DoctorSidebar = () => {
 
   return (
     <>
-      {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0  w-64 bg-gradient-to-b from-blue-600 via-blue-500 to-blue-700 text-white shadow-xl
+        className={`fixed md:sticky top-0 left-0 h-screen md:h-[100vh] w-64 bg-gradient-to-b from-blue-600 via-blue-500 to-blue-700 text-white shadow-xl
           transform transition-transform duration-300 z-40
-          ${mobileOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static md:flex md:flex-col`}
+          ${mobileOpen ? "translate-x-0" : "-translate-x-full"} 
+          md:translate-x-0 md:flex md:flex-col`}
       >
         {/* Header */}
         <div className="px-6 py-6 border-b border-white/20 flex items-center justify-between">
           <h1 className="text-2xl font-bold tracking-wide">TeleMed Doctor</h1>
-          {/* Close button only for mobile */}
           <button
             className="md:hidden p-2 rounded-full hover:bg-white/10 transition"
             onClick={() => setMobileOpen(false)}
@@ -43,7 +40,7 @@ const DoctorSidebar = () => {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+        <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20">
           {menuitems.map((it) => {
             const active = pathname === it.path;
             return (
@@ -63,23 +60,12 @@ const DoctorSidebar = () => {
           })}
         </nav>
 
-        {/* Optional Footer */}
         <div className="px-4 py-6 border-t border-white/20">
           <p className="text-sm text-white/80">TeleMed Doctor Panel</p>
         </div>
       </aside>
 
-      {/* Mobile Hamburger now fixed inside Topbar (prevent overlap) */}
-      <div className="md:hidden fixed top-4 left-4 z-50">
-        <button
-          className="p-3 rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-600 transition"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Overlay for mobile when sidebar is open */}
+      {/* Mobile Overlay */}
       {mobileOpen && (
         <div
           className="fixed inset-0 bg-black/40 z-30 md:hidden"
