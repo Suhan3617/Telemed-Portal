@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Users, Calendar, User, Mars, Venus } from "lucide-react";
 import { patients } from "../../../data/doctor/mockdata";
 import { motion, AnimatePresence } from "framer-motion";
+import SelectedPatientCard from "./selectedpatientcard";
 
 const PatientSelector = ({ onSelect }) => {
   const [selectedPatient, setSelectedPatient] = useState(null);
@@ -85,27 +86,7 @@ const PatientSelector = ({ onSelect }) => {
       </AnimatePresence>
 
       {/* Selected Patient Preview */}
-      {selectedPatient && (
-        <motion.div
-          className="mt-4 p-6 bg-gradient-to-r from-blue-50 to-blue-100 border-l-4 border-blue-400 rounded-3xl shadow-lg text-sm space-y-3 hover:shadow-xl transition-shadow"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <p className="text-blue-700 font-bold text-lg">{selectedPatient.name}</p>
-          <div className="grid grid-cols-2 gap-3">
-            <p className="flex items-center gap-2"><User className="w-5 h-5 text-blue-500" /> <strong>Age:</strong> {selectedPatient.age}</p>
-            <p className="flex items-center gap-2">{getGenderIcon(selectedPatient.gender)} <strong>Gender:</strong> {selectedPatient.gender}</p>
-            <p className="flex items-center gap-2 col-span-2"><Calendar className="w-5 h-5 text-blue-500" /> <strong>Last Visit:</strong> {selectedPatient.lastVisit}</p>
-          </div>
-          <div className="space-y-1 text-gray-700">
-            <p><strong>Chronic Illnesses:</strong> {selectedPatient.history.chronicIllnesses.length ? selectedPatient.history.chronicIllnesses.join(", ") : "None"}</p>
-            <p><strong>Allergies:</strong> {selectedPatient.history.allergies.length ? selectedPatient.history.allergies.join(", ") : "None"}</p>
-            <p><strong>Surgeries:</strong> {selectedPatient.history.surgeries.length ? selectedPatient.history.surgeries.join(", ") : "None"}</p>
-            <p><strong>Family History:</strong> {selectedPatient.history.familyHistory.length ? selectedPatient.history.familyHistory.join(", ") : "None"}</p>
-          </div>
-        </motion.div>
-      )}
+      {selectedPatient && <SelectedPatientCard selectedPatient={selectedPatient} />}
     </div>
   );
 };
