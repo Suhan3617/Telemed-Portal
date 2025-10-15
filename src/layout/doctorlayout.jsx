@@ -3,22 +3,19 @@ import DoctorSidebar from "../components/Doctor/doctorsidebar.jsx";
 import DoctorTopbar from "../components/Doctor/doctortopbar.jsx";
 
 const DoctorLayout = ({ children, doctorName = "Dr. John" }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false); // closed by default on all screens
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const layoutRef = useRef(null);
 
-  // 🟦 Remove auto open/close behavior on resize.
-  // Just ensure sidebar closes if resized to small screen while open.
+  // Handle resizing
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768 && sidebarOpen) {
-        setSidebarOpen(false);
-      }
+      if (window.innerWidth < 768 && sidebarOpen) setSidebarOpen(false);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [sidebarOpen]);
 
-  // 🟨 Close sidebar when clicking outside (on mobile)
+  // Close sidebar when clicking outside (mobile only)
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -36,12 +33,18 @@ const DoctorLayout = ({ children, doctorName = "Dr. John" }) => {
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
   return (
-    <div ref={layoutRef} className="flex min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div
+      ref={layoutRef}
+      className="flex min-h-screen bg-gradient-to-br from-blue-50 to-blue-100"
+    >
       {/* Sidebar */}
-      <DoctorSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      <DoctorSidebar
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+      />
 
-      {/* Main content area */}
-      <div className="flex flex-col flex-1 transition-all duration-300">
+      {/* Main Content */}
+      <div className="flex flex-col flex-1 overflow-hidden">
         {/* Topbar */}
         <DoctorTopbar
           name={doctorName}
@@ -49,8 +52,8 @@ const DoctorLayout = ({ children, doctorName = "Dr. John" }) => {
           isSidebarOpen={sidebarOpen}
         />
 
-        {/* Page content */}
-        <main className="p-6 mt-4 overflow-y-auto transition-all duration-300">
+        {/* Page Content */}
+        <main className="flex-1 overflow-y-auto p-6">
           {children}
         </main>
       </div>
