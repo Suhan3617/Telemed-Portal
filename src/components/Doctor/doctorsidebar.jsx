@@ -17,6 +17,7 @@ const DoctorSidebar = ({ sidebarOpen, setSidebarOpen }) => {
     { name: "Patients", icon: <Users size={20} />, path: "/doctor/patients" },
     { name: "Messages", icon: <MessageCircle size={20} />, path: "/doctor/messages" },
     { name: "Reports", icon: <FileText size={20} />, path: "/doctor/reports" },
+    { name: "Write Prescription", icon: <FileText size={20} />, path: "/doctor/prescription" },
   ];
 
   return (
