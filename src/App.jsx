@@ -29,6 +29,9 @@ import Doctorsettings from "./pages/Doctor/doctorsettings.jsx";
 import Doctorprescription from "./pages/Doctor/doctorwriteprescription.jsx";
 import Doctorpatientprofile from "./pages/Doctor/doctorpatientprofile.jsx";
 
+import DoctorLayout from "./layout/doctorlayout.jsx";
+
+// Layout for Navbar hiding logic
 const Layout = ({ children }) => {
   const location = useLocation();
 
@@ -41,20 +44,12 @@ const Layout = ({ children }) => {
     "/patient/messages",
     "/patient/medicalrecords",
     "/patient/profile",
-    "/doctor/overview",
-    "/doctor/messages",
-    "/doctor/patients",
-    "/doctor/appointments",
-    "/doctor/records",
-    "/doctor/settings",
-    "/doctor/prescription",
     "/patient/doctors",
     "/patient/settings",
   ];
 
-  // Add special handling for dynamic routes
   const dynamicRoutes = [
-    "/doctor/patients/",
+    "/doctor/",
     "/patient/appointmentdetails/",
     "/book-appointment/",
     "/patient/doctors/",
@@ -74,69 +69,90 @@ const Layout = ({ children }) => {
 
 function App() {
   return (
-    <>
-      <Router>
-        <Layout>
-          <Routes>
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
+    <Router>
+      <Layout>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
 
-            {/* Patient Routing */}
-            <Route path="/patientdashboard" element={<PatientDashboard />} />
-            {/* <Route
-              path="/patient/bookappointment"
-              element={<PatientBookAppointment />}
-            /> */}
-            <Route
-              path="/patient/appointments"
-              element={<PatientsAppointmentspage />}
-            />
-            <Route
-              path="/patient/appointmentdetails/:id"
-              element={<PatientAppointmentDetails />}
-            />
-            <Route path="/patient/doctors" element={<Patientdoctor />} />
-            <Route
-              path="/patient/doctors/:id"
-              element={<Patientdoctordetails />}
-            />
-            <Route
-              path="/book-appointment/:doctorId"
-              element={<PatientBookAppointment />}
-            />
-            <Route
-              path="/patient/messages"
-              element={<PatientsMessagespage />}
-            />
-            <Route
-              path="/patient/medicalrecords"
-              element={<PatientMedicalRecordspage />}
-            />
-            <Route path="/patient/profile" element={<PatientProfilepage />} />
-            <Route path="/patient/settings" element={<Patientsettings />} />
+          {/* Patient Routes (same as before) */}
+          <Route path="/patientdashboard" element={<PatientDashboard />} />
+          <Route
+            path="/patient/appointments"
+            element={<PatientsAppointmentspage />}
+          />
+          <Route
+            path="/patient/appointmentdetails/:id"
+            element={<PatientAppointmentDetails />}
+          />
+          <Route path="/patient/doctors" element={<Patientdoctor />} />
+          <Route
+            path="/patient/doctors/:id"
+            element={<Patientdoctordetails />}
+          />
+          <Route
+            path="/book-appointment/:doctorId"
+            element={<PatientBookAppointment />}
+          />
+          <Route path="/patient/messages" element={<PatientsMessagespage />} />
+          <Route
+            path="/patient/medicalrecords"
+            element={<PatientMedicalRecordspage />}
+          />
+          <Route path="/patient/profile" element={<PatientProfilepage />} />
+          <Route path="/patient/settings" element={<Patientsettings />} />
 
-            {/* Doctor routing */}
-            <Route path="/doctor/overview" element={<DoctorDashboard />} />
-            <Route path="/doctor/messages" element={<Doctormessages />} />
-            <Route path="/doctor/patients" element={<Doctorpatients />} />
-            <Route
-              path="/doctor/appointments"
-              element={<Doctorappointments />}
-            />
-            <Route path="/doctor/records" element={<Doctorreports />} />
-            <Route path="/doctor/settings" element={<Doctorsettings />} />
-            <Route
-              path="/doctor/prescription"
-              element={<Doctorprescription />}
-            />
-            <Route
-              path="/doctor/patients/:patientId"
-              element={<Doctorpatientprofile />}
-            />
-          </Routes>
-        </Layout>
-      </Router>
-    </>
+          {/* Doctor Routes inside DoctorLayout */}
+          <Route path="/doctor/overview" element={<DoctorDashboard />} />
+
+          <Route
+            path="/doctor/appointments"
+            element={
+              <DoctorLayout>
+                <Doctorappointments />
+              </DoctorLayout>
+            }
+          />
+
+          <Route
+            path="/doctor/patients"
+            element={
+              <DoctorLayout>
+                <Doctorpatients />
+              </DoctorLayout>
+            }
+          />
+
+          <Route
+            path="/doctor/messages"
+            element={
+              <DoctorLayout>
+                <Doctormessages />
+              </DoctorLayout>
+            }
+          />
+
+          <Route
+            path="/doctor/records"
+            element={
+              <DoctorLayout>
+                <Doctorreports />
+              </DoctorLayout>
+            }
+          />
+
+          <Route
+            path="/doctor/settings"
+            element={
+              <DoctorLayout>
+                <Doctorsettings />
+              </DoctorLayout>
+            }
+          />
+        </Routes>
+      </Layout>
+    </Router>
   );
 }
 
