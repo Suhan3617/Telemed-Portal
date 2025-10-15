@@ -37,7 +37,7 @@ const PatientSelector = ({ onSelect }) => {
     <div className="mb-6 relative" ref={dropdownRef}>
       {/* Label */}
       <label className="text-sm font-semibold text-blue-600 flex items-center gap-2 mb-2">
-        <Users className="w-5 h-5" /> Select Patient
+        <Users className="w-5 h-5" /> <p className="text-2xl font-bold">Select Patient</p> 
       </label>
 
       {/* Input / Selector */}

@@ -9,7 +9,14 @@ import PrescriptionSummary from "../../components/Doctor/prescription_form/presc
 const DoctorPrescription = () => {
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [medicines, setMedicines] = useState([
-    { name: "", strength: "", dose: "", frequency: "", duration: "", instructions: "" },
+    {
+      name: "",
+      strength: "",
+      dose: "",
+      frequency: "",
+      duration: "",
+      instructions: "",
+    },
   ]);
   const [notes, setNotes] = useState("");
   const [showSummary, setShowSummary] = useState(false);
@@ -26,49 +33,53 @@ const DoctorPrescription = () => {
   return (
     <>
       <motion.div
-        className="flex flex-col lg:flex-row gap-6 p-4"
+        className="flex flex-col lg:flex-row gap-6 p-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
         {/* Left: Form */}
         <motion.div
-          className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 backdrop-blur-xl shadow-2xl rounded-3xl p-6 border border-blue-200"
-          whileHover={{ scale: 1.02 }}
+          className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 backdrop-blur-xl shadow-2xl rounded-3xl p-6 border border-blue-300"
+          whileHover={{ scale: 1.01 }}
+          transition={{ type: "spring", stiffness: 100 }}
         >
           <h2 className="text-3xl font-bold text-blue-700 mb-6 flex items-center gap-3">
             <FileText className="w-7 h-7 text-blue-600" /> Create Prescription
           </h2>
 
           {/* Patient Selector */}
+          {/* Selected Patient Info */}
           <PatientSelector onSelect={setSelectedPatient} />
-
           {selectedPatient && (
             <form onSubmit={handleGenerate} className="mt-6 space-y-6">
               {/* Medicines */}
               <MedicineForm medicines={medicines} setMedicines={setMedicines} />
 
-              {/* Notes */}
-              <div>
-                <label className="block text-sm font-medium text-blue-600 mb-1">
+              {/* Additional Notes */}
+              <motion.div
+                className="bg-gradient-to-r from-blue-100/80 to-blue-50/80 p-5 rounded-2xl border border-blue-200 shadow-md hover:shadow-lg transition-all"
+                whileHover={{ scale: 1.01 }}
+              >
+                <label className="block text-base md:text-lg font-semibold text-blue-700 mb-2">
                   Additional Notes / Instructions
                 </label>
                 <textarea
-                  rows="4"
+                  rows="5"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full border border-blue-300 rounded-xl p-3 focus:ring-2 focus:ring-blue-400 transition-all hover:shadow-md"
+                  className="w-full border border-blue-300 rounded-2xl p-4 text-base md:text-lg focus:ring-2 focus:ring-blue-400 transition-all hover:shadow-md bg-white/90 placeholder:text-blue-300"
                   placeholder="Add remarks, dietary advice, follow-up info..."
                 />
-              </div>
+              </motion.div>
 
               {/* Generate Button */}
-              <div className="text-right">
+              <div className="text-right mt-2">
                 <motion.button
                   type="submit"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-7 py-3 rounded-2xl font-semibold shadow-lg hover:shadow-2xl transition-all"
+                  className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-2xl font-semibold shadow-lg hover:shadow-2xl transition-all text-lg"
                 >
                   Generate Prescription
                 </motion.button>
@@ -79,12 +90,16 @@ const DoctorPrescription = () => {
 
         {/* Right: Preview */}
         <motion.div
-          className="lg:w-1/3 mt-4 lg:mt-0"
+          className="lg:w-1/3 mt-6 lg:mt-0 sticky top-6"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <PrescriptionPreview patient={selectedPatient} medicines={medicines} notes={notes} />
+          <PrescriptionPreview
+            patient={selectedPatient}
+            medicines={medicines}
+            notes={notes}
+          />
         </motion.div>
       </motion.div>
 
