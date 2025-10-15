@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FileText } from "lucide-react";
 import DoctorLayout from "../../layout/doctorlayout";
-import Patientselector from "../../components/Doctor/prescription_form/patientselector";
-import Prescriptionpreview from "../../components/Doctor/prescription_form/prescriptionpreview";
-import Medicineform from "../../components/Doctor/prescription_form/medicineform";
-import Prescriptionsummary from "../../components/Doctor/prescription_form/prescriptionsummary";
+import PatientSelector from "../../components/Doctor/prescription_form/patientselector";
+import PrescriptionPreview from "../../components/Doctor/prescription_form/prescriptionpreview";
+import MedicineForm from "../../components/Doctor/prescription_form/medicineform";
+import PrescriptionSummary from "../../components/Doctor/prescription_form/prescriptionsummary";
 
 const DoctorPrescription = () => {
   const [selectedPatient, setSelectedPatient] = useState(null);
@@ -27,7 +27,7 @@ const DoctorPrescription = () => {
   return (
     <>
       <motion.div
-        className="flex flex-col md:flex-row gap-6"
+        className="flex flex-col md:flex-row gap-6 p-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -38,11 +38,13 @@ const DoctorPrescription = () => {
             <FileText className="w-6 h-6 text-blue-600" /> Create Prescription
           </h2>
 
-          <Patientselector onSelect={setSelectedPatient} />
+          {/* Patient selector */}
+          <PatientSelector onSelect={setSelectedPatient} />
 
           {selectedPatient && (
             <form onSubmit={handleGenerate} className="mt-4 space-y-6">
-              <Medicineform medicines={medicines} setMedicines={setMedicines} />
+              {/* Medicines */}
+              <MedicineForm medicines={medicines} setMedicines={setMedicines} />
 
               {/* Notes */}
               <div>
@@ -55,10 +57,10 @@ const DoctorPrescription = () => {
                   onChange={(e) => setNotes(e.target.value)}
                   className="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-400"
                   placeholder="Add remarks, dietary advice, follow-up info..."
-                ></textarea>
+                />
               </div>
 
-              {/* Submit */}
+              {/* Submit button */}
               <div className="text-right">
                 <button
                   type="submit"
@@ -71,15 +73,15 @@ const DoctorPrescription = () => {
           )}
         </div>
 
-        {/* Right side: preview */}
+        {/* Right side: live preview */}
         <div className="md:w-1/3">
-          <Prescriptionpreview patient={selectedPatient} medicines={medicines} notes={notes} />
+          <PrescriptionPreview patient={selectedPatient} medicines={medicines} notes={notes} />
         </div>
       </motion.div>
 
       {/* Summary modal */}
       {showSummary && (
-        <Prescriptionsummary
+        <PrescriptionSummary
           patient={selectedPatient}
           medicines={medicines}
           notes={notes}
