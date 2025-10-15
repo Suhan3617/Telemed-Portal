@@ -1,20 +1,55 @@
-
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DoctorSidebar from "../components/Doctor/doctorsidebar.jsx";
 import DoctorTopbar from "../components/Doctor/doctortopbar.jsx";
 
-const DoctorLayout = ({children}) => {
+const DoctorLayout = ({ children, doctorName = "Dr. John" }) => {
+  const [sidebarOpen, setSidebarOpen] = useState(true); // open by default on desktop
+  const layoutRef = useRef(null);
+
+  // Adjust sidebar based on window size
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) setSidebarOpen(false);
+      else setSidebarOpen(true);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Close sidebar when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        sidebarOpen &&
+        layoutRef.current &&
+        !layoutRef.current.contains(e.target)
+      ) {
+        if (window.innerWidth < 768) setSidebarOpen(false); // close only on mobile
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [sidebarOpen]);
+
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
+
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div ref={layoutRef} className="flex min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
       {/* Sidebar */}
-      <DoctorSidebar />
+      <DoctorSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       {/* Main content area */}
-      <div className="flex flex-col flex-1">
-        <DoctorTopbar />
+      <div className="flex flex-col flex-1 transition-all duration-300">
+        {/* Topbar */}
+        <DoctorTopbar
+          name={doctorName}
+          onToggleSidebar={toggleSidebar}
+          isSidebarOpen={sidebarOpen}
+        />
 
-        {/* Content area with proper padding */}
-        <main className="p-6 mt-4 overflow-y-auto">
+        {/* Page content */}
+        <main className="p-6 mt-4 overflow-y-auto transition-all duration-300">
           {children}
         </main>
       </div>
