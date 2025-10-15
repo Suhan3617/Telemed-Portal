@@ -22,17 +22,19 @@ const DoctorSidebar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <>
       <aside
-        className={`fixed top-0 left-0 h-screen w-64 bg-gradient-to-b from-blue-600 via-blue-500 to-blue-700 text-white shadow-2xl
-          transform transition-transform duration-300 z-40
-          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 left-0 h-screen w-64 bg-gradient-to-b from-blue-700 via-blue-600 to-blue-800 text-white
+        shadow-[0_0_25px_rgba(37,99,235,0.4)] backdrop-blur-2xl border-r border-white/20
+        transform transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+        ${sidebarOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"}
+        z-40 rounded-r-3xl`}
       >
         {/* Header */}
         <div className="px-6 py-6 border-b border-white/20 flex items-center justify-between">
           <h1 className="text-2xl font-extrabold tracking-wide drop-shadow-lg">
-            TeleMed Doctor
+            TeleMed<span className="text-blue-200">+</span>
           </h1>
           <button
-            className="md:block p-2 rounded-full hover:bg-white/10 transition"
+            className="p-2 rounded-full hover:bg-white/10 transition"
             onClick={() => setSidebarOpen(false)}
           >
             ✕
@@ -47,15 +49,15 @@ const DoctorSidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <Link
                 key={it.name}
                 to={it.path}
-                onClick={() => setSidebarOpen(false)} // closes after clicking a link
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300
+                onClick={() => setSidebarOpen(false)}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 
                   ${
                     active
-                      ? "bg-white/25 shadow-inner font-semibold text-white"
-                      : "hover:bg-white/10 hover:translate-x-1 hover:shadow-md text-white/90"
+                      ? "bg-gradient-to-r from-blue-400/40 to-blue-500/30 shadow-inner backdrop-blur-md border border-white/20 text-white"
+                      : "hover:bg-white/10 hover:translate-x-1 hover:shadow-lg text-white/90"
                   }`}
               >
-                <div className={`${active ? "text-white" : "text-white/80"}`}>
+                <div className={`${active ? "text-white" : "text-blue-100"}`}>
                   {it.icon}
                 </div>
                 <span className="font-medium">{it.name}</span>
@@ -65,15 +67,15 @@ const DoctorSidebar = ({ sidebarOpen, setSidebarOpen }) => {
         </nav>
 
         {/* Footer */}
-        <div className="px-4 py-6 border-t border-white/20">
-          <p className="text-sm text-white/80 font-light">TeleMed Doctor Panel</p>
+        <div className="px-4 py-6 border-t border-white/20 text-center text-sm text-blue-100/80">
+          <p>TeleMed Doctor Panel</p>
         </div>
       </aside>
 
-      {/* Overlay (for mobile) */}
+      {/* Overlay (when open) */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-30"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-30 transition-opacity duration-500"
           onClick={() => setSidebarOpen(false)}
         />
       )}

@@ -3,22 +3,10 @@ import DoctorSidebar from "../components/Doctor/doctorsidebar.jsx";
 import DoctorTopbar from "../components/Doctor/doctortopbar.jsx";
 
 const DoctorLayout = ({ children, doctorName = "Dr. John" }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false); // closed by default on all screens
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const layoutRef = useRef(null);
 
-  // 🟦 Remove auto open/close behavior on resize.
-  // Just ensure sidebar closes if resized to small screen while open.
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768 && sidebarOpen) {
-        setSidebarOpen(false);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [sidebarOpen]);
-
-  // 🟨 Close sidebar when clicking outside (on mobile)
+  // close sidebar when clicking outside (any screen)
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -26,7 +14,7 @@ const DoctorLayout = ({ children, doctorName = "Dr. John" }) => {
         layoutRef.current &&
         !layoutRef.current.contains(e.target)
       ) {
-        if (window.innerWidth < 768) setSidebarOpen(false);
+        setSidebarOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -36,22 +24,29 @@ const DoctorLayout = ({ children, doctorName = "Dr. John" }) => {
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
   return (
-    <div ref={layoutRef} className="flex min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div
+      ref={layoutRef}
+      className="flex min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-blue-200 relative overflow-hidden"
+    >
+      {/* Subtle animated background shimmer */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(59,130,246,0.08),transparent_70%)] animate-pulse-slow"></div>
+
       {/* Sidebar */}
       <DoctorSidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-      {/* Main content area */}
-      <div className="flex flex-col flex-1 transition-all duration-300">
-        {/* Topbar */}
+      {/* Main area */}
+      <div className="flex flex-col flex-1 relative z-10">
         <DoctorTopbar
           name={doctorName}
           onToggleSidebar={toggleSidebar}
           isSidebarOpen={sidebarOpen}
         />
 
-        {/* Page content */}
-        <main className="p-6 mt-4 overflow-y-auto transition-all duration-300">
-          {children}
+        {/* Main Content */}
+        <main className="p-6 mt-4 overflow-y-auto">
+          <div className="rounded-2xl bg-white/60 backdrop-blur-xl shadow-xl border border-blue-100 p-6 transition-all duration-500 hover:shadow-2xl">
+            {children}
+          </div>
         </main>
       </div>
     </div>
