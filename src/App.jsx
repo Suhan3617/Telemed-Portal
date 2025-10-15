@@ -157,6 +157,14 @@ function App() {
               </DoctorLayout>
             }
           />
+          <Route
+            path="/doctor/prescription"
+            element={
+              <DoctorLayout>
+                <Doctorprescription />
+              </DoctorLayout>
+            }
+          />
         </Routes>
       </Layout>
     </Router>
