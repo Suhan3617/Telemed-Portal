@@ -13,7 +13,7 @@ const DoctorSidebar = ({ mobileOpen, setMobileOpen }) => {
   const { pathname } = useLocation();
 
   const menuitems = [
-    { name: "Dashboard", icon: <Home size={18} />, path: "/" },
+    { name: "Dashboard", icon: <Home size={18} />, path: "/doctor/overview" },
     { name: "Appointments", icon: <CalendarDays size={18} />, path: "/doctor/appointments" },
     { name: "Patients", icon: <Users size={18} />, path: "/doctor/patients" },
     { name: "Messages", icon: <MessageCircle size={18} />, path: "/doctor/messages" },
