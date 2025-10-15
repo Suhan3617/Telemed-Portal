@@ -104,8 +104,15 @@ function App() {
           <Route path="/patient/settings" element={<Patientsettings />} />
 
           {/* Doctor Routes inside DoctorLayout */}
-          <Route path="/doctor/overview" element={<DoctorDashboard />} />
 
+          <Route
+            path="/doctor/overview"
+            element={
+              <DoctorLayout>
+                <DoctorDashboard />
+              </DoctorLayout>
+            }
+          />
           <Route
             path="/doctor/appointments"
             element={

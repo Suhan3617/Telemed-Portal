@@ -15,12 +15,9 @@ const DoctorDashboard = () => {
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
-      {/* Sidebar */}
-      <DoctorSidebar />
 
       {/* Main Section */}
       <div className="flex flex-col flex-1">
-        <DoctorTopbar name="Dr. Smith" />
 
         <main className="p-6 space-y-10">
 

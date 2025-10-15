@@ -3,21 +3,22 @@ import DoctorSidebar from "../components/Doctor/doctorsidebar.jsx";
 import DoctorTopbar from "../components/Doctor/doctortopbar.jsx";
 
 const DoctorLayout = ({ children, doctorName = "Dr. John" }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(true); // open by default on desktop
+  const [sidebarOpen, setSidebarOpen] = useState(false); // closed by default on all screens
   const layoutRef = useRef(null);
 
-  // Adjust sidebar based on window size
+  // 🟦 Remove auto open/close behavior on resize.
+  // Just ensure sidebar closes if resized to small screen while open.
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768) setSidebarOpen(false);
-      else setSidebarOpen(true);
+      if (window.innerWidth < 768 && sidebarOpen) {
+        setSidebarOpen(false);
+      }
     };
-    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [sidebarOpen]);
 
-  // Close sidebar when clicking outside
+  // 🟨 Close sidebar when clicking outside (on mobile)
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -25,7 +26,7 @@ const DoctorLayout = ({ children, doctorName = "Dr. John" }) => {
         layoutRef.current &&
         !layoutRef.current.contains(e.target)
       ) {
-        if (window.innerWidth < 768) setSidebarOpen(false); // close only on mobile
+        if (window.innerWidth < 768) setSidebarOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);

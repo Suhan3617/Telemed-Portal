@@ -24,14 +24,19 @@ const DoctorSidebar = ({ sidebarOpen, setSidebarOpen }) => {
       <aside
         className={`fixed top-0 left-0 h-screen w-64 bg-gradient-to-b from-blue-600 via-blue-500 to-blue-700 text-white shadow-2xl
           transform transition-transform duration-300 z-40
-          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} 
-          md:flex md:flex-col`}
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
         {/* Header */}
         <div className="px-6 py-6 border-b border-white/20 flex items-center justify-between">
           <h1 className="text-2xl font-extrabold tracking-wide drop-shadow-lg">
             TeleMed Doctor
           </h1>
+          <button
+            className="md:block p-2 rounded-full hover:bg-white/10 transition"
+            onClick={() => setSidebarOpen(false)}
+          >
+            ✕
+          </button>
         </div>
 
         {/* Navigation */}
@@ -42,13 +47,17 @@ const DoctorSidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <Link
                 key={it.name}
                 to={it.path}
+                onClick={() => setSidebarOpen(false)} // closes after clicking a link
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300
-                  ${active
-                    ? "bg-white/25 shadow-inner font-semibold text-white"
-                    : "hover:bg-white/10 hover:translate-x-1 hover:shadow-md text-white/90"
+                  ${
+                    active
+                      ? "bg-white/25 shadow-inner font-semibold text-white"
+                      : "hover:bg-white/10 hover:translate-x-1 hover:shadow-md text-white/90"
                   }`}
               >
-                <div className={`${active ? "text-white" : "text-white/80"}`}>{it.icon}</div>
+                <div className={`${active ? "text-white" : "text-white/80"}`}>
+                  {it.icon}
+                </div>
                 <span className="font-medium">{it.name}</span>
               </Link>
             );
@@ -61,10 +70,10 @@ const DoctorSidebar = ({ sidebarOpen, setSidebarOpen }) => {
         </div>
       </aside>
 
-      {/* Mobile Overlay */}
+      {/* Overlay (for mobile) */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-30 md:hidden"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-30"
           onClick={() => setSidebarOpen(false)}
         />
       )}
