@@ -17,44 +17,41 @@ const DoctorTopbar = ({ name, onToggleSidebar, isSidebarOpen }) => {
   }, []);
 
   return (
-    <header className="relative bg-gradient-to-r from-blue-500/90 via-blue-600/80 to-indigo-500/90
-                       backdrop-blur-xl shadow-lg border-b border-white/20
+    <header className="relative bg-gradient-to-r from-blue-600/90 via-blue-500/90 to-indigo-500/90
+                       backdrop-blur-xl shadow-xl border-b border-white/20
                        px-6 py-4 flex items-center justify-between sticky top-0 z-30">
 
-      {/* Left: Hamburger + Title */}
+      {/* Left: Hamburger + Greeting */}
       <div className="flex items-center gap-4">
         <button
-          className="p-3 rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-600 transition duration-300"
+          className="p-3 rounded-full bg-white/10 hover:bg-blue-500 hover:text-white text-white shadow-lg transition duration-300 border border-white/20"
           onClick={onToggleSidebar}
         >
-          {isSidebarOpen ? <X size={26} /> : <Menu size={26} />}
+          {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
         <div>
-          <h1 className="text-xl font-bold text-white drop-shadow-sm">
+          <h1 className="text-xl font-semibold text-white drop-shadow-sm">
             Welcome back,&nbsp;
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-white">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-200 via-white to-blue-100 font-bold">
               {name}
             </span>
           </h1>
-          <p className="text-sm text-blue-100 mt-1 font-medium">
-            Here is your schedule for today
-          </p>
+          <p className="text-sm text-blue-100 mt-1">Let's make patients smile today 😊</p>
         </div>
       </div>
 
-      {/* Right Side */}
+      {/* Right: Notifications + Profile */}
       <div className="flex items-center gap-4 relative">
         <button className="relative p-3 rounded-full bg-white/10 hover:bg-white/20 text-white shadow-inner transition duration-300">
           <Bell size={22} />
           <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full shadow-md animate-pulse"></span>
         </button>
 
-        {/* Profile Dropdown */}
         <div ref={dropdownRef} className="relative">
           <button
             onClick={() => setOpen(!open)}
-            className="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full shadow-inner cursor-pointer hover:bg-white/20 transition duration-300"
+            className="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-full shadow-inner cursor-pointer hover:bg-white/20 transition duration-300 border border-white/10"
           >
             <img
               src="https://i.pravatar.cc/40?img=5"
@@ -65,16 +62,16 @@ const DoctorTopbar = ({ name, onToggleSidebar, isSidebarOpen }) => {
           </button>
 
           {open && (
-            <div className="absolute right-0 mt-2 w-44 bg-gradient-to-b from-blue-50 to-blue-100 rounded-xl shadow-2xl border border-blue-200 overflow-hidden z-50 animate-fade-in">
+            <div className="absolute right-0 mt-3 w-48 bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-blue-200 overflow-hidden z-50 animate-fade-in">
               <Link
                 to="/doctor/settings"
-                className="w-full flex items-center gap-2 px-4 py-3 hover:bg-blue-200 transition text-blue-700 font-medium"
+                className="w-full flex items-center gap-2 px-4 py-3 hover:bg-blue-100 transition text-blue-700 font-medium"
               >
                 <User size={18} /> Profile
               </Link>
               <Link
                 to=""
-                className="w-full flex items-center gap-2 px-4 py-3 hover:bg-blue-200 transition text-blue-700 font-medium"
+                className="w-full flex items-center gap-2 px-4 py-3 hover:bg-blue-100 transition text-blue-700 font-medium"
               >
                 <Settings size={18} /> Settings
               </Link>
