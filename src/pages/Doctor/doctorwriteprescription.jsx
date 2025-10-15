@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { PlusCircle, Trash2, FileText } from "lucide-react";
+import { FileText } from "lucide-react";
 import DoctorLayout from "../../layout/doctorlayout";
 import Patientselector from "../../components/Doctor/prescription_form/patientselector";
 import Prescriptionpreview from "../../components/Doctor/prescription_form/prescriptionpreview";
@@ -25,7 +25,7 @@ const DoctorPrescription = () => {
   };
 
   return (
-    <DoctorLayout doctorName="Dr. John">
+    <>
       <motion.div
         className="flex flex-col md:flex-row gap-6"
         initial={{ opacity: 0 }}
@@ -86,7 +86,7 @@ const DoctorPrescription = () => {
           onClose={() => setShowSummary(false)}
         />
       )}
-    </DoctorLayout>
+    </>
   );
 };
 
