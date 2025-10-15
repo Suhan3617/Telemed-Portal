@@ -1,6 +1,22 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { CalendarDays, User, Mars, Venus, Info } from "lucide-react";
+import { CalendarDays, User, Mars, Venus, Tablet, Zap, Droplet, Info } from "lucide-react";
+
+const getMedicineIcon = (type) => {
+  switch (type?.toLowerCase()) {
+    case "tablet":
+      return <Tablet className="w-5 h-5 text-blue-500" />;
+    case "syrup":
+      return <Droplet className="w-5 h-5 text-blue-500" />;
+    case "injection":
+      return <Zap className="w-5 h-5 text-blue-500" />;
+    case "ointment":
+    case "cream":
+      return <Droplet className="w-5 h-5 text-blue-500" />;
+    default:
+      return <Info className="w-5 h-5 text-blue-500" />;
+  }
+};
 
 const PrescriptionPreview = ({ patient, medicines, notes }) => {
   if (!patient)
@@ -34,11 +50,7 @@ const PrescriptionPreview = ({ patient, medicines, notes }) => {
           <CalendarDays className="w-5 h-5" /> {new Date().toLocaleDateString()}
         </p>
         <p className="flex items-center gap-1 text-blue-600">
-          {patient.gender === "Male" ? (
-            <Mars className="w-5 h-5" />
-          ) : (
-            <Venus className="w-5 h-5" />
-          )}{" "}
+          {patient.gender === "Male" ? <Mars className="w-5 h-5" /> : <Venus className="w-5 h-5" />}{" "}
           {patient.age} yrs
         </p>
       </div>
@@ -54,9 +66,12 @@ const PrescriptionPreview = ({ patient, medicines, notes }) => {
                 whileHover={{ scale: 1.02 }}
               >
                 <p className="font-bold text-blue-700 text-lg flex items-center gap-1">
-                  <Info className="w-5 h-5 text-blue-500" /> {med.name}
+                  {getMedicineIcon(med.type)} {med.name}
                 </p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-1 text-sm text-blue-700">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mt-1 text-sm text-blue-700">
+                  <p>
+                    <span className="font-semibold">Type:</span> {med.type || "-"}
+                  </p>
                   <p>
                     <span className="font-semibold">Strength:</span> {med.strength || "-"}
                   </p>
