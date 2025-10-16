@@ -20,7 +20,7 @@ const actions = [
     label: "View Medical Records",
     icon: <ClipboardList size={20} />,
     gradient: "from-indigo-500 to-blue-500",
-    path: "/doctor/records",
+    path: "/doctor/reports",
   },
 ];
 
