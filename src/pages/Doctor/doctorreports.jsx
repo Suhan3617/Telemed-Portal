@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useMemo, useEffect } from "react";
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import DoctorLayout from "../../components/Doctor/doctorsidebar";
 import PR_PremiumCard from "../../components/Doctor/reports_page/doctorlabcard";
 import PR_PremiumModal from "../../components/Doctor/reports_page/doctorcardmodal";
@@ -17,6 +17,16 @@ export default function DoctorReports() {
   const [modalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState(mockRecords);
 
+  // Reload animation controller
+  const controls = useAnimation();
+  useEffect(() => {
+    controls.start({
+      opacity: [0, 1],
+      y: [50, 0],
+      transition: { duration: 1.4, ease: "easeOut" },
+    });
+  }, []);
+
   const filtered = useMemo(() => {
     return data.filter((r) => {
       const matchQ = (r.patientName + r.title + r.type)
@@ -33,7 +43,10 @@ export default function DoctorReports() {
     reviewed: data.filter((d) => d.status === "Reviewed").length,
     pending: data.filter((d) => d.status === "Pending").length,
     common: (() => {
-      const freq = data.reduce((acc, r) => ((acc[r.type] = (acc[r.type] || 0) + 1), acc), {});
+      const freq = data.reduce(
+        (acc, r) => ((acc[r.type] = (acc[r.type] || 0) + 1), acc),
+        {}
+      );
       return Object.keys(freq).sort((a, b) => freq[b] - freq[a])[0] || "—";
     })(),
   };
@@ -42,31 +55,92 @@ export default function DoctorReports() {
     setSelected(r);
     setModalOpen(true);
   };
-  const markReviewed = (id) => setData((prev) => prev.map((d) => (d.id === id ? { ...d, status: "Reviewed" } : d)));
+
+  const markReviewed = (id) =>
+    setData((prev) =>
+      prev.map((d) => (d.id === id ? { ...d, status: "Reviewed" } : d))
+    );
 
   return (
     <>
+      {/* ✨ Main Container with Entry Animation */}
       <motion.div
-        className="min-h-screen p-8 bg-gradient-to-br from-blue-300/60 via-blue100/60 rounded-3xl to-indigo-100 blur-0 shadow-inner premium-glow"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        animate={controls}
+        className="relative min-h-screen overflow-hidden 
+                   p-8 md:p-10 rounded-3xl 
+                   bg-gradient-to-br from-blue-500/40 via-sky-200/60 to-indigo-200/70 
+                   backdrop-blur-2xl border border-blue-200/30 shadow-inner"
       >
+        {/* 🌈 Animated Gradient Glows */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <motion.div
+            className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-500/40 rounded-full blur-[150px]"
+            animate={{ y: [0, 40, 0], x: [0, 25, 0] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-[-20%] right-[-15%] w-[600px] h-[600px] bg-indigo-400/40 rounded-full blur-[160px]"
+            animate={{ y: [0, -50, 0], x: [0, -30, 0] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute top-[30%] right-[10%] w-[300px] h-[300px] bg-cyan-300/40 rounded-full blur-[120px]"
+            animate={{ y: [0, -25, 0], x: [0, 25, 0] }}
+            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+
+        {/* 🫧 Floating Oxygen Bubbles */}
+        {Array.from({ length: 8 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full bg-white/40 blur-[6px]"
+            style={{
+              width: `${10 + Math.random() * 15}px`,
+              height: `${10 + Math.random() * 15}px`,
+              left: `${Math.random() * 100}%`,
+              bottom: `${Math.random() * 40}%`,
+            }}
+            animate={{
+              y: [0, -80 - Math.random() * 50, 0],
+              opacity: [0.3, 1, 0.3],
+            }}
+            transition={{
+              duration: 6 + Math.random() * 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: i * 0.8,
+            }}
+          />
+        ))}
+
+        {/* 🩵 Header */}
         <motion.div
-          initial={{ y: -30, opacity: 0 }}
+          initial={{ y: -40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7, type: "spring", stiffness: 110 }}
+          transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
         >
           <PR_PremiumHeader />
         </motion.div>
 
-        <PR_PremiumStats stats={stats} />
-
+        {/* 📊 Stats */}
         <motion.div
-          className="rounded-3xl bg-white/40 backdrop-blur-lg shadow-md mb-8 border border-blue-200"
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
+          className="mt-6"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
+        >
+          <PR_PremiumStats stats={stats} />
+        </motion.div>
+
+        {/* 🔍 Filter */}
+        <motion.div
+          className="mt-8 rounded-3xl bg-white/50 backdrop-blur-2xl shadow-2xl 
+                     border border-blue-200/60 hover:shadow-blue-200/40 transition-all duration-500"
+          initial={{ y: 40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5 }}
         >
           <PR_PremiumFilters
             q={q}
@@ -84,42 +158,65 @@ export default function DoctorReports() {
               setStatus("All");
               setDateRange("Any");
             }}
-            onApply={() => {}}
           />
         </motion.div>
 
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {filtered.length === 0 ? (
+        {/* 🧾 Cards */}
+        <motion.div
+          className="mt-12 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-10"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+        >
+          {filtered.length === 0 ? (
+            <motion.div
+              className="col-span-full p-16 text-center text-blue-700 font-semibold
+                         bg-white/70 rounded-2xl shadow-lg backdrop-blur-3xl border border-blue-100 text-lg"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+            >
+              No reports found
+            </motion.div>
+          ) : (
+            filtered.map((r, index) => (
               <motion.div
-                className="col-span-full p-14 text-center text-blue-400 rounded-2xl bg-white/75 font-semibold shadow-lg backdrop-blur-3xl border border-blue-100 text-xl"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
+                key={r.id}
+                whileHover={{
+                  y: -8,
+                  scale: 1.02,
+                  boxShadow: "0 20px 40px rgba(59,130,246,0.25)",
+                }}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: 0.2 + index * 0.05,
+                  type: "spring",
+                  stiffness: 150,
+                }}
               >
-                No reports found
-              </motion.div>
-            ) : (
-              filtered.map((r, i) => (
                 <PR_PremiumCard
-                  key={r.id}
                   r={r}
                   onView={handleView}
                   onPatient={() => {}}
                   onNote={() => {}}
                 />
-              ))
-            )}
-          </div>
-          <aside className="space-y-4">{/* Future: AI summary, etc. */}</aside>
-        </div>
+              </motion.div>
+            ))
+          )}
+        </motion.div>
 
-        <PR_PremiumModal
-          open={modalOpen}
-          setOpen={setModalOpen}
-          record={selected}
-          onMarkReviewed={markReviewed}
-        />
+        {/* 🩺 Modal */}
+        <AnimatePresence>
+          {modalOpen && (
+            <PR_PremiumModal
+              open={modalOpen}
+              setOpen={setModalOpen}
+              record={selected}
+              onMarkReviewed={markReviewed}
+            />
+          )}
+        </AnimatePresence>
       </motion.div>
     </>
   );

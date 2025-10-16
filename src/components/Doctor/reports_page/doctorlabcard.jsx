@@ -68,7 +68,7 @@ export default function LabCard({ r = {}, onView, onPatient, onNote }) {
             <div
               key={i}
               className="text-xs px-3 py-1.5 bg-white/70 border border-blue-100 rounded-lg
-                         shadow-inner text-blue-700 font-medium"
+                         shadow-inner text-blue-700 font-medium "
             >
               {f.name || "File"}
             </div>
