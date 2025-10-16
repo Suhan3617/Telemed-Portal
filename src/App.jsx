@@ -141,7 +141,7 @@ function App() {
           />
 
           <Route
-            path="/doctor/records"
+            path="/doctor/reports"
             element={
               <DoctorLayout>
                 <Doctorreports />
