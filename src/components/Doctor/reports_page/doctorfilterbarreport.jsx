@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Search, X, ChevronDown } from "lucide-react";
 import { pop } from "./animation.js";
+import './filterVFX.css'; // Shimmer animation CSS (will add below)
 
 export default function PR_PremiumFilters({
   q,
@@ -42,7 +43,7 @@ export default function PR_PremiumFilters({
       animate="animate"
       variants={pop}
       className="bg-gradient-to-br from-blue-50/70 via-white/60 to-blue-100/50
-                 backdrop-blur-2xl border border-blue-400/50 rounded-3xl p-6
+                 backdrop-blur-2xl border border-blue-200/50 rounded-3xl p-6
                  shadow-[0_8px_32px_rgba(0,0,0,0.08)] transition-all duration-500 flex flex-col gap-6"
     >
       {/* 🔍 Search Bar */}
@@ -91,12 +92,12 @@ export default function PR_PremiumFilters({
                 value={f.value}
                 onChange={(e) => f.set(e.target.value)}
                 className="appearance-none w-full px-4 py-3 pr-10 rounded-xl
-                           bg-gradient-to-r from-white/80 via-blue-50/50 to-white/80
-                           text-blue-800 font-semibold shadow-[inset_0_1px_4px_rgba(0,0,0,0.08)]
+                           bg-gradient-to-br from-white/80 via-blue-50/60 to-white/80
+                           text-blue-800 font-semibold shadow-[inset_0_1px_6px_rgba(0,0,0,0.08)]
                            border border-blue-200/50 focus:ring-0 focus:outline-none
                            hover:shadow-[0_4px_12px_rgba(59,130,246,0.15)]
                            hover:bg-gradient-to-br hover:from-white/90 hover:to-blue-50/80
-                           transition-all duration-300 cursor-pointer"
+                           transition-all duration-300 cursor-pointer shimmer-dropdown"
               >
                 {f.options.map((opt) => (
                   <option key={opt} value={opt}>
@@ -118,12 +119,12 @@ export default function PR_PremiumFilters({
           <div className="relative w-full group">
             <select
               className="appearance-none w-full px-4 py-3 pr-10 rounded-xl
-                         bg-gradient-to-r from-white/80 via-blue-50/50 to-white/80
-                         text-blue-800 font-semibold shadow-[inset_0_1px_4px_rgba(0,0,0,0.08)]
+                         bg-gradient-to-br from-white/80 via-blue-50/60 to-white/80
+                         text-blue-800 font-semibold shadow-[inset_0_1px_6px_rgba(0,0,0,0.08)]
                          border border-blue-200/50 focus:ring-0 focus:outline-none
                          hover:shadow-[0_4px_12px_rgba(59,130,246,0.15)]
                          hover:bg-gradient-to-br hover:from-white/90 hover:to-blue-50/80
-                         transition-all duration-300 cursor-pointer"
+                         transition-all duration-300 cursor-pointer shimmer-dropdown"
             >
               <option>Newest First</option>
               <option>Oldest First</option>
