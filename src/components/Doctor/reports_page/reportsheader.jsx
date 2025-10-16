@@ -14,7 +14,7 @@ export default function PR_PremiumHeader() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
         {/* ---------- Left: Title & Subtitle ---------- */}
         <div>
-          <div className="text-sm font-semibold tracking-wide text-blue-400 uppercase">
+          <div className="text-sm font-semibold tracking-wide text-blue-600 uppercase">
             Dashboard / Reports
           </div>
 
