@@ -1,34 +1,29 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { BarChart3, FlaskConical, Image, FileText } from "lucide-react";
+import { BarChart3, CheckCircle2, Clock, Droplet } from "lucide-react";
+import { fadeInUp } from "./animation.js";
 
-const DoctorStatsBar = ({ stats }) => {
-  const items = [
-    { label: "Total Reports", value: stats.total, icon: BarChart3, color: "text-blue-600" },
-    { label: "Lab Results", value: stats.lab, icon: FlaskConical, color: "text-green-600" },
-    { label: "Imaging", value: stats.imaging, icon: Image, color: "text-indigo-600" },
-    { label: "Prescriptions", value: stats.prescription, icon: FileText, color: "text-blue-500" },
+export default function PR_PremiumStats({ stats }) {
+  const cards = [
+    { label: "Total Reports", value: stats.total, Icon: BarChart3, color: "from-blue-50 to-blue-100" },
+    { label: "Reviewed", value: stats.reviewed, Icon: CheckCircle2, color: "from-green-50 to-green-100" },
+    { label: "Pending", value: stats.pending, Icon: Clock, color: "from-yellow-50 to-yellow-100" },
+    { label: "Most Common", value: stats.common, Icon: Droplet, color: "from-blue-50 to-indigo-50" }
   ];
 
   return (
-    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-      {items.map(({ label, value, icon: Icon, color }, i) => (
-        <motion.div
-          key={label}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: i * 0.1 }}
-          className="bg-white/70 backdrop-blur-lg rounded-2xl p-4 shadow hover:shadow-xl border border-blue-100 flex items-center justify-between"
-        >
+    <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 my-4">
+      {cards.map((c, i) => (
+        <motion.div key={c.label} initial={{opacity:0,y:6}} animate={{opacity:1,y:0}} transition={{delay:i*0.06}} className="rounded-2xl p-4 border border-blue-100 bg-white/75 shadow-md flex items-center justify-between">
           <div>
-            <p className="text-sm text-gray-500">{label}</p>
-            <h3 className="text-xl font-bold text-blue-700">{value}</h3>
+            <div className="text-xs text-slate-500">{c.label}</div>
+            <div className="text-2xl font-bold text-slate-900">{c.value}</div>
           </div>
-          <Icon className={`${color}`} size={28} />
+          <div className={`p-3 rounded-lg bg-gradient-to-br ${c.color} shadow-inner`} style={{boxShadow: "inset 0 -6px 18px rgba(0,0,0,0.03)"}}>
+            <c.Icon className="text-blue-600" size={24} />
+          </div>
         </motion.div>
       ))}
     </div>
   );
-};
-
-export default DoctorStatsBar;
+}
