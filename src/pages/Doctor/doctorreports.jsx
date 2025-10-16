@@ -1,68 +1,76 @@
 import React, { useState, useMemo } from "react";
-import { motion } from "framer-motion";
-import DoctorFiltersBar from "../../components/Doctor/reports_page/doctorfilterbarreport";
-import DoctorStatsBar from "../../components/Doctor/reports_page/reportsstats";
-import DoctorReportsHeader from "../../components/Doctor/reports_page/reportsheader";
-import DoctorLabCard from "../../components/Doctor/reports_page/doctorlabcard";
-import { records } from "../../data/doctor/mockdata";
+import DoctorLayout from "../../components/Doctor/doctorsidebar?"; // use your layout import path
+import PR_PremiumStats from "../../components/Doctor/reports_page/reportsstats";
+import PR_PremiumCard from "../../components/Doctor/reports_page/doctorlabcard";
+import PR_PremiumModal from "../../components/Doctor/reports_page/doctorcardmodal";
+import PR_PremiumHeader from "../../components/Doctor/reports_page/reportsheader";
+import PR_PremiumFilters from "../../components/Doctor/reports_page/doctorfilterbarreport";
+import { records as mockRecords} from "../../data/doctor/mockdata";
 
-const DoctorReports = () => {
-  const [q, setq] = useState("");
-  const [type, settype] = useState("All");
+export default function Doctorreports() {
+  const [q, setQ] = useState("");
+  const [type, setType] = useState("All");
+  const [status, setStatus] = useState("All");
+  const [dateRange, setDateRange] = useState("Any");
+  const [selected, setSelected] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [data, setData] = useState(mockRecords);
 
-  const list = useMemo(() => {
-    return records.filter((r) => {
-      const matchQ = (r.title + r.patientName)
-        .toLowerCase()
-        .includes(q.toLowerCase());
+  const filtered = useMemo(()=>{
+    return data.filter(r=>{
+      const matchQ = (r.patientName + r.title + r.type).toLowerCase().includes(q.toLowerCase());
       const matchType = type === "All" || r.type === type;
-      return matchQ && matchType;
+      const matchStatus = status === "All" || r.status === status;
+      return matchQ && matchType && matchStatus;
     });
-  }, [q, type]);
+  },[data,q,type,status]);
 
   const stats = {
-    total: records.length,
-    lab: records.filter((r) => r.type === "Lab Result").length,
-    imaging: records.filter((r) => r.type === "Imaging").length,
-    prescription: records.filter((r) => r.type === "Prescription").length,
+    total: data.length,
+    reviewed: data.filter(d=>d.status==="Reviewed").length,
+    pending: data.filter(d=>d.status==="Pending").length,
+    common: (()=> {
+      const freq = data.reduce((acc,r)=> (acc[r.type]=(acc[r.type]||0)+1,acc),{});
+      return Object.keys(freq).sort((a,b)=>freq[b]-freq[a])[0] || "—";
+    })()
   };
 
+  const handleView = (r) => { setSelected(r); setModalOpen(true); };
+  const markReviewed = (id) => setData(prev => prev.map(d=> d.id===id ? {...d, status:"Reviewed"} : d));
+
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className="min-h-screen bg-gradient-to-b from-blue-100 via-white to-blue-50 p-6"
-    >
-      <DoctorReportsHeader />
-      <DoctorStatsBar stats={stats} />
-      <DoctorFiltersBar q={q} setq={setq} type={type} settype={settype} />
+    <>
+      <div className="min-h-screen p-6 bg-gradient-to-b from-blue-50 to-white">
+        <PR_PremiumHeader />
 
-      {/* Reports Grid */}
-      <div className="container mx-auto mt-8">
-        {list.length > 0 ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-          >
-            {list.map((r) => (
-              <DoctorLabCard key={r.id} record={r} />
+        <PR_PremiumStats stats={stats} />
+
+        <PR_PremiumFilters
+          q={q} setQ={setQ}
+          type={type} setType={setType}
+          status={status} setStatus={setStatus}
+          dateRange={dateRange} setDateRange={setDateRange}
+          resultsCount={filtered.length}
+          onClear={()=>{ setQ(""); setType("All"); setStatus("All"); setDateRange("Any"); }}
+          onApply={()=>{}}
+        />
+
+        <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {filtered.length === 0 ? (
+              <div className="col-span-full p-12 text-center text-slate-500 rounded-2xl bg-white/60">No reports found</div>
+            ) : filtered.map(r => (
+              <PR_PremiumCard key={r.id} r={r} onView={handleView} onPatient={()=>{}} onNote={()=>{}} />
             ))}
-          </motion.div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center mt-12 text-gray-500"
-          >
-            <p className="text-xl">No records found 📄</p>
-          </motion.div>
-        )}
-      </div>
-    </motion.div>
-  );
-};
+          </div>
 
-export default DoctorReports;
+          <aside className="space-y-4">
+            {/* AI Summary / Recent Uploads / Alerts panels insert here — reuse earlier optional components */}
+          </aside>
+        </div>
+
+        <PR_PremiumModal open={modalOpen} setOpen={setModalOpen} record={selected} onMarkReviewed={markReviewed} />
+      </div>
+    </>
+  );
+}
