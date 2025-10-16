@@ -63,7 +63,7 @@ export default function DoctorReports() {
         <PR_PremiumStats stats={stats} />
 
         <motion.div
-          className="p-4 rounded-3xl bg-white/40 backdrop-blur-lg shadow-md mb-8 border border-blue-200"
+          className="rounded-3xl bg-white/40 backdrop-blur-lg shadow-md mb-8 border border-blue-200"
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4 }}

@@ -8,74 +8,84 @@ export default function PR_PremiumStats({ stats }) {
       label: "Total Reports",
       value: stats.total,
       Icon: BarChart3,
-      bg: "bg-blue-100",
-      accent: "from-blue-200 to-blue-400",
+      glow: "from-blue-300 to-blue-500",
       iconColor: "text-blue-600",
     },
     {
       label: "Reviewed",
       value: stats.reviewed,
       Icon: CheckCircle2,
-      bg: "bg-emerald-100",
-      accent: "from-emerald-200 to-emerald-400",
+      glow: "from-emerald-300 to-emerald-500",
       iconColor: "text-emerald-600",
     },
     {
       label: "Pending",
       value: stats.pending,
       Icon: Clock,
-      bg: "bg-amber-100",
-      accent: "from-amber-200 to-amber-400",
+      glow: "from-amber-300 to-amber-500",
       iconColor: "text-amber-600",
-    },
-    {
-      label: "Most Common",
-      value: stats.common,
-      Icon: Droplet,
-      bg: "bg-indigo-100",
-      accent: "from-indigo-300 to-indigo-400",
-      iconColor: "text-indigo-600",
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 my-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7 my-6">
       {cards.map((c, i) => (
         <motion.div
           key={c.label}
-          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          initial={{ opacity: 0, y: 30, scale: 0.92 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{
-            delay: i * 0.1,
-            duration: 0.5,
-            ease: "easeOut",
+            delay: i * 0.07,
+            type: "spring",
+            stiffness: 230,
+            damping: 18,
           }}
           whileHover={{
-            scale: 1.06,
-            y: -4,
+            scale: 1.07,
+            y: -6,
             boxShadow:
-              "0 12px 30px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0,0,0,0.05)",
+              "0 16px 32px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255,255,255,0.4)",
+            transition: { type: "spring", stiffness: 340, damping: 20 },
           }}
-          className={`relative overflow-hidden rounded-2xl p-6 shadow-md ${c.bg} text-gray-800 flex items-center justify-between transition-all duration-300`}
+          whileTap={{
+            scale: 0.97,
+            transition: { duration: 0.1 },
+          }}
+          className={`relative overflow-hidden rounded-2xl p-6 shadow-lg flex items-center justify-between transition-all duration-200`}
+          style={{
+            background:
+              "rgba(255, 255, 255, 0.55)",
+            backdropFilter: "blur(14px)",
+            WebkitBackdropFilter: "blur(14px)",
+            border: "1px solid rgba(255, 255, 255, 0.25)",
+          }}
         >
-          {/* soft gradient overlay */}
+          {/* Glow background */}
           <div
-            className={`absolute inset-0 bg-gradient-to-br ${c.accent} opacity-40 blur-2xl`}
+            className={`absolute -inset-12 bg-gradient-to-br ${c.glow} opacity-40 blur-3xl`}
           ></div>
 
+          {/* Light reflection overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40 opacity-40"></div>
+
+          {/* Content */}
           <div className="relative z-10">
-            <div className="text-sm font-semibold uppercase tracking-wide text-gray-600">
+            <div className="text-xs font-semibold uppercase tracking-wider text-gray-600">
               {c.label}
             </div>
-            <div className="text-4xl font-bold mt-2 text-gray-800">
+            <div className="text-4xl font-bold mt-2 text-gray-900 drop-shadow-sm">
               {c.value}
             </div>
           </div>
 
+          {/* Icon */}
           <motion.div
-            whileHover={{ rotate: 6, scale: 1.1 }}
-            transition={{ duration: 0.25 }}
-            className="relative z-10 p-3 rounded-xl bg-white/70 backdrop-blur-sm shadow-inner"
+            whileHover={{
+              rotate: 8,
+              scale: 1.15,
+              transition: { type: "spring", stiffness: 400, damping: 18 },
+            }}
+            className="relative z-10 p-3 rounded-xl bg-white/60 backdrop-blur-sm shadow-md border border-white/50"
           >
             <c.Icon size={28} className={`${c.iconColor}`} />
           </motion.div>
