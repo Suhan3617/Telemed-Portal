@@ -171,7 +171,7 @@ export default function DoctorReports() {
           {filtered.length === 0 ? (
             <motion.div
               className="col-span-full p-16 text-center text-blue-700 font-semibold
-                         bg-white/70 rounded-2xl shadow-lg backdrop-blur-3xl border border-blue-100 text-lg"
+                         bg-white/70 rounded-2xl shadow-lg backdrop-blur-3xl text-lg"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
