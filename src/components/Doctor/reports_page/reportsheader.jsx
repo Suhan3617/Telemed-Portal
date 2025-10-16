@@ -8,31 +8,27 @@ export default function PR_PremiumHeader() {
       initial="initial"
       animate="animate"
       variants={fadeInUp}
-      className="mb-6"
+      className="mb-10"
     >
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <div className="text-sm text-blue-500/70">Dashboard &nbsp;/&nbsp; Reports</div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 flex items-center gap-3 mt-1">
-            <span className="p-2 rounded-lg bg-gradient-to-br from-blue-50 to-white shadow-sm text-blue-600">📄</span>
+          <div className="text-xs font-semibold tracking-wide text-blue-400 uppercase">Dashboard &nbsp;/&nbsp; Reports</div>
+          <h1 className="text-4xl sm:text-5xl font-black text-blue-700 tracking-tight flex items-center gap-4 mt-2">
+            <span className="p-3 rounded-lg bg-gradient-to-br from-blue-100 to-blue-500/60 shadow-blue-300/30 text-blue-600 premium-icon-glow">📄</span>
             Patient Reports
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-base text-slate-600/90 mt-2 font-medium glow-secondary">
             Review and analyze reports uploaded by your patients.
           </p>
         </div>
-
-        <div className="flex gap-3 items-center">
-          <button className="px-4 py-2 rounded-xl bg-white border border-blue-100 shadow-sm hover:shadow-md transition">
-            Import
-          </button>
-
+        <div className="flex gap-4 items-center">
+          <button className="px-5 py-2 rounded-xl font-semibold bg-white/70 border border-blue-200 shadow-xl text-blue-600 hover:bg-blue-50 transition-all">Import</button>
           <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg hover:brightness-105 transition"
+            whileHover={{ scale: 1.05, boxShadow: "0 0 24px 8px rgba(59,130,246,0.28)" }}
+            whileTap={{ scale: 0.97 }}
+            className="px-5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-2xl font-bold tracking-wide transition"
           >
-            New Report
+            + New Report
           </motion.button>
         </div>
       </div>
