@@ -261,7 +261,7 @@ export const records = [
     patientName: "John Doe",
     age: 42,
     gender: "Male",
-    title: "Comprehensive Blood Test Report",
+    title: "Blood Test Report",
     type: "Lab Result",
     date: "2025-07-10",
     uploadedBy: "Patient",
