@@ -1,55 +1,147 @@
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Search, X } from "lucide-react";
+import { pop } from "./animation.js";
 
+export default function DoctorSidebar({
+  collapsed,
+  patients,
+  onSelectPatient,
+  selectedPatientId,
+}) {
+  const [filter, setFilter] = useState("");
 
-import React from 'react'
-
-const sidebar = ({ collapsed, patients, onSelectPatient, selectedPatientId }) => {
-  const [filter, setFilter] = React.useState('');
-  const filteredPatients = patients.filter(p =>
+  const filteredPatients = patients.filter((p) =>
     p.name.toLowerCase().includes(filter.toLowerCase())
   );
 
   return (
-    <aside className={`bg-gradient-to-b from-blue-50 to-white text-blue-900 overflow-y-auto transition-width duration-300 ${collapsed ? 'w-16' : 'w-80'}`}>
+    <motion.aside
+      initial={{ x: -30, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`${
+        collapsed ? "w-20" : "w-80"
+      } bg-gradient-to-b from-blue-50/70 via-white/60 to-blue-100/50
+         backdrop-blur-2xl border-r border-blue-200/60
+         shadow-[0_8px_32px_rgba(0,0,0,0.08)]
+         transition-all duration-500 overflow-y-auto rounded-tr-3xl rounded-br-3xl`}
+    >
+      {/* 🔍 Premium Search Bar */}
       {!collapsed && (
-        <div className="p-4 sticky top-0 bg-blue-50">
-          <input
-            type="text"
-            placeholder="Search patients"
-            className="w-full p-2 rounded-lg border border-blue-300 focus:ring-2 focus:ring-teal-300 focus:outline-none"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-            aria-label="Filter patient list"
-          />
-        </div>
+        <motion.div
+          variants={pop}
+          initial="initial"
+          animate="animate"
+          className="sticky top-0 z-20 p-4 bg-gradient-to-br from-blue-50/80 to-white/60 backdrop-blur-xl border-b border-blue-100/60"
+        >
+          <div className="relative">
+            <Search
+              className="absolute left-4 top-3.5 text-blue-500/80"
+              size={22}
+            />
+            <input
+              type="text"
+              placeholder="Search patients..."
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              className="w-full pl-12 pr-10 py-3 rounded-2xl
+                         bg-gradient-to-r from-white/80 via-blue-50/50 to-white/80
+                         text-blue-900 border border-blue-100/60 shadow-inner font-medium
+                         placeholder:text-blue-400 focus:ring-2 focus:ring-blue-300/70
+                         focus:outline-none hover:bg-white/90 transition-all duration-300"
+            />
+            {filter && (
+              <button
+                onClick={() => setFilter("")}
+                className="absolute right-4 top-3 text-blue-400 hover:text-blue-600 transition"
+              >
+                <X size={18} />
+              </button>
+            )}
+          </div>
+        </motion.div>
       )}
-      <ul className="divide-y divide-blue-200">
-        {filteredPatients.map(patient => (
-          <li
+
+      {/* 🧬 Patient List */}
+      <motion.ul
+        layout
+        className="divide-y divide-blue-100 px-3 py-2 space-y-2"
+      >
+        {filteredPatients.map((patient) => (
+          <motion.li
             key={patient.id}
-            tabIndex={0}
+            whileHover={{ scale: 1.02, y: -2 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => onSelectPatient(patient.id)}
-            onKeyDown={e => (e.key === 'Enter' ? onSelectPatient(patient.id) : null)}
-            className={`cursor-pointer flex items-center space-x-3 p-3 hover:bg-blue-100 transition rounded-md ${
-              patient.id === selectedPatientId ? 'bg-teal-200 font-semibold' : ''
-            }`}
+            tabIndex={0}
+            className={`cursor-pointer group flex items-center gap-3 p-3 rounded-2xl transition-all
+                        ${
+                          patient.id === selectedPatientId
+                            ? "bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg shadow-blue-200"
+                            : "bg-gradient-to-br from-white/90 via-blue-50/50 to-white/90 hover:shadow-md border border-blue-100/60"
+                        }`}
           >
-            <img alt={`${patient.name} avatar`} src={patient.avatar} className="w-10 h-10 rounded-full shadow-md" />
+            {/* Avatar */}
+            <motion.img
+              src={patient.avatar}
+              alt={`${patient.name} avatar`}
+              className={`w-12 h-12 rounded-full shadow-md object-cover border-2 ${
+                patient.id === selectedPatientId
+                  ? "border-white/70"
+                  : "border-blue-100"
+              }`}
+            />
+
+            {/* Patient Info */}
             {!collapsed && (
               <div className="flex-1">
-                <div>{patient.name}</div>
-                <div className="text-sm text-blue-700">
+                <div
+                  className={`font-semibold ${
+                    patient.id === selectedPatientId
+                      ? "text-white"
+                      : "text-blue-900"
+                  }`}
+                >
+                  {patient.name}
+                </div>
+                <div
+                  className={`text-sm ${
+                    patient.id === selectedPatientId
+                      ? "text-blue-100/90"
+                      : "text-blue-700/90"
+                  }`}
+                >
                   {patient.age}/{patient.sex} • Last: {patient.lastVisit}
                 </div>
               </div>
             )}
+
+            {/* Status Pill */}
             {!collapsed && patient.statusPill && (
-              <span className="text-xs bg-amber-300 text-amber-900 rounded px-2 py-0.5 select-none">{patient.statusPill}</span>
+              <span
+                className={`text-xs px-2 py-0.5 rounded-full font-semibold shadow-sm select-none ${
+                  patient.id === selectedPatientId
+                    ? "bg-white/30 text-white"
+                    : "bg-amber-200/80 text-amber-900"
+                }`}
+              >
+                {patient.statusPill}
+              </span>
             )}
-          </li>
+          </motion.li>
         ))}
-      </ul>
-    </aside>
+
+        {filteredPatients.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center text-blue-600/70 font-medium py-6"
+          >
+            No patients found 🩺
+          </motion.div>
+        )}
+      </motion.ul>
+    </motion.aside>
   );
 }
-
-export default sidebar

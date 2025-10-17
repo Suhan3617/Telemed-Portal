@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { mockPatients } from '../../components/Doctor/Patients_page/mockdata';
 import Topbar from '../../components/Doctor/Patients_page/topbar';
-import Sidebar from '../../components/Doctor/Patients_page/sidebar';
+import DoctorSidebar from '../../components/Doctor/Patients_page/sidebar';
 import PatientSummary from '../../components/Doctor/Patients_page/patientsummary';
 import Patientdetails from '../../components/Doctor/Patients_page/patientdetails';
 import Rightbar_quickactions from '../../components/Doctor/Patients_page/rightbar_quickactions';
@@ -15,7 +15,7 @@ export default function PatientOverviewPage() {
     <div className="flex flex-col h-screen bg-gradient-to-b from-blue-100 to-white overflow-hidden">
       <Topbar onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)} />
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar
+        <DoctorSidebar
           collapsed={sidebarCollapsed}
           patients={mockPatients}
           onSelectPatient={setSelectedPatientId}
