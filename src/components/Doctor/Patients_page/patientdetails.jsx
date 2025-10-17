@@ -42,7 +42,7 @@ const renderListItem = (content, subContent, key, bgColor = "bg-blue-50", textCo
     variants={itemVariants}
     whileHover="hover"
     className={`flex flex-col sm:flex-row sm:justify-between items-start sm:items-center px-4 py-2 rounded-xl
-                ${bgColor} ${textColor} shadow-sm transition-all duration-300 cursor-pointer`}
+                ${bgColor}  ${textColor} shadow-sm transition-all duration-300 cursor-pointer`}
     style={{
       borderLeft: `4px solid ${
         textColor.includes("blue")
@@ -64,10 +64,7 @@ const PatientDetailsPremium = ({ patient, onViewReports }) => {
       initial="hidden"
       animate="visible"
       variants={sectionVariants}
-      className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-blue-900 p-8 rounded-3xl shadow-2xl border border-blue-100 relative overflow-hidden"
-      style={{
-        background: "linear-gradient(135deg, #ffffff, #bfdbfe, #93c5fd)",
-      }}
+      className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-blue-900 p-8 rounded-3xl shadow-2xl border border-blue-100 relative overflow-hidden bg-gradient-to-br from-blue-500/65 via-sky-300/45 to-indigo-300/40"
     >
       {/* Gradient background animation */}
       <motion.div

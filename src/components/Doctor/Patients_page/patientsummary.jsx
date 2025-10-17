@@ -77,7 +77,7 @@ const PatientCardPremium = ({ patient }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
       className="relative w-full rounded-3xl shadow-2xl overflow-hidden
-                 bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-200 p-8 md:p-10 border-4 border-white/50"
+                 bg-gradient-to-br from-blue-500/65 via-sky-300/45 to-indigo-300/40 p-8 md:p-10 border-4 border-white/50"
     >
       
       {/* --- 1. Top Section: AVATAR (Left) | NAME/INFO (Center) | REPORTS (Right) --- */}
