@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FileText } from "lucide-react";
+import { useSearchParams } from "react-router-dom"; // 👈 Import useSearchParams
 import PatientSelector from "../../components/Doctor/prescription_form/patientselector";
 import PrescriptionPreview from "../../components/Doctor/prescription_form/prescriptionpreview";
 import MedicineForm from "../../components/Doctor/prescription_form/medicineform";
 import PrescriptionSummary from "../../components/Doctor/prescription_form/prescriptionsummary";
 
+// 👈 PLACEHOLDER: You need to implement this function to fetch patient data
+const fetchPatientById = async (id) => {
+  // In a real application, this would be an API call, e.g., axios.get('/api/patients/' + id)
+  console.log(`Fetching patient data for ID: ${id}`);
+  
+  // Mock data for demonstration
+  if (id === "pat_123") {
+    return {
+      id: id,
+      name: "Dr. Selected Mock Patient",
+      dob: "1990-01-01",
+      // ... other patient fields
+    };
+  }
+  return null;
+};
+
 const DoctorPrescription = () => {
+  const [searchParams] = useSearchParams(); // 👈 Use the hook to get URL parameters
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [medicines, setMedicines] = useState([
     {
@@ -20,6 +39,22 @@ const DoctorPrescription = () => {
   ]);
   const [notes, setNotes] = useState("");
   const [showSummary, setShowSummary] = useState(false);
+
+  // 💡 NEW LOGIC: Effect to check for and pre-select a patient from the URL
+  useEffect(() => {
+    const preselectedPatientId = searchParams.get("patientId");
+
+    if (preselectedPatientId && !selectedPatient) {
+      // 1. Fetch the patient data using the ID from the URL
+      fetchPatientById(preselectedPatientId).then(patientData => {
+        if (patientData) {
+          // 2. Set the fetched patient as the selected patient
+          setSelectedPatient(patientData);
+          console.log(`Pre-selected patient: ${patientData.name}`);
+        }
+      });
+    }
+  }, [searchParams, selectedPatient]); // Rerun if URL params change
 
   const handleGenerate = (e) => {
     e.preventDefault();
@@ -48,9 +83,13 @@ const DoctorPrescription = () => {
             <FileText className="w-7 h-7 text-blue-600" /> Create Prescription
           </h2>
 
-          {/* Patient Selector */}
-          {/* Selected Patient Info */}
-          <PatientSelector onSelect={setSelectedPatient} />
+          {/* Patient Selector - Pass the current selection to the selector 
+             so it can manage its state correctly if one is pre-selected */}
+          <PatientSelector 
+            onSelect={setSelectedPatient} 
+            initialPatient={selectedPatient} // Pass the pre-selected patient
+          />
+          
           {selectedPatient && (
             <form onSubmit={handleGenerate} className="mt-6 space-y-6">
               {/* Medicines */}

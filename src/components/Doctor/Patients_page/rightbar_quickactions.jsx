@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom"; // 👈 Import Link
 import {
   MessageCircle,
   FileText,
@@ -12,38 +13,48 @@ import {
 } from "lucide-react";
 
 export default function Rightbar_QuickActions({ patient }) {
+  // Added a 'path' property to each action
   const actions = [
     {
       label: "Send Message",
       Icon: MessageCircle,
       glow: "from-blue-300 to-blue-500",
       iconColor: "text-blue-600",
+      path: `/patient/${patient.id}/message`, // Example path
     },
     {
       label: "New Prescription",
       Icon: PlusCircle,
       glow: "from-emerald-300 to-green-500",
       iconColor: "text-emerald-600",
+      path: `/doctor/prescription`, // Example path
     },
     {
       label: "Share Records",
       Icon: FileText,
       glow: "from-indigo-300 to-indigo-500",
       iconColor: "text-indigo-600",
+      path: `/patient/${patient.id}/records/share`, // Example path
     },
     {
       label: "Print",
       Icon: Printer,
       glow: "from-sky-300 to-sky-500",
       iconColor: "text-sky-600",
+      path: `/patient/${patient.id}/print`, // Example path
     },
     {
       label: "Add Flag / Alert",
       Icon: Flag,
       glow: "from-amber-300 to-amber-500",
       iconColor: "text-amber-600",
+      path: `/patient/${patient.id}/flag`, // Example path
     },
   ];
+
+  // Assuming you need the patient ID for dynamic routes, 
+  // ensure the 'patient' prop is passed and has an 'id' property.
+  const patientId = patient?.id || "default";
 
   return (
     <motion.aside
@@ -69,7 +80,9 @@ export default function Rightbar_QuickActions({ patient }) {
         {actions.map((a, i) => {
           const Icon = a.Icon;
           return (
-            <motion.button
+            // 💡 REPLACED motion.button with Link and wrapped in motion.div 
+            // for Framer Motion effects on the Link
+            <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -81,7 +94,7 @@ export default function Rightbar_QuickActions({ patient }) {
                   "0 10px 20px rgba(0,0,0,0.15), 0 0 20px rgba(255,255,255,0.4)",
               }}
               whileTap={{ scale: 0.97 }}
-              className="relative overflow-hidden rounded-2xl px-5 py-4 flex items-center justify-between font-semibold text-gray-900 transition-all duration-300 shadow-lg"
+              className="rounded-2xl shadow-lg transition-all duration-300 cursor-pointer"
               style={{
                 background: "rgba(255, 255, 255, 0.55)",
                 backdropFilter: "blur(14px)",
@@ -89,29 +102,36 @@ export default function Rightbar_QuickActions({ patient }) {
                 border: "1px solid rgba(255, 255, 255, 0.25)",
               }}
             >
-              {/* Glow background */}
-              <div
-                className={`absolute -inset-10 bg-gradient-to-br ${a.glow} opacity-40 blur-3xl`}
-              ></div>
+              <Link
+                to={a.path} // 👈 The path property is used here
+                className="relative overflow-hidden block w-full h-full rounded-2xl px-5 py-4 flex items-center justify-between font-semibold text-gray-900"
+              >
+                {/* Glow background */}
+                <div
+                  className={`absolute -inset-10 bg-gradient-to-br ${a.glow} opacity-40 blur-3xl`}
+                ></div>
 
-              {/* Reflection layer */}
-              <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40 opacity-40"></div>
+                {/* Reflection layer */}
+                <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40 opacity-40"></div>
 
-              {/* Content */}
-              <div className="relative z-10 flex items-center gap-3 text-left">
-                <motion.div
-                  whileHover={{
-                    rotate: 10,
-                    scale: 1.15,
-                    transition: { type: "spring", stiffness: 400 },
-                  }}
-                  className="p-2 rounded-xl bg-white/60 backdrop-blur-sm border border-white/40 shadow-md"
-                >
-                  <Icon size={22} className={a.iconColor} />
-                </motion.div>
-                <span>{a.label}</span>
-              </div>
-            </motion.button>
+                {/* Content */}
+                <div className="relative z-10 flex items-center gap-3 text-left">
+                  <motion.div
+                    // Note: whileHover on inner elements will only work if the parent motion component doesn't steal the hover state.
+                    // For the sake of a simpler refactor, I'm keeping the original hover here.
+                    whileHover={{
+                      rotate: 10,
+                      scale: 1.15,
+                      transition: { type: "spring", stiffness: 400 },
+                    }}
+                    className="p-2 rounded-xl bg-white/60 backdrop-blur-sm border border-white/40 shadow-md"
+                  >
+                    <Icon size={22} className={a.iconColor} />
+                  </motion.div>
+                  <span>{a.label}</span>
+                </div>
+              </Link>
+            </motion.div>
           );
         })}
       </div>
@@ -164,6 +184,8 @@ export default function Rightbar_QuickActions({ patient }) {
           <AlertTriangle size={18} className="text-blue-500" /> Admin Actions
         </h4>
 
+        {/* Since these buttons perform an action and not a navigation, 
+            they remain as motion.button. If they navigate, change them to Link. */}
         <motion.button
           whileHover={{
             scale: 1.05,
@@ -172,6 +194,7 @@ export default function Rightbar_QuickActions({ patient }) {
           }}
           whileTap={{ scale: 0.96 }}
           className="relative overflow-hidden bg-gradient-to-br from-red-500 to-red-600 text-white font-semibold py-2.5 w-full rounded-2xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+          onClick={() => console.log(`Flagging patient ${patientId} for review`)} // Example action
         >
           <Flag size={18} />
           Flag for Review
@@ -185,6 +208,7 @@ export default function Rightbar_QuickActions({ patient }) {
           }}
           whileTap={{ scale: 0.96 }}
           className="relative overflow-hidden bg-gradient-to-br from-gray-200 to-gray-100 text-gray-800 font-semibold py-2.5 w-full rounded-2xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+          onClick={() => console.log(`Archiving patient ${patientId}`)} // Example action
         >
           <Archive size={18} /> Archive Patient
         </motion.button>
