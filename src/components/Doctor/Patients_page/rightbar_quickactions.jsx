@@ -1,45 +1,194 @@
-import React from 'react'
-import { MessageCircle , FileText , Printer , Flag} from "lucide-react";
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  MessageCircle,
+  FileText,
+  Printer,
+  Flag,
+  Activity,
+  AlertTriangle,
+  Archive,
+  PlusCircle,
+} from "lucide-react";
 
-const rightbar_quickactions = ({patient}) => {
+export default function Rightbar_QuickActions({ patient }) {
+  const actions = [
+    {
+      label: "Send Message",
+      Icon: MessageCircle,
+      glow: "from-blue-300 to-blue-500",
+      iconColor: "text-blue-600",
+    },
+    {
+      label: "New Prescription",
+      Icon: PlusCircle,
+      glow: "from-emerald-300 to-green-500",
+      iconColor: "text-emerald-600",
+    },
+    {
+      label: "Share Records",
+      Icon: FileText,
+      glow: "from-indigo-300 to-indigo-500",
+      iconColor: "text-indigo-600",
+    },
+    {
+      label: "Print",
+      Icon: Printer,
+      glow: "from-sky-300 to-sky-500",
+      iconColor: "text-sky-600",
+    },
+    {
+      label: "Add Flag / Alert",
+      Icon: Flag,
+      glow: "from-amber-300 to-amber-500",
+      iconColor: "text-amber-600",
+    },
+  ];
+
   return (
-    <aside className="w-64 bg-gradient-to-t from-blue-50 to-white p-4 rounded-2xl shadow-lg text-blue-900 sticky top-20 h-fit space-y-5">
-      <h4 className="font-semibold text-lg border-b border-blue-300 pb-2">Quick Actions</h4>
-      <button className="flex items-center space-x-2 hover:glow bg-blue-100 px-3 py-2 rounded-lg w-full font-semibold transition">
-        <MessageCircle size={20} />
-        <span>Send Message</span>
-      </button>
-      <button className="flex items-center space-x-2 hover:glow bg-blue-100 px-3 py-2 rounded-lg w-full font-semibold transition">
-        <FileText size={20} />
-        <span>Share Records</span>
-      </button>
-      <button className="flex items-center space-x-2 hover:glow bg-blue-100 px-3 py-2 rounded-lg w-full font-semibold transition">
-        <Printer size={20} />
-        <span>Print</span>
-      </button>
-      <button className="flex items-center space-x-2 hover:glow bg-amber-100 px-3 py-2 rounded-lg w-full font-semibold text-amber-800 transition">
-        <Flag size={20} />
-        <span>Add Flag / Alert</span>
-      </button>
+    <motion.aside
+      initial={{ opacity: 0, x: 60 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="w-72 sticky top-24 h-fit space-y-8"
+    >
+      {/* ✨ Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center"
+      >
+        <h2 className="font-extrabold text-3xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          Quick Actions
+        </h2>
+        <div className="h-[2px] w-16 bg-gradient-to-r from-blue-400 to-indigo-400 mx-auto mt-2 rounded-full"></div>
+      </motion.div>
 
-      <h4 className="font-semibold text-lg border-b border-blue-300 pb-2">Short Analytics</h4>
-      <p>Adherence Score: 87%</p>
-      <p>Upcoming Meds Due: 2</p>
-      <p>Last Medication Sync: 2025-10-10</p>
+      {/* ⚡ Action Buttons */}
+      <div className="flex flex-col gap-5">
+        {actions.map((a, i) => {
+          const Icon = a.Icon;
+          return (
+            <motion.button
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1, type: "spring", stiffness: 220 }}
+              whileHover={{
+                scale: 1.06,
+                y: -3,
+                boxShadow:
+                  "0 10px 20px rgba(0,0,0,0.15), 0 0 20px rgba(255,255,255,0.4)",
+              }}
+              whileTap={{ scale: 0.97 }}
+              className="relative overflow-hidden rounded-2xl px-5 py-4 flex items-center justify-between font-semibold text-gray-900 transition-all duration-300 shadow-lg"
+              style={{
+                background: "rgba(255, 255, 255, 0.55)",
+                backdropFilter: "blur(14px)",
+                WebkitBackdropFilter: "blur(14px)",
+                border: "1px solid rgba(255, 255, 255, 0.25)",
+              }}
+            >
+              {/* Glow background */}
+              <div
+                className={`absolute -inset-10 bg-gradient-to-br ${a.glow} opacity-40 blur-3xl`}
+              ></div>
 
-      {/* Only if doctor has privileges */}
-      <h4 className="font-semibold text-lg border-b border-blue-300 pb-2">Admin Actions</h4>
-      <button className="bg-red-400 hover:bg-red-500 text-white rounded-lg w-full py-2 font-semibold transition">
-        Flag for Review
-      </button>
-      <button className="bg-gray-300 hover:bg-gray-400 text-gray-900 rounded-lg w-full py-2 font-semibold transition">
-        Archive Patient
-      </button>
-    </aside>
+              {/* Reflection layer */}
+              <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40 opacity-40"></div>
+
+              {/* Content */}
+              <div className="relative z-10 flex items-center gap-3 text-left">
+                <motion.div
+                  whileHover={{
+                    rotate: 10,
+                    scale: 1.15,
+                    transition: { type: "spring", stiffness: 400 },
+                  }}
+                  className="p-2 rounded-xl bg-white/60 backdrop-blur-sm border border-white/40 shadow-md"
+                >
+                  <Icon size={22} className={a.iconColor} />
+                </motion.div>
+                <span>{a.label}</span>
+              </div>
+            </motion.button>
+          );
+        })}
+      </div>
+
+      {/* 📊 Analytics Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="relative overflow-hidden rounded-2xl p-5 shadow-lg"
+        style={{
+          background: "rgba(255,255,255,0.55)",
+          backdropFilter: "blur(14px)",
+          border: "1px solid rgba(255,255,255,0.25)",
+        }}
+      >
+        {/* Glow */}
+        <div className="absolute -inset-10 bg-gradient-to-br from-blue-300 to-blue-500 opacity-40 blur-3xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40 opacity-40"></div>
+
+        <div className="relative z-10">
+          <h4 className="font-semibold text-blue-700 flex items-center gap-2 mb-3">
+            <Activity size={18} className="text-blue-500" /> Short Analytics
+          </h4>
+          <div className="text-sm text-blue-800/90 font-medium space-y-1">
+            <p>
+              Adherence Score:{" "}
+              <span className="font-semibold text-blue-600">87%</span>
+            </p>
+            <p>
+              Upcoming Meds Due:{" "}
+              <span className="font-semibold text-indigo-600">2</span>
+            </p>
+            <p>
+              Last Sync:{" "}
+              <span className="font-semibold text-blue-500">Oct 10, 2025</span>
+            </p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* 🔐 Admin Actions */}
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="space-y-4"
+      >
+        <h4 className="font-semibold text-lg border-b border-blue-200 pb-2 flex items-center gap-2 text-blue-800">
+          <AlertTriangle size={18} className="text-blue-500" /> Admin Actions
+        </h4>
+
+        <motion.button
+          whileHover={{
+            scale: 1.05,
+            boxShadow:
+              "0 10px 20px rgba(239,68,68,0.2), 0 0 10px rgba(239,68,68,0.4)",
+          }}
+          whileTap={{ scale: 0.96 }}
+          className="relative overflow-hidden bg-gradient-to-br from-red-500 to-red-600 text-white font-semibold py-2.5 w-full rounded-2xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+        >
+          <Flag size={18} />
+          Flag for Review
+        </motion.button>
+
+        <motion.button
+          whileHover={{
+            scale: 1.05,
+            boxShadow:
+              "0 10px 20px rgba(156,163,175,0.2), 0 0 10px rgba(255,255,255,0.3)",
+          }}
+          whileTap={{ scale: 0.96 }}
+          className="relative overflow-hidden bg-gradient-to-br from-gray-200 to-gray-100 text-gray-800 font-semibold py-2.5 w-full rounded-2xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+        >
+          <Archive size={18} /> Archive Patient
+        </motion.button>
+      </motion.div>
+    </motion.aside>
   );
 }
-
-export default rightbar_quickactions
-
-
-
