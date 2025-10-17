@@ -169,88 +169,318 @@ export const patients = [
   {
     id: "p1",
     name: "John Doe",
+    avatar: "https://i.pravatar.cc/80?img=1",
     age: 34,
-    gender: "Male",
-    lastVisit: "12 Jul 2025",
-    photo: "https://i.pravatar.cc/80?img=1",
-    history: {
-      chronicIllnesses: ["Diabetes"],
-      allergies: ["Penicillin"],
-      surgeries: ["Appendectomy - 2015"],
-      familyHistory: ["Heart Disease"],
-    },
+    sex: "M",
+    dob: "1991-03-15",
+    uhid: "UH100001",
+    primaryContact: "+91-9876500001",
+    emergencyContact: { name: "Jane Doe", relation: "Wife", phone: "+91-9123400001" },
+    location: "Mumbai",
+    insurance: "MediCare Gold",
+    statusPill: "Diabetic",
+    allergies: [{ substance: "Penicillin", reaction: "Rash", severity: "Moderate", recordedDate: "2024-05-12" }],
+    activeMeds: [
+      { name: "Metformin", dose: "500mg", frequency: "Twice daily", startDate: "2024-01-10", prescriber: "Dr. Sharma" }
+    ],
+    lastVisit: "2025-07-12",
+    lastVisitReason: "Routine Checkup",
+    nextAppointment: "2025-10-25",
+    vitals: [
+      { date: "2025-07-12", bp: "128/82", hr: 74, temp: 98.5, spo2: 98 },
+      { date: "2025-06-10", bp: "130/85", hr: 76, temp: 98.6, spo2: 97 }
+    ],
+    problemList: [
+      { name: "Type 2 Diabetes", icd: "E11", onset: "2020", status: "Chronic" }
+    ],
+    immunizations: [
+      { vaccine: "COVID-19 Booster", date: "2025-01-10" },
+      { vaccine: "Influenza", date: "2024-12-01" }
+    ],
+    labResults: [
+      { testName: "HbA1c", value: "7.0%", refRange: "4-6%", flag: "High", date: "2025-07-10", reportLink: "#" }
+    ],
+    familyHistory: ["Heart Disease"],
+    socialHistory: { smoking: "Never", alcohol: "Occasionally", occupation: "Accountant" },
+    careTeam: [
+      { name: "Dr. Sharma", role: "Primary Care", contact: "sharma@hospital.com" }
+    ],
+    timelineVisits: [
+      {
+        date: "2025-07-12",
+        encounterType: "Routine Checkup",
+        diagnosisCodes: ["E11"],
+        provider: "Dr. Sharma",
+        attachments: [],
+        notes: "Patient stable. Continue current medication."
+      }
+    ],
+    adminInfo: {
+      registrationDate: "2019-03-01",
+      preferredPharmacy: "Apollo Pharmacy"
+    }
   },
   {
     id: "p2",
     name: "Aisha Khan",
+    avatar: "https://i.pravatar.cc/80?img=5",
     age: 29,
-    gender: "Female",
-    lastVisit: "20 Jun 2025",
-    photo: "https://i.pravatar.cc/80?img=5",
-    history: {
-      chronicIllnesses: ["Hypertension"],
-      allergies: ["None"],
-      surgeries: ["None"],
-      familyHistory: ["Migraine"],
-    },
+    sex: "F",
+    dob: "1996-02-11",
+    uhid: "UH100002",
+    primaryContact: "+91-9876500002",
+    emergencyContact: { name: "Rehan Khan", relation: "Brother", phone: "+91-9123400002" },
+    location: "Delhi",
+    insurance: "Care Plus Plan",
+    statusPill: "Hypertension",
+    allergies: [{ substance: "None", reaction: "-", severity: "None", recordedDate: "2024-04-05" }],
+    activeMeds: [
+      { name: "Amlodipine", dose: "5mg", frequency: "Once daily", startDate: "2023-12-01", prescriber: "Dr. Mehta" }
+    ],
+    lastVisit: "2025-06-20",
+    lastVisitReason: "Follow-up for BP check",
+    nextAppointment: "2025-11-01",
+    vitals: [
+      { date: "2025-06-20", bp: "135/88", hr: 78, temp: 98.3, spo2: 99 }
+    ],
+    problemList: [
+      { name: "Hypertension", icd: "I10", onset: "2022", status: "Chronic" }
+    ],
+    immunizations: [
+      { vaccine: "Tetanus", date: "2023-09-12" }
+    ],
+    labResults: [
+      { testName: "Blood Pressure", value: "135/88", refRange: "120/80", flag: "Slightly High", date: "2025-06-20", reportLink: "#" }
+    ],
+    familyHistory: ["Migraine"],
+    socialHistory: { smoking: "Never", alcohol: "No", occupation: "Teacher" },
+    careTeam: [
+      { name: "Dr. Mehta", role: "Primary Physician", contact: "mehta@hospital.com" }
+    ],
+    timelineVisits: [
+      {
+        date: "2025-06-20",
+        encounterType: "Follow-up",
+        diagnosisCodes: ["I10"],
+        provider: "Dr. Mehta",
+        attachments: [],
+        notes: "BP slightly elevated, continue Amlodipine."
+      }
+    ],
+    adminInfo: {
+      registrationDate: "2021-02-15",
+      preferredPharmacy: "MedLife Pharmacy"
+    }
   },
   {
     id: "p3",
     name: "Michael Smith",
+    avatar: "https://i.pravatar.cc/80?img=8",
     age: 45,
-    gender: "Male",
-    lastVisit: "05 Aug 2025",
-    photo: "https://i.pravatar.cc/80?img=8",
-    history: {
-      chronicIllnesses: ["Asthma"],
-      allergies: ["Dust"],
-      surgeries: ["Tonsillectomy - 2017"],
-      familyHistory: ["None"],
-    },
+    sex: "M",
+    dob: "1980-09-30",
+    uhid: "UH100003",
+    primaryContact: "+91-9876500003",
+    emergencyContact: { name: "Laura Smith", relation: "Wife", phone: "+91-9123400003" },
+    location: "Bangalore",
+    insurance: "Health Secure",
+    statusPill: "Asthmatic",
+    allergies: [{ substance: "Dust", reaction: "Sneezing", severity: "Mild", recordedDate: "2024-03-05" }],
+    activeMeds: [
+      { name: "Salbutamol Inhaler", dose: "100mcg", frequency: "As needed", startDate: "2024-01-10", prescriber: "Dr. Raj" }
+    ],
+    lastVisit: "2025-08-05",
+    lastVisitReason: "Asthma follow-up",
+    nextAppointment: "2025-11-12",
+    vitals: [
+      { date: "2025-08-05", bp: "120/78", hr: 80, temp: 98.7, spo2: 96 }
+    ],
+    problemList: [
+      { name: "Asthma", icd: "J45", onset: "2015", status: "Chronic" }
+    ],
+    immunizations: [
+      { vaccine: "Influenza", date: "2024-10-01" }
+    ],
+    labResults: [
+      { testName: "Spirometry", value: "Normal", refRange: "-", flag: "Normal", date: "2025-08-05", reportLink: "#" }
+    ],
+    familyHistory: ["None"],
+    socialHistory: { smoking: "Former", alcohol: "Rarely", occupation: "Software Engineer" },
+    careTeam: [
+      { name: "Dr. Raj", role: "Pulmonologist", contact: "raj@hospital.com" }
+    ],
+    timelineVisits: [
+      {
+        date: "2025-08-05",
+        encounterType: "Follow-up",
+        diagnosisCodes: ["J45"],
+        provider: "Dr. Raj",
+        attachments: [],
+        notes: "Asthma well controlled with inhaler use."
+      }
+    ],
+    adminInfo: {
+      registrationDate: "2017-05-20",
+      preferredPharmacy: "Netmeds Pharmacy"
+    }
   },
   {
     id: "p4",
     name: "Priya Sharma",
+    avatar: "https://i.pravatar.cc/80?img=15",
     age: 38,
-    gender: "Female",
-    lastVisit: "10 Jul 2025",
-    photo: "https://i.pravatar.cc/80?img=15",
-    history: {
-      chronicIllnesses: ["Arthritis"],
-      allergies: ["Pollen"],
-      surgeries: ["Knee Arthroscopy - 2020"],
-      familyHistory: ["Arthritis"],
-    },
+    sex: "F",
+    dob: "1987-07-12",
+    uhid: "UH100004",
+    primaryContact: "+91-9876500004",
+    emergencyContact: { name: "Arjun Sharma", relation: "Husband", phone: "+91-9123400004" },
+    location: "Pune",
+    insurance: "Care Health Prime",
+    statusPill: "Arthritis",
+    allergies: [{ substance: "Pollen", reaction: "Sneezing", severity: "Mild", recordedDate: "2024-02-12" }],
+    activeMeds: [
+      { name: "Ibuprofen", dose: "400mg", frequency: "Twice daily", startDate: "2024-06-01", prescriber: "Dr. Kaur" }
+    ],
+    lastVisit: "2025-07-10",
+    lastVisitReason: "Joint pain follow-up",
+    nextAppointment: "2025-10-28",
+    vitals: [
+      { date: "2025-07-10", bp: "125/80", hr: 72, temp: 98.4, spo2: 98 }
+    ],
+    problemList: [
+      { name: "Arthritis", icd: "M19", onset: "2019", status: "Chronic" }
+    ],
+    immunizations: [
+      { vaccine: "Influenza", date: "2024-12-10" }
+    ],
+    labResults: [
+      { testName: "CRP", value: "6 mg/L", refRange: "<5", flag: "High", date: "2025-07-08", reportLink: "#" }
+    ],
+    familyHistory: ["Arthritis"],
+    socialHistory: { smoking: "Never", alcohol: "Occasionally", occupation: "Architect" },
+    careTeam: [
+      { name: "Dr. Kaur", role: "Rheumatologist", contact: "kaur@hospital.com" }
+    ],
+    timelineVisits: [
+      {
+        date: "2025-07-10",
+        encounterType: "Follow-up",
+        diagnosisCodes: ["M19"],
+        provider: "Dr. Kaur",
+        attachments: [],
+        notes: "Mild stiffness, advised physiotherapy and continue meds."
+      }
+    ],
+    adminInfo: {
+      registrationDate: "2020-06-15",
+      preferredPharmacy: "Apollo Pharmacy"
+    }
   },
   {
     id: "p5",
     name: "David Johnson",
+    avatar: "https://i.pravatar.cc/80?img=20",
     age: 52,
-    gender: "Male",
-    lastVisit: "28 May 2025",
-    photo: "https://i.pravatar.cc/80?img=20",
-    history: {
-      chronicIllnesses: ["None"],
-      allergies: ["Pollen", "Peanuts"],
-      surgeries: ["None"],
-      familyHistory: ["Allergies"],
-    },
+    sex: "M",
+    dob: "1973-11-05",
+    uhid: "UH100005",
+    primaryContact: "+91-9876500005",
+    emergencyContact: { name: "Sarah Johnson", relation: "Wife", phone: "+91-9123400005" },
+    location: "Chennai",
+    insurance: "Silver Shield Health",
+    statusPill: "Allergies",
+    allergies: [
+      { substance: "Pollen", reaction: "Sneezing", severity: "Mild", recordedDate: "2024-05-10" },
+      { substance: "Peanuts", reaction: "Swelling", severity: "Severe", recordedDate: "2024-05-10" }
+    ],
+    activeMeds: [
+      { name: "Cetirizine", dose: "10mg", frequency: "Once daily", startDate: "2024-03-15", prescriber: "Dr. Thomas" }
+    ],
+    lastVisit: "2025-05-28",
+    lastVisitReason: "Allergy management",
+    nextAppointment: "2025-10-30",
+    vitals: [
+      { date: "2025-05-28", bp: "122/78", hr: 70, temp: 98.5, spo2: 98 }
+    ],
+    problemList: [
+      { name: "Seasonal Allergies", icd: "J30", onset: "2016", status: "Chronic" }
+    ],
+    immunizations: [
+      { vaccine: "COVID-19 Booster", date: "2025-01-05" }
+    ],
+    labResults: [
+      { testName: "Allergy Test", value: "Positive for Pollen", refRange: "Negative", flag: "Abnormal", date: "2025-05-25", reportLink: "#" }
+    ],
+    familyHistory: ["Allergies"],
+    socialHistory: { smoking: "Never", alcohol: "Occasionally", occupation: "Bank Manager" },
+    careTeam: [
+      { name: "Dr. Thomas", role: "Allergist", contact: "thomas@hospital.com" }
+    ],
+    timelineVisits: [
+      {
+        date: "2025-05-28",
+        encounterType: "Consultation",
+        diagnosisCodes: ["J30"],
+        provider: "Dr. Thomas",
+        attachments: [],
+        notes: "Prescribed antihistamines, avoid triggers."
+      }
+    ],
+    adminInfo: {
+      registrationDate: "2015-10-10",
+      preferredPharmacy: "Netmeds Pharmacy"
+    }
   },
   {
     id: "p6",
     name: "Meera Patel",
+    avatar: "https://i.pravatar.cc/80?img=32",
     age: 26,
-    gender: "Female",
-    lastVisit: "02 Aug 2025",
-    photo: "https://i.pravatar.cc/80?img=32",
-    history: {
-      chronicIllnesses: ["None"],
-      allergies: ["Latex"],
-      surgeries: ["None"],
-      familyHistory: ["Diabetes"],
-    },
-  },
+    sex: "F",
+    dob: "1999-04-17",
+    uhid: "UH100006",
+    primaryContact: "+91-9876500006",
+    emergencyContact: { name: "Rina Patel", relation: "Mother", phone: "+91-9123400006" },
+    location: "Ahmedabad",
+    insurance: "Star Health Basic",
+    statusPill: "Healthy",
+    allergies: [{ substance: "Latex", reaction: "Rash", severity: "Mild", recordedDate: "2024-06-12" }],
+    activeMeds: [],
+    lastVisit: "2025-08-02",
+    lastVisitReason: "Routine health check",
+    nextAppointment: "2026-01-15",
+    vitals: [
+      { date: "2025-08-02", bp: "118/76", hr: 72, temp: 98.3, spo2: 99 }
+    ],
+    problemList: [],
+    immunizations: [
+      { vaccine: "COVID-19 Booster", date: "2025-01-10" }
+    ],
+    labResults: [
+      { testName: "Blood Sugar", value: "90 mg/dL", refRange: "70-110", flag: "Normal", date: "2025-08-02", reportLink: "#" }
+    ],
+    familyHistory: ["Diabetes"],
+    socialHistory: { smoking: "Never", alcohol: "No", occupation: "Graphic Designer" },
+    careTeam: [
+      { name: "Dr. Iyer", role: "General Physician", contact: "iyer@hospital.com" }
+    ],
+    timelineVisits: [
+      {
+        date: "2025-08-02",
+        encounterType: "Routine Checkup",
+        diagnosisCodes: [],
+        provider: "Dr. Iyer",
+        attachments: [],
+        notes: "Healthy overall, no issues found."
+      }
+    ],
+    adminInfo: {
+      registrationDate: "2022-09-10",
+      preferredPharmacy: "1mg Pharmacy"
+    }
+  }
 ];
+
 
 
 // Medical Records

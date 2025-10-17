@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { mockPatients } from "../../components/Doctor/Patients_page/mockdata";
+import { patients } from "../../data/doctor/mockdata";
 import Topbar from "../../components/Doctor/Patients_page/topbar";
 import DoctorSidebar from "../../components/Doctor/Patients_page/sidebar";
 import PatientSummary from "../../components/Doctor/Patients_page/patientsummary";
@@ -10,9 +10,9 @@ import { motion } from "framer-motion";
 export default function PatientOverviewPage() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [selectedPatientId, setSelectedPatientId] = useState(
-    mockPatients[0]?.id
+    patients[0]?.id
   );
-  const selectedPatient = mockPatients.find((p) => p.id === selectedPatientId);
+  const selectedPatient = patients.find((p) => p.id === selectedPatientId);
 
   return (
     <motion.div
@@ -30,7 +30,7 @@ export default function PatientOverviewPage() {
         {/* ---------- Sidebar ---------- */}
         <DoctorSidebar
           collapsed={sidebarCollapsed}
-          patients={mockPatients}
+          patients={patients}
           onSelectPatient={setSelectedPatientId}
           selectedPatientId={selectedPatientId}
         />
