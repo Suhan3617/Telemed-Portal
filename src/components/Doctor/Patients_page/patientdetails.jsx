@@ -64,7 +64,7 @@ const PatientDetailsPremium = ({ patient, onViewReports }) => {
       initial="hidden"
       animate="visible"
       variants={sectionVariants}
-      className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-blue-900 p-8 rounded-3xl shadow-2xl border border-blue-100 relative overflow-hidden bg-gradient-to-br from-blue-500/65 via-sky-300/45 to-indigo-300/40"
+      className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-blue-900 p-8 rounded-3xl shadow-2xl border border-blue-100 relative overflow-hidden bg-gradient-to-br from-blue-500/40 via-sky-300/30 to-indigo-300/25"
     >
       {/* Gradient background animation */}
       <motion.div
