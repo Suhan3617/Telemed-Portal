@@ -32,14 +32,12 @@ export default function DoctorAppointmentsPage() {
     if (dateRange === "Today")
       return date.toDateString() === today.toDateString();
     if (dateRange === "This Week") return date >= startOfWeek && date <= today;
-    return true; // For "Custom" — you can enhance later with actual from–to picker values
+    return true;
   };
 
   // --------------------- 🔹 Filter & Sort Logic ---------------------
   const filteredAppointments = useMemo(() => {
     let data = [...appointments];
-
-    // 🔍 Search by patient name or ID
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase();
       data = data.filter(
@@ -48,16 +46,10 @@ export default function DoctorAppointmentsPage() {
           a.id.toLowerCase().includes(term)
       );
     }
-
-    // 📅 Date range filter
     data = data.filter((a) => isInRange(a.date));
-
-    // 🟢 Status multi-select
     if (selectedStatuses.length > 0) {
       data = data.filter((a) => selectedStatuses.includes(a.status));
     }
-
-    // ↕️ Sort logic
     switch (sortOption) {
       case "By Patient Name":
         data.sort((a, b) => a.patientName.localeCompare(b.patientName));
@@ -66,13 +58,12 @@ export default function DoctorAppointmentsPage() {
         data.sort((a, b) => a.type.localeCompare(b.type));
         break;
       default:
-        data.sort((a, b) => new Date(a.date) - new Date(b.date)); // By Time
+        data.sort((a, b) => new Date(a.date) - new Date(b.date));
     }
-
     return data;
   }, [appointments, searchTerm, selectedStatuses, dateRange, sortOption]);
 
-  // --------------------- 🔹 Reset All Filters ---------------------
+  // --------------------- 🔹 Reset Filters ---------------------
   const handleReset = () => {
     setSearchTerm("");
     setSelectedStatuses([]);
@@ -90,61 +81,100 @@ export default function DoctorAppointmentsPage() {
     setSelected(null);
   };
 
+  // --------------------- 🔹 Motion Variants ---------------------
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 25 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.15,
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    }),
+  };
+
   // --------------------- 🔹 Render ---------------------
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className="min-h-screen p-8 bg-gradient-to-br from-blue-500/40 via-sky-200/60 to-indigo-200/70 rounded-3xl text-slate-900"
+      transition={{ duration: 0.8, ease: "easeInOut" }}
+      className="min-h-screen p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-blue-500/40 via-sky-200/60 to-indigo-200/70 rounded-3xl text-slate-900 overflow-hidden"
     >
       {/* 🔷 Premium Header */}
-      <PremiumHeader
-        breadcrumb="Doctor Dashboard / Appointments"
-        icon={<CalendarDays size={28} />}
-        title="Appointments Overview"
-        subtitle="Manage, review, and track your patients’ appointments efficiently."
-      />
-
-      <motion.div
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="space-y-10"
-      >
-        {/* 🔹 Summary Cards */}
-        <SummaryCards appointments={appointments} />
-
-        {/* 🔹 Filter Bar */}
-        <FiltersBar
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          selectedStatuses={selectedStatuses}
-          setSelectedStatuses={setSelectedStatuses}
-          dateRange={dateRange}
-          setDateRange={setDateRange}
-          sortOption={sortOption}
-          setSortOption={setSortOption}
-          appointments={appointments}
-          onReset={handleReset}
-        />
-
-        {/* 🔹 Appointments Table */}
-        <AppointmentsTable
-          appointments={filteredAppointments}
-          onView={handleOpenModal}
+      <motion.div variants={fadeInUp} initial="hidden" animate="visible">
+        <PremiumHeader
+          breadcrumb="Doctor Dashboard / Appointments"
+          icon={<CalendarDays size={28} />}
+          title="Appointments Overview"
+          subtitle="Manage, review, and track your patients’ appointments efficiently."
         />
       </motion.div>
 
+      <motion.div
+        variants={fadeInUp}
+        initial="hidden"
+        animate="visible"
+        transition={{ staggerChildren: 0.2 }}
+        className="space-y-8 sm:space-y-10 mt-6"
+      >
+        {/* 🔹 Summary Cards */}
+        <motion.div variants={fadeInUp}>
+          <SummaryCards appointments={appointments} />
+        </motion.div>
+
+        {/* 🔹 Filter Bar */}
+        <motion.div variants={fadeInUp}>
+          <FiltersBar
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            selectedStatuses={selectedStatuses}
+            setSelectedStatuses={setSelectedStatuses}
+            dateRange={dateRange}
+            setDateRange={setDateRange}
+            sortOption={sortOption}
+            setSortOption={setSortOption}
+            appointments={appointments}
+            onReset={handleReset}
+          />
+        </motion.div>
+
+        {/* 🔹 Appointments Table */}
+        <motion.div variants={fadeInUp}>
+          <AppointmentsTable
+            appointments={filteredAppointments}
+            onView={handleOpenModal}
+          />
+        </motion.div>
+      </motion.div>
+
       {/* ➕ Floating Add Button */}
-      <FloatingAdd />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, delay: 0.8 }}
+      >
+        <FloatingAdd />
+      </motion.div>
 
       {/* 📅 Appointment Modal */}
-      <AppointmentModal
-        open={modalOpen}
-        appointment={selected}
-        onClose={handleCloseModal}
-      />
+      {modalOpen && (
+        <motion.div
+          key="modal"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <AppointmentModal
+            open={modalOpen}
+            appointment={selected}
+            onClose={handleCloseModal}
+          />
+        </motion.div>
+      )}
     </motion.div>
   );
 }
