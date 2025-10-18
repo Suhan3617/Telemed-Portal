@@ -29,7 +29,8 @@ export default function DoctorAppointmentsPage() {
 
   const isInRange = (dateStr) => {
     const date = new Date(dateStr);
-    if (dateRange === "Today") return date.toDateString() === today.toDateString();
+    if (dateRange === "Today")
+      return date.toDateString() === today.toDateString();
     if (dateRange === "This Week") return date >= startOfWeek && date <= today;
     return true; // For "Custom" — you can enhance later with actual from–to picker values
   };
@@ -84,7 +85,10 @@ export default function DoctorAppointmentsPage() {
     setSelected(appointment);
     setModalOpen(true);
   };
-  const handleCloseModal = () => setModalOpen(false);
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelected(null);
+  };
 
   // --------------------- 🔹 Render ---------------------
   return (

@@ -1,77 +1,140 @@
 import { motion } from "framer-motion";
-import { FileText, Pill, Activity, X } from "lucide-react";
+import { FileText, Pill, Activity, X, User2 } from "lucide-react";
 
-export default function AppointmentDetailsModal({ appointment, onClose }) {
-  if (!appointment) return null;
+export default function AppointmentDetailsModal({ appointment, open, onClose }) {
+  if (!open || !appointment) return null;
 
   return (
     <motion.div
-      className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center z-50"
+      className="fixed inset-0 bg-blue-950/40 backdrop-blur-md flex items-center justify-center z-50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
     >
       <motion.div
-        className="bg-gradient-to-br from-white via-blue-50 to-white rounded-3xl shadow-[0_0_40px_rgba(59,130,246,0.2)] p-8 max-w-2xl w-full relative overflow-y-auto max-h-[90vh]"
-        initial={{ scale: 0.9, y: 20 }}
-        animate={{ scale: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
+        className="relative bg-gradient-to-br from-white/95 via-blue-50/80 to-blue-100/70 rounded-3xl shadow-[0_8px_50px_rgba(59,130,246,0.25)] p-8 sm:p-10 max-w-2xl w-[92%] sm:w-full overflow-y-auto max-h-[88vh] border border-blue-200/50 backdrop-blur-xl"
+        initial={{ scale: 0.9, y: 40, opacity: 0 }}
+        animate={{ scale: 1, y: 0, opacity: 1 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
       >
-        <button
-          className="absolute top-4 right-4 text-blue-400 hover:text-blue-600 transition"
+        {/* ❌ Close Button (fixed + animated) */}
+        <motion.button
           onClick={onClose}
+          whileHover={{
+            rotate: 90,
+            scale: 1.2,
+            backgroundColor: "rgba(239,246,255,0.9)",
+          }}
+          transition={{ type: "spring", stiffness: 300 }}
+          className="absolute top-4 right-4 p-2 rounded-full bg-white/80 border border-blue-200 text-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.2)] hover:text-blue-700 transition-all"
         >
-          <X size={22} />
-        </button>
+          <X size={20} />
+        </motion.button>
 
-        {/* Header */}
-        <div className="flex items-center gap-4 border-b border-blue-100 pb-4 mb-4">
-          <img
+        {/* 🧑‍⚕️ Header */}
+        <div className="flex items-center gap-5 border-b border-blue-100 pb-5 mb-6">
+          <motion.img
             src={appointment.patientPhoto}
             alt={appointment.patientName}
-            className="w-16 h-16 rounded-full border-2 border-blue-200 shadow-[0_0_15px_rgba(59,130,246,0.2)]"
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
+            className="w-16 h-16 rounded-full border-2 border-blue-300 shadow-[0_0_20px_rgba(59,130,246,0.25)]"
           />
           <div>
-            <h2 className="text-2xl font-semibold text-blue-700">
+            <h2 className="text-2xl font-semibold text-blue-800">
               {appointment.patientName}
             </h2>
             <p className="text-gray-500">{appointment.reason}</p>
           </div>
         </div>
 
-        {/* Details */}
-        <div className="space-y-6">
-          <DetailSection title="Patient History" icon={<Activity className="text-blue-600" />}>
+        {/* 🩺 Details */}
+        <div className="space-y-8">
+          {/* Patient Info */}
+          <DetailSection
+            title="Patient Info"
+            icon={<User2 className="text-blue-600" />}
+          >
+            <div className="grid grid-cols-2 gap-3 text-sm text-slate-600">
+              <p>
+                <span className="font-semibold text-blue-700">Age:</span>{" "}
+                {appointment.age}
+              </p>
+              <p>
+                <span className="font-semibold text-blue-700">Gender:</span>{" "}
+                {appointment.gender}
+              </p>
+              <p>
+                <span className="font-semibold text-blue-700">Date:</span>{" "}
+                {appointment.date}
+              </p>
+              <p>
+                <span className="font-semibold text-blue-700">Time:</span>{" "}
+                {appointment.time}
+              </p>
+            </div>
+          </DetailSection>
+
+          {/* Patient History */}
+          <DetailSection
+            title="Patient History"
+            icon={<Activity className="text-blue-600" />}
+          >
             {Object.entries(appointment.history).map(([key, val]) => (
-              <div key={key}>
-                <p className="font-medium text-gray-600 capitalize">{key}</p>
-                <ul className="ml-4 list-disc text-gray-500 text-sm">
+              <motion.div
+                key={key}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <p className="font-medium text-gray-700 capitalize">{key}</p>
+                <ul className="ml-5 list-disc text-gray-500 text-sm">
                   {val.map((item, i) => (
                     <li key={i}>{item}</li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             ))}
           </DetailSection>
 
+          {/* Prescriptions */}
           <DetailSection title="Prescriptions" icon={<Pill className="text-blue-600" />}>
-            {appointment.prescriptions.map((p, i) => (
-              <div
-                key={i}
-                className="bg-gradient-to-r from-blue-50 to-blue-100/60 p-3 rounded-lg border border-blue-100 shadow-inner mb-2"
-              >
-                <p className="font-semibold text-blue-700">{p.medicine}</p>
-                <p className="text-xs text-gray-500">{p.duration}</p>
-                <p className="text-xs text-gray-500">{p.notes}</p>
-              </div>
-            ))}
+            <div className="grid gap-3">
+              {appointment.prescriptions.map((p, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{
+                    scale: 1.02,
+                    boxShadow:
+                      "0 0 20px rgba(59,130,246,0.25), 0 0 40px rgba(191,219,254,0.2)",
+                  }}
+                  className="bg-gradient-to-r from-blue-50 via-white to-blue-100/70 p-4 rounded-xl border border-blue-200/50 shadow-inner hover:bg-blue-50/80 transition-all"
+                >
+                  <p className="font-semibold text-blue-700 text-[15px]">
+                    {p.medicine}
+                  </p>
+                  <p className="text-xs text-gray-600">{p.duration}</p>
+                  <p className="text-xs text-gray-500 italic">{p.notes}</p>
+                </motion.div>
+              ))}
+            </div>
           </DetailSection>
 
+          {/* Lab Reports */}
           <DetailSection title="Lab Reports" icon={<FileText className="text-blue-600" />}>
-            {appointment.labReports.map((r, i) => (
-              <div key={i} className="text-sm text-gray-600">
-                {r.title} – <span className="text-gray-400">{r.date}</span>
-              </div>
-            ))}
+            <div className="grid gap-2">
+              {appointment.labReports.map((r, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ x: 4 }}
+                  className="flex items-center justify-between text-sm text-slate-600 border-b border-blue-50 pb-1"
+                >
+                  <span>{r.title}</span>
+                  <span className="text-gray-400">{r.date}</span>
+                </motion.div>
+              ))}
+            </div>
           </DetailSection>
         </div>
       </motion.div>
@@ -81,12 +144,22 @@ export default function AppointmentDetailsModal({ appointment, onClose }) {
 
 function DetailSection({ title, icon, children }) {
   return (
-    <div className="p-4 rounded-xl bg-white/70 border border-blue-100 shadow-sm hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] transition">
-      <div className="flex items-center gap-2 mb-2">
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      whileHover={{
+        scale: 1.02,
+        boxShadow:
+          "0 0 25px rgba(59,130,246,0.2), 0 0 50px rgba(191,219,254,0.2)",
+      }}
+      className="p-5 rounded-2xl bg-white/70 border border-blue-100/70 shadow-[inset_0_0_15px_rgba(255,255,255,0.4)] hover:bg-blue-50/50 transition-all duration-300"
+    >
+      <div className="flex items-center gap-2 mb-3">
         {icon}
-        <h3 className="font-semibold text-blue-700">{title}</h3>
+        <h3 className="font-semibold text-blue-700 text-lg">{title}</h3>
       </div>
-      {children}
-    </div>
+      <div className="pl-1">{children}</div>
+    </motion.div>
   );
 }
