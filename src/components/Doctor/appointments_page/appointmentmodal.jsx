@@ -6,27 +6,23 @@ export default function AppointmentDetailsModal({ appointment, open, onClose }) 
 
   return (
     <motion.div
-      className="fixed inset-0 bg-blue-950/40 backdrop-blur-md flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black/30 backdrop-blur-md flex items-center justify-center z-50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className="relative bg-gradient-to-br from-white/95 via-blue-50/80 to-blue-100/70 rounded-3xl shadow-[0_8px_50px_rgba(59,130,246,0.25)] p-8 sm:p-10 max-w-2xl w-[92%] sm:w-full overflow-y-auto max-h-[88vh] border border-blue-200/50 backdrop-blur-xl"
+        className="relative bg-gradient-to-br from-blue-200 via-sky-50 to-indigo-100 rounded-3xl shadow-[0_8px_40px_rgba(0,0,0,0.15)] p-8 sm:p-10 max-w-2xl w-[92%] sm:w-full overflow-y-auto max-h-[88vh] border border-blue-100"
         initial={{ scale: 0.9, y: 40, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
-        transition={{ duration: 0.35, ease: "easeOut" }}
+        transition={{ duration: 0.35, ease: 'easeOut' }}
       >
-        {/* ❌ Close Button (fixed + animated) */}
+        {/* ❌ Close Button */}
         <motion.button
           onClick={onClose}
-          whileHover={{
-            rotate: 90,
-            scale: 1.2,
-            backgroundColor: "rgba(239,246,255,0.9)",
-          }}
-          transition={{ type: "spring", stiffness: 300 }}
-          className="absolute top-4 right-4 p-2 rounded-full bg-white/80 border border-blue-200 text-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.2)] hover:text-blue-700 transition-all"
+          whileHover={{ rotate: 90, scale: 1.2 }}
+          transition={{ type: 'spring', stiffness: 300 }}
+          className="absolute top-4 right-4 p-2 rounded-full bg-white/90 border border-gray-200 text-blue-500 hover:text-blue-700 shadow-sm transition-all"
         >
           <X size={20} />
         </motion.button>
@@ -39,7 +35,7 @@ export default function AppointmentDetailsModal({ appointment, open, onClose }) 
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.1, duration: 0.3 }}
-            className="w-16 h-16 rounded-full border-2 border-blue-300 shadow-[0_0_20px_rgba(59,130,246,0.25)]"
+            className="w-16 h-16 rounded-full border-2 border-blue-200 shadow-md"
           />
           <div>
             <h2 className="text-2xl font-semibold text-blue-800">
@@ -99,17 +95,16 @@ export default function AppointmentDetailsModal({ appointment, open, onClose }) 
           </DetailSection>
 
           {/* Prescriptions */}
-          <DetailSection title="Prescriptions" icon={<Pill className="text-blue-600" />}>
+          <DetailSection
+            title="Prescriptions"
+            icon={<Pill className="text-blue-600" />}
+          >
             <div className="grid gap-3">
               {appointment.prescriptions.map((p, i) => (
                 <motion.div
                   key={i}
-                  whileHover={{
-                    scale: 1.02,
-                    boxShadow:
-                      "0 0 20px rgba(59,130,246,0.25), 0 0 40px rgba(191,219,254,0.2)",
-                  }}
-                  className="bg-gradient-to-r from-blue-50 via-white to-blue-100/70 p-4 rounded-xl border border-blue-200/50 shadow-inner hover:bg-blue-50/80 transition-all"
+                  whileHover={{ scale: 1.02 }}
+                  className="bg-gradient-to-br from-blue-50 via-white to-blue-100 p-4 rounded-xl border border-blue-100 shadow-inner hover:shadow-md transition-all"
                 >
                   <p className="font-semibold text-blue-700 text-[15px]">
                     {p.medicine}
@@ -122,7 +117,10 @@ export default function AppointmentDetailsModal({ appointment, open, onClose }) 
           </DetailSection>
 
           {/* Lab Reports */}
-          <DetailSection title="Lab Reports" icon={<FileText className="text-blue-600" />}>
+          <DetailSection
+            title="Lab Reports"
+            icon={<FileText className="text-blue-600" />}
+          >
             <div className="grid gap-2">
               {appointment.labReports.map((r, i) => (
                 <motion.div
@@ -148,12 +146,8 @@ function DetailSection({ title, icon, children }) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      whileHover={{
-        scale: 1.02,
-        boxShadow:
-          "0 0 25px rgba(59,130,246,0.2), 0 0 50px rgba(191,219,254,0.2)",
-      }}
-      className="p-5 rounded-2xl bg-white/70 border border-blue-100/70 shadow-[inset_0_0_15px_rgba(255,255,255,0.4)] hover:bg-blue-50/50 transition-all duration-300"
+      whileHover={{ scale: 1.02 }}
+      className="p-5 rounded-2xl bg-gradient-to-br from-blue-500/30 via-blue-200/50 to-blue-50 border border-blue-100 shadow-sm transition-all duration-300"
     >
       <div className="flex items-center gap-2 mb-3">
         {icon}
