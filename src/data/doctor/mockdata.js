@@ -4,7 +4,8 @@ export const appointments = [
     id: "ap1",
     patientId: "p1",
     patientName: "John Doe",
-    patientPhoto: "https://i.pravatar.cc/50?img=1",
+    patientPhoto: "https://i.pravatar.cc/80?img=1",
+    gender: "Male",
     date: "13 Aug 2025",
     time: "11.00 AM",
     type: "Video Consultation",
@@ -37,6 +38,7 @@ export const appointments = [
     patientId: "p2",
     patientName: "Aisha Khan",
     patientPhoto: "https://i.pravatar.cc/80?img=5",
+    gender: "Female",
     date: "14 Aug 2025",
     time: "3:00 PM",
     type: "In-person Consultation",
@@ -63,8 +65,9 @@ export const appointments = [
     patientId: "p3",
     patientName: "Michael Smith",
     patientPhoto: "https://i.pravatar.cc/80?img=8",
-    date: "15 Aug 2025",
-    time: "9:30 AM",
+    gender: "Male",
+    date: "15 Aug 2025", // Already in 'DD Mon YYYY' format
+    time: "9:30 AM", // Already in consistent format
     type: "Video Consultation",
     status: "Scheduled",
     reason: "Cough and mild fever",
@@ -76,21 +79,22 @@ export const appointments = [
     },
     prescriptions: [
       {
-        date: "14 Aug 2025",
+        date: "14 Aug 2025", // Already in 'DD Mon YYYY' format
         medicine: "Paracetamol 500mg",
         duration: "5 days",
         notes: "Every 6 hours",
       },
     ],
-    labReports: [{ title: "Chest X-ray", date: "12 Aug 2025" }],
+    labReports: [{ title: "Chest X-ray", date: "12 Aug 2025" }], // Already in 'DD Mon YYYY' format
   },
   {
     id: "ap4",
     patientId: "p4",
     patientName: "Priya Sharma",
     patientPhoto: "https://i.pravatar.cc/80?img=15",
-    date: "16 Aug 2025",
-    time: "2:15 PM",
+    gender: "Female",
+    date: "16 Aug 2025", // Already in 'DD Mon YYYY' format
+    time: "2:15 PM", // Already in consistent format
     type: "In-person Consultation",
     status: "Cancelled",
     reason: "Follow-up for knee pain",
@@ -102,21 +106,22 @@ export const appointments = [
     },
     prescriptions: [
       {
-        date: "10 Aug 2025",
+        date: "10 Aug 2025", // Already in 'DD Mon YYYY' format
         medicine: "Naproxen 250mg",
         duration: "7 days",
         notes: "After meals",
       },
     ],
-    labReports: [{ title: "Knee MRI Scan", date: "09 Aug 2025" }],
+    labReports: [{ title: "Knee MRI Scan", date: "09 Aug 2025" }], // Already in 'DD Mon YYYY' format
   },
   {
     id: "ap5",
     patientId: "p5",
     patientName: "David Johnson",
     patientPhoto: "https://i.pravatar.cc/80?img=20",
-    date: "17 Aug 2025",
-    time: "5:00 PM",
+    gender: "Male",
+    date: "17 Aug 2025", // Already in 'DD Mon YYYY' format
+    time: "5:00 PM", // Already in consistent format
     type: "Video Consultation",
     status: "Scheduled",
     reason: "Seasonal allergies",
@@ -128,21 +133,22 @@ export const appointments = [
     },
     prescriptions: [
       {
-        date: "15 Aug 2025",
+        date: "15 Aug 2025", // Already in 'DD Mon YYYY' format
         medicine: "Loratadine 10mg",
         duration: "10 days",
         notes: "Once daily",
       },
     ],
-    labReports: [{ title: "Allergy Test", date: "14 Aug 2025" }],
+    labReports: [{ title: "Allergy Test", date: "14 Aug 2025" }], // Already in 'DD Mon YYYY' format
   },
   {
     id: "ap6",
     patientId: "p6",
     patientName: "Meera Patel",
     patientPhoto: "https://i.pravatar.cc/80?img=32",
-    date: "18 Aug 2025",
-    time: "10:00 AM",
+    gender: "Female",
+    date: "18 Aug 2025", // Already in 'DD Mon YYYY' format
+    time: "10:00 AM", // Already in consistent format
     type: "In-person Consultation",
     status: "Completed",
     reason: "Routine health check-up",
@@ -154,16 +160,15 @@ export const appointments = [
     },
     prescriptions: [
       {
-        date: "18 Aug 2025",
+        date: "18 Aug 2025", // Already in 'DD Mon YYYY' format
         medicine: "Multivitamin",
         duration: "30 days",
         notes: "Once daily in the morning",
       },
     ],
-    labReports: [{ title: "Full Body Blood Test", date: "18 Aug 2025" }],
+    labReports: [{ title: "Full Body Blood Test", date: "18 Aug 2025" }], // Already in 'DD Mon YYYY' format
   },
 ];
-
 // Patients
 // src/data/doctor/patients.js
 

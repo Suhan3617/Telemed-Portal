@@ -28,7 +28,7 @@ export default function AppointmentRow({ a, onOpen, index }) {
       <td className="px-6 py-4 align-top">
         <div className="flex items-center gap-3">
           <img
-            src={a.patient.avatar}
+            src={a.patientPhoto}
             alt="avatar"
             className="w-10 h-10 rounded-full shadow-sm"
           />
@@ -37,7 +37,7 @@ export default function AppointmentRow({ a, onOpen, index }) {
               onClick={() => onOpen(a)}
               className="text-slate-900 font-semibold hover:text-blue-600 transition"
             >
-              {a.patient.name}
+              {a.patientName}
             </button>
             <div className="text-xs text-slate-500">{a.reason}</div>
           </div>
@@ -47,9 +47,9 @@ export default function AppointmentRow({ a, onOpen, index }) {
       <td className="px-6 py-4 align-top">
         <div className="flex items-center gap-3 text-sm text-slate-700">
           <div className="text-slate-600 opacity-90">
-            {a.patient.gender === "Female" ? "♀" : "♂"}
+            {a.gender === "Female" ? "♀" : "♂"}
           </div>
-          <div className="text-xs">{a.patient.age} yrs</div>
+          {/* <div className="text-xs">{a.patient.age} yrs</div> */}
         </div>
       </td>
 
