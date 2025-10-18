@@ -3,9 +3,9 @@ import { User, Mars, Venus, Calendar, Heart, PlusCircle } from "lucide-react";
 
 const SelectedPatientCard = ({ selectedPatient }) => {
 
-  const getGenderIcon = (gender) => {
-    if (gender.toLowerCase() === "male") return <Mars className="w-5 h-5 text-blue-500" />;
-    if (gender.toLowerCase() === "female") return <Venus className="w-5 h-5 text-pink-500" />;
+  const getsexIcon = (sex) => {
+    if (sex.toLowerCase() === "M") return <Mars className="w-5 h-5 text-blue-500" />;
+    if (sex.toLowerCase() === "F") return <Venus className="w-5 h-5 text-pink-500" />;
     return <User className="w-5 h-5 text-gray-500" />;
   };
 
@@ -33,7 +33,7 @@ const SelectedPatientCard = ({ selectedPatient }) => {
         <h2 className="text-2xl font-bold text-blue-700">{selectedPatient.name}</h2>
         <div className="flex items-center gap-4 mt-2 md:mt-0 text-gray-600 text-sm">
           <div className="flex items-center gap-1"><User className="w-5 h-5 text-blue-500" /> {selectedPatient.age} yrs</div>
-          <div className="flex items-center gap-1">{getGenderIcon(selectedPatient.gender)} {selectedPatient.gender}</div>
+          <div className="flex items-center gap-1">{getsexIcon(selectedPatient.sex)} {selectedPatient.sex}</div>
           <div className="flex items-center gap-1"><Calendar className="w-5 h-5 text-blue-500" /> {selectedPatient.lastVisit}</div>
         </div>
       </div>

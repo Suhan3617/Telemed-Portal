@@ -1,67 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+
 import { motion } from "framer-motion";
+
 import { FileText } from "lucide-react";
-import { useSearchParams } from "react-router-dom"; // 👈 Import useSearchParams
+
 import PatientSelector from "../../components/Doctor/prescription_form/patientselector";
+
 import PrescriptionPreview from "../../components/Doctor/prescription_form/prescriptionpreview";
+
 import MedicineForm from "../../components/Doctor/prescription_form/medicineform";
+
 import PrescriptionSummary from "../../components/Doctor/prescription_form/prescriptionsummary";
 
-// 👈 PLACEHOLDER: You need to implement this function to fetch patient data
-const fetchPatientById = async (id) => {
-  // In a real application, this would be an API call, e.g., axios.get('/api/patients/' + id)
-  console.log(`Fetching patient data for ID: ${id}`);
-  
-  // Mock data for demonstration
-  if (id === "pat_123") {
-    return {
-      id: id,
-      name: "Dr. Selected Mock Patient",
-      dob: "1990-01-01",
-      // ... other patient fields
-    };
-  }
-  return null;
-};
-
 const DoctorPrescription = () => {
-  const [searchParams] = useSearchParams(); // 👈 Use the hook to get URL parameters
   const [selectedPatient, setSelectedPatient] = useState(null);
+
   const [medicines, setMedicines] = useState([
     {
       name: "",
+
       strength: "",
+
       dose: "",
+
       frequency: "",
+
       duration: "",
+
       instructions: "",
     },
   ]);
+
   const [notes, setNotes] = useState("");
+
   const [showSummary, setShowSummary] = useState(false);
-
-  // 💡 NEW LOGIC: Effect to check for and pre-select a patient from the URL
-  useEffect(() => {
-    const preselectedPatientId = searchParams.get("patientId");
-
-    if (preselectedPatientId && !selectedPatient) {
-      // 1. Fetch the patient data using the ID from the URL
-      fetchPatientById(preselectedPatientId).then(patientData => {
-        if (patientData) {
-          // 2. Set the fetched patient as the selected patient
-          setSelectedPatient(patientData);
-          console.log(`Pre-selected patient: ${patientData.name}`);
-        }
-      });
-    }
-  }, [searchParams, selectedPatient]); // Rerun if URL params change
 
   const handleGenerate = (e) => {
     e.preventDefault();
+
     if (!selectedPatient) {
       alert("Please select a patient first!");
+
       return;
     }
+
     setShowSummary(true);
   };
 
@@ -74,6 +56,7 @@ const DoctorPrescription = () => {
         transition={{ duration: 0.6 }}
       >
         {/* Left: Form */}
+
         <motion.div
           className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 backdrop-blur-xl shadow-2xl rounded-3xl p-6 border border-blue-300"
           whileHover={{ scale: 1.01 }}
@@ -83,19 +66,18 @@ const DoctorPrescription = () => {
             <FileText className="w-7 h-7 text-blue-600" /> Create Prescription
           </h2>
 
-          {/* Patient Selector - Pass the current selection to the selector 
-             so it can manage its state correctly if one is pre-selected */}
-          <PatientSelector 
-            onSelect={setSelectedPatient} 
-            initialPatient={selectedPatient} // Pass the pre-selected patient
-          />
-          
+          {/* Patient Selector */}
+          {/* Selected Patient Info */}
+          <PatientSelector onSelect={setSelectedPatient} />
+
           {selectedPatient && (
             <form onSubmit={handleGenerate} className="mt-6 space-y-6">
               {/* Medicines */}
+
               <MedicineForm medicines={medicines} setMedicines={setMedicines} />
 
               {/* Additional Notes */}
+
               <motion.div
                 className="bg-gradient-to-r from-blue-100/80 to-blue-50/80 p-5 rounded-2xl border border-blue-200 shadow-md hover:shadow-lg transition-all"
                 whileHover={{ scale: 1.01 }}
@@ -103,6 +85,7 @@ const DoctorPrescription = () => {
                 <label className="block text-base md:text-lg font-semibold text-blue-700 mb-2">
                   Additional Notes / Instructions
                 </label>
+
                 <textarea
                   rows="5"
                   value={notes}
@@ -113,6 +96,7 @@ const DoctorPrescription = () => {
               </motion.div>
 
               {/* Generate Button */}
+
               <div className="text-right mt-2">
                 <motion.button
                   type="submit"
@@ -128,6 +112,7 @@ const DoctorPrescription = () => {
         </motion.div>
 
         {/* Right: Preview */}
+
         <motion.div
           className="lg:w-1/3 mt-6 lg:mt-0 sticky top-6"
           initial={{ opacity: 0, x: 20 }}
@@ -143,6 +128,7 @@ const DoctorPrescription = () => {
       </motion.div>
 
       {/* Summary Modal */}
+
       {showSummary && (
         <PrescriptionSummary
           patient={selectedPatient}

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Users, Calendar, User, Mars, Venus } from "lucide-react";
+import { Users, Calendar, User, Mars, Venus, MapPin, Phone } from "lucide-react";
 import { patients } from "../../../data/doctor/mockdata";
 import { motion, AnimatePresence } from "framer-motion";
 import SelectedPatientCard from "./selectedpatientcard";
@@ -15,10 +15,10 @@ const PatientSelector = ({ onSelect }) => {
     setOpen(false);
   };
 
-  // Close dropdown when clicking outside
+  // Close dropdown on outside click
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setOpen(false);
       }
     };
@@ -26,10 +26,10 @@ const PatientSelector = ({ onSelect }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Return gender icon
-  const getGenderIcon = (gender) => {
-    if (gender.toLowerCase() === "male") return <Mars className="w-4 h-4 text-blue-500" />;
-    if (gender.toLowerCase() === "female") return <Venus className="w-4 h-4 text-pink-500" />;
+  // Gender Icon
+  const getGenderIcon = (sex) => {
+    if (sex?.toLowerCase() === "m") return <Mars className="w-4 h-4 text-blue-500" />;
+    if (sex?.toLowerCase() === "f") return <Venus className="w-4 h-4 text-pink-500" />;
     return <User className="w-4 h-4 text-gray-500" />;
   };
 
@@ -37,22 +37,34 @@ const PatientSelector = ({ onSelect }) => {
     <div className="mb-6 relative" ref={dropdownRef}>
       {/* Label */}
       <label className="text-sm font-semibold text-blue-600 flex items-center gap-2 mb-2">
-        <Users className="w-5 h-5" /> <p className="text-2xl font-bold">Select Patient</p> 
+        <Users className="w-5 h-5" />
+        <p className="text-2xl font-bold">Select Patient</p>
       </label>
 
-      {/* Input / Selector */}
+      {/* Selector */}
       <div
-        className="w-full border border-blue-300 rounded-xl p-3 flex justify-between items-center cursor-pointer bg-white hover:shadow-xl transition-shadow"
+        className="w-full border border-blue-300 rounded-xl p-3 flex justify-between items-center cursor-pointer bg-white hover:shadow-lg transition-shadow"
         onClick={() => setOpen(!open)}
       >
         {selectedPatient ? (
-          <span className="text-gray-700 font-medium">
-            {selectedPatient.name} • {selectedPatient.age} yrs • {selectedPatient.gender}
-          </span>
+          <div className="flex items-center gap-2">
+            <img
+              src={selectedPatient.avatar}
+              alt={selectedPatient.name}
+              className="w-8 h-8 rounded-full object-cover border"
+            />
+            <span className="text-gray-700 font-medium">
+              {selectedPatient.name} • {selectedPatient.age} yrs • {selectedPatient.sex}
+            </span>
+          </div>
         ) : (
-          <span className="text-gray-400">Choose patient</span>
+          <span className="text-gray-400">Choose a patient</span>
         )}
-        <span className={`transform transition-transform ${open ? "rotate-180" : "rotate-0"}`}>
+        <span
+          className={`transform transition-transform text-gray-600 ${
+            open ? "rotate-180" : "rotate-0"
+          }`}
+        >
           ▼
         </span>
       </div>
@@ -65,19 +77,35 @@ const PatientSelector = ({ onSelect }) => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
           >
             {patients.map((p) => (
               <div
                 key={p.id}
                 onClick={() => handleSelect(p)}
-                className="p-4 border-b last:border-b-0 border-blue-100 cursor-pointer hover:bg-blue-50 rounded-xl mx-3 my-2"
+                className="p-3 border-b last:border-b-0 border-blue-100 cursor-pointer hover:bg-blue-50 transition-colors flex items-center gap-3"
               >
-                <p className="font-semibold text-blue-700 text-base">{p.name}</p>
-                <div className="flex items-center gap-4 mt-1 text-gray-600 text-sm">
-                  <span className="flex items-center gap-1"><User className="w-4 h-4" /> {p.age} yrs</span>
-                  <span className="flex items-center gap-1">{getGenderIcon(p.gender)} {p.gender}</span>
-                  <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> {p.lastVisit}</span>
+                <img
+                  src={p.avatar}
+                  alt={p.name}
+                  className="w-10 h-10 rounded-full object-cover border"
+                />
+                <div className="flex flex-col">
+                  <p className="font-semibold text-blue-700 text-base">{p.name}</p>
+                  <div className="flex flex-wrap items-center gap-3 text-gray-600 text-sm mt-0.5">
+                    <span className="flex items-center gap-1">
+                      <User className="w-4 h-4" /> {p.age} yrs
+                    </span>
+                    <span className="flex items-center gap-1">
+                      {getGenderIcon(p.sex)} {p.sex}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-4 h-4" /> {p.location}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-4 h-4" /> {p.lastVisit}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
