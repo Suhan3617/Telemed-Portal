@@ -92,7 +92,7 @@ export default function DoctorAppointmentsPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen p-8 bg-gradient-to-br from-blue-50 via-white to-blue-100 text-slate-900"
+      className="min-h-screen p-8 bg-gradient-to-br from-blue-500/40 via-sky-200/60 to-indigo-200/70 rounded-3xl text-slate-900"
     >
       {/* 🔷 Premium Header */}
       <PremiumHeader
