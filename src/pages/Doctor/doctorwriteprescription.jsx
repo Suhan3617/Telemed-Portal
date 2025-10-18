@@ -12,6 +12,8 @@ import MedicineForm from "../../components/Doctor/prescription_form/medicineform
 
 import PrescriptionSummary from "../../components/Doctor/prescription_form/prescriptionsummary";
 
+import PremiumHeader from "../../components/Doctor/allpagesheader";
+
 const DoctorPrescription = () => {
   const [selectedPatient, setSelectedPatient] = useState(null);
 
@@ -49,6 +51,8 @@ const DoctorPrescription = () => {
 
   return (
     <>
+      {/* ✅ Added Page Header */}
+
       <motion.div
         className="flex flex-col lg:flex-row gap-6 p-6"
         initial={{ opacity: 0, y: 20 }}
@@ -58,13 +62,16 @@ const DoctorPrescription = () => {
         {/* Left: Form */}
 
         <motion.div
-          className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 backdrop-blur-xl shadow-2xl rounded-3xl p-6 border border-blue-300"
+          className="flex-1 bg-gradient-to-br from-blue-500/40 via-sky-200/60 to-indigo-200/70  backdrop-blur-xl shadow-2xl rounded-3xl p-6 border border-blue-300"
           whileHover={{ scale: 1.01 }}
           transition={{ type: "spring", stiffness: 100 }}
         >
-          <h2 className="text-3xl font-bold text-blue-700 mb-6 flex items-center gap-3">
-            <FileText className="w-7 h-7 text-blue-600" /> Create Prescription
-          </h2>
+          <PremiumHeader
+            breadcrumb="Doctor / Prescription"
+            icon={<FileText className="w-6 h-6" />}
+            title="Create Prescription"
+            subtitle="Easily craft digital prescriptions, manage patient medications, and add follow-up instructions."
+          />
 
           {/* Patient Selector */}
           {/* Selected Patient Info */}
