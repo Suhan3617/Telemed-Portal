@@ -1,64 +1,107 @@
+import React from "react";
 import { motion } from "framer-motion";
 import { CalendarDays, Clock, CheckCircle, XCircle } from "lucide-react";
 
-const cardsDef = (appointments, todayISO) => {
+export default function SummaryCards({ appointments }) {
+  const todayISO = new Date().toISOString().split("T")[0];
+
   const todayCount = appointments.filter((a) => a.date === todayISO).length;
   const upcomingCount = appointments.length;
   const completedCount = appointments.filter((a) => a.status === "Completed").length;
   const cancelledCount = appointments.filter((a) => a.status === "Cancelled").length;
 
-  return [
+  const cards = [
     {
       label: "Today's Appointments",
       value: todayCount,
-      icon: CalendarDays,
-      gradient: "from-blue-500 via-blue-400 to-blue-300",
+      Icon: CalendarDays,
+      glow: "from-blue-300 to-blue-500",
+      iconColor: "text-blue-600",
     },
     {
       label: "Upcoming (7d)",
       value: upcomingCount,
-      icon: Clock,
-      gradient: "from-indigo-500 via-blue-500 to-cyan-400",
+      Icon: Clock,
+      glow: "from-indigo-300 to-cyan-400",
+      iconColor: "text-cyan-600",
     },
     {
       label: "Completed",
       value: completedCount,
-      icon: CheckCircle,
-      gradient: "from-green-500 via-emerald-400 to-emerald-300",
+      Icon: CheckCircle,
+      glow: "from-emerald-300 to-emerald-500",
+      iconColor: "text-emerald-600",
     },
     {
       label: "Cancelled / Missed",
       value: cancelledCount,
-      icon: XCircle,
-      gradient: "from-rose-500 via-rose-400 to-amber-400",
+      Icon: XCircle,
+      glow: "from-rose-300 to-amber-400",
+      iconColor: "text-rose-600",
     },
   ];
-};
-
-export default function SummaryCards({ appointments }) {
-  const todayISO = new Date().toISOString().split("T")[0];
-  const cards = cardsDef(appointments, todayISO);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7 my-6">
       {cards.map((c, i) => (
         <motion.div
-          key={i}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: i * 0.05 }}
-          whileHover={{ scale: 1.05, boxShadow: "0px 0px 20px rgba(59,130,246,0.4)" }}
-          className={`relative overflow-hidden rounded-2xl p-5 bg-gradient-to-tr ${c.gradient} text-white shadow-xl transition-all`}
+          key={c.label}
+          initial={{ opacity: 0, y: 30, scale: 0.92 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{
+            delay: i * 0.07,
+            type: "spring",
+            stiffness: 230,
+            damping: 18,
+          }}
+          whileHover={{
+            scale: 1.07,
+            y: -6,
+            boxShadow:
+              "0 16px 32px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255,255,255,0.4)",
+            transition: { type: "spring", stiffness: 340, damping: 20 },
+          }}
+          whileTap={{
+            scale: 0.97,
+            transition: { duration: 0.1 },
+          }}
+          className={`relative overflow-hidden rounded-2xl p-6 shadow-lg flex items-center justify-between transition-all duration-200`}
+          style={{
+            background: "rgba(255, 255, 255, 0.55)",
+            backdropFilter: "blur(14px)",
+            WebkitBackdropFilter: "blur(14px)",
+            border: "1px solid rgba(255, 255, 255, 0.25)",
+          }}
         >
-          <div className="flex items-start justify-between">
-            <div>
-              <div className="text-4xl font-extrabold">{c.value}</div>
-              <div className="mt-1 text-sm opacity-90">{c.label}</div>
+          {/* Glow background */}
+          <div
+            className={`absolute -inset-12 bg-gradient-to-br ${c.glow} opacity-40 blur-3xl`}
+          ></div>
+
+          {/* Light reflection overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40 opacity-40"></div>
+
+          {/* Content */}
+          <div className="relative z-10">
+            <div className="text-xs font-semibold uppercase tracking-wider text-gray-600">
+              {c.label}
             </div>
-            <div className="p-3 bg-white/25 rounded-lg backdrop-blur-sm">
-              <c.icon size={22} />
+            <div className="text-4xl font-bold mt-2 text-gray-900 drop-shadow-sm">
+              {c.value}
             </div>
           </div>
+
+          {/* Icon */}
+          <motion.div
+            whileHover={{
+              rotate: 8,
+              scale: 1.15,
+              transition: { type: "spring", stiffness: 400, damping: 18 },
+            }}
+            className="relative z-10 p-3 rounded-xl bg-white/60 backdrop-blur-sm shadow-md border border-white/50"
+          >
+            <c.Icon size={28} className={`${c.iconColor}`} />
+          </motion.div>
         </motion.div>
       ))}
     </div>
