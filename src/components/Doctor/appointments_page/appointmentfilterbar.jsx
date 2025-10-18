@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Search, X, ChevronDown, Calendar, RotateCcw } from "lucide-react";
-import "./VFXfilter.css"; // same shimmer animation from reports filter
+import { Search, X, ChevronDown, RotateCcw } from "lucide-react";
+import "./VFXfilter.css"; // shimmer effect
 
 export default function AppointmentsFilterBar({
   searchTerm,
@@ -19,7 +19,12 @@ export default function AppointmentsFilterBar({
   const [customTo, setCustomTo] = useState("");
   const [suggestionsOpen, setSuggestionsOpen] = useState(false);
 
-  // 🔍 Auto-suggest options (patient name or ID)
+  // 🗓 Default date range = "Custom"
+  useEffect(() => {
+    if (!dateRange) setDateRange("Custom");
+  }, [dateRange, setDateRange]);
+
+  // 🔍 Auto-suggest
   const suggestions = useMemo(() => {
     if (!searchTerm.trim()) return [];
     const lower = searchTerm.toLowerCase();
@@ -54,7 +59,7 @@ export default function AppointmentsFilterBar({
                  backdrop-blur-2xl border border-blue-200/50 rounded-3xl p-6
                  shadow-[0_8px_32px_rgba(0,0,0,0.08)] transition-all duration-500 flex flex-col gap-6"
     >
-      {/* 🔍 Search Bar with Auto-suggest */}
+      {/* 🔍 Search Bar */}
       <div className="relative flex flex-col lg:flex-row items-center gap-4 w-full">
         <div className="relative flex-1 w-full">
           <Search className="absolute left-4 top-3.5 text-blue-500/80" size={22} />
@@ -110,10 +115,10 @@ export default function AppointmentsFilterBar({
         </motion.button>
       </div>
 
-      {/* 🗓️ Filters Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full justify-items-stretch">
+      {/* 🧭 Filters Row */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full items-end">
 
-        {/* Date Range */}
+        {/* 📅 Date Range */}
         <motion.div whileHover={{ scale: 1.02 }} transition={{ duration: 0.15 }}>
           <div className="relative w-full group">
             <select
@@ -138,7 +143,6 @@ export default function AppointmentsFilterBar({
             />
           </div>
 
-          {/* Custom Date Inputs */}
           {dateRange === "Custom" && (
             <div className="flex gap-2 mt-2">
               <input
@@ -157,10 +161,11 @@ export default function AppointmentsFilterBar({
           )}
         </motion.div>
 
-        {/* Status Multi-select */}
+        {/* 🩺 Status Filter */}
         <motion.div whileHover={{ scale: 1.02 }} transition={{ duration: 0.15 }}>
-          <div className="bg-white/70 border border-blue-200 rounded-xl p-3 shadow-inner">
-            <div className="text-xs font-semibold text-blue-600 mb-2">
+          <div className="bg-gradient-to-br from-blue-50/70 via-white/70 to-blue-100/60 
+                          border border-blue-200/60 rounded-xl p-4 shadow-inner">
+            <div className="text-xs font-semibold text-blue-700 mb-2 tracking-wide">
               Status
             </div>
             <div className="flex flex-wrap gap-2">
@@ -168,11 +173,13 @@ export default function AppointmentsFilterBar({
                 <button
                   key={s}
                   onClick={() => toggleStatus(s)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                    selectedStatuses.includes(s)
-                      ? "bg-blue-500 text-white shadow-[0_0_10px_rgba(59,130,246,0.5)]"
-                      : "bg-blue-50 text-blue-700 hover:bg-blue-100"
-                  }`}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold 
+                              transition-all backdrop-blur-sm shadow-sm
+                              ${
+                                selectedStatuses.includes(s)
+                                  ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-[0_0_10px_rgba(59,130,246,0.4)] scale-[1.02]"
+                                  : "bg-blue-50/80 text-blue-700 hover:bg-blue-100/80 border border-blue-200"
+                              }`}
                 >
                   {s}
                 </button>
@@ -181,7 +188,7 @@ export default function AppointmentsFilterBar({
           </div>
         </motion.div>
 
-        {/* Sort Options */}
+        {/* 🔽 Sort Options */}
         <motion.div whileHover={{ scale: 1.02 }} transition={{ duration: 0.15 }}>
           <div className="relative w-full group">
             <select
