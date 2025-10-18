@@ -2,7 +2,7 @@ import React from 'react'
 
 import { motion } from 'framer-motion';
 // Assume you've imported the messages and patient data
-import { patients , messages } from '../../../data/doctor/mockdata';
+import { patients } from '../../../data/doctor/mockdata';
 
 const patientMessages = [
   { pid: 'p4', text: 'Follow-up for knee pain', name: 'Priya Sharma', avatar: patients.find(p => p.id === 'p4')?.avatar },

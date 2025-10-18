@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from "framer-motion";
 
 // Mock data for the chart from the screenshot 
 const trendData = [

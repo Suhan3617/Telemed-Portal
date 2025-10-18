@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from "framer-motion";
 
 const cardVariants = {
   initial: { opacity: 0, y: 20, scale: 0.98 },
@@ -6,7 +7,7 @@ const cardVariants = {
   hover: { scale: 1.03, boxShadow: "0 0 20px 0 var(--primary-glow)", transition: { duration: 0.3 } },
 };
 
-const appointmentstatscard = () => {
+const appointmentstatscard = ({ label, value, icon: Icon }) => {
   return (
     <motion.div
       initial="initial"
