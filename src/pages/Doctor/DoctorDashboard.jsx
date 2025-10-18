@@ -153,21 +153,11 @@ const DoctorDashboard = () => {
       {/* Main Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {/* Stats Cards (Full width on large screens) */}
-        <div className="md:col-span-3 lg:col-span-4 grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="md:col-span-3 lg:col-span-4">
           <Appointmentstatscard
-            label="Today's Appointments"
-            value={todayAppointments}
-            icon={icons.Appointments}
-          />
-          <Appointmentstatscard
-            label="Pending Lab Results"
-            value={pendingLabResults}
-            icon={icons.LabResults}
-          />
-          <Appointmentstatscard
-            label="Upcoming Follow-ups"
-            value={upcomingFollowUps}
-            icon={icons.FollowUps}
+            todayAppointments={todayAppointments}
+            pendingLabResults={pendingLabResults}
+            upcomingFollowUps={upcomingFollowUps}
           />
         </div>
         {/* Appointments Table (2/3 width) */}
