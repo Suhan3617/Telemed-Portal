@@ -1,92 +1,70 @@
 import React, { useState, useMemo } from "react";
-import { appointments, patients } from "../../data/doctor/mockdata";
-import Pageheader from "../../components/Common/pageheader";
-import Doctorfilterpanel from "../../components/Doctor/appointments_page/doctorfilterpanel";
-import DoctorAppointmentCard from "../../components/Doctor/appointments_page/doctorappointmentcard";
-import Doctordetailsmodal from "../../components/Doctor/appointments_page/doctordetailsmodal";
-import { motion, AnimatePresence } from "framer-motion";
+import SummaryCards from "../../components/Doctor/appointments_page/summarycard";
+import FiltersBar from "../../components/Doctor/appointments_page/appointmentfilterbar";
+import AppointmentsTable from "../../components/Doctor/appointments_page/appointmenttable";
+import AppointmentModal from "../../components/Doctor/appointments_page/appointmentmodal";
+import FloatingAdd from "../../components/Doctor/appointments_page/floatingadd";
 
-const DoctorAppointments = () => {
-  const [q, setQ] = useState("");
-  const [type, setType] = useState("All");
-  const [range, setRange] = useState("Upcoming");
-  const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState(null);
+// mock data (replace with API)
+import { appointments as mockAppointments } from "../../data/doctor/mockdata.js";
+export default function DoctorAppointmentsPage() {
+  const [appointments] = useState(mockAppointments);
+  const [filters, setFilters] = useState({
+    range: "today",
+    status: "all",
+    q: "",
+  });
+  const [selected, setSelected] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const list = useMemo(() => {
-    return appointments.filter((a) => {
-      const matchQ = a.patientName.toLowerCase().includes(q.toLowerCase());
-      const matchType = type === "All" || a.type === type;
-      return matchQ && matchType;
-    });
-  }, [q, type, range]);
+  const todayISO = new Date().toISOString().split("T")[0];
 
-  const openDetails = (appt) => {
-    const patient = patients.find((p) => p.id === appt.patientId);
-    const patientPrescriptions = appt.prescriptions.filter(
-      (pr) => pr.patientId === appt.patientId
-    );
-    setCurrent({ appt, patient, patientPrescriptions });
-    setOpen(true);
-  };
+  const filtered = useMemo(() => {
+    let list = appointments;
+    if (filters.range === "today")
+      list = list.filter((a) => a.date === todayISO);
+    if (filters.status !== "all")
+      list = list.filter((a) => a.status === filters.status);
+    if (filters.q)
+      list = list.filter(
+        (a) =>
+          a.patientName.toLowerCase().includes(filters.q.toLowerCase()) ||
+          a.id.includes(filters.q)
+      );
+    return list;
+  }, [appointments, filters, todayISO]);
+
+  function openModal(appointment) {
+    setSelected(appointment);
+    setModalOpen(true);
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-blue-100 to-white p-6 sm:p-10">
-      <Pageheader
-        title="Appointments Records"
-        subtitle="Manage and view your patient appointments"
-        breadcrumb={["Dashboard", "Appointments"]}
+    <div className="min-h-screen p-6 bg-gradient-to-br from-blue-50 via-white to-blue-50 text-slate-900">
+      {/* Header is provided by doctor layout (title, subtitle, breadcrumbs) */}
+
+      <div className="space-y-6">
+        <SummaryCards appointments={appointments} />
+
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-semibold tracking-tight text-slate-900">
+            Appointments
+          </h2>
+        </div>
+
+        <FiltersBar filters={filters} setFilters={setFilters} />
+
+        <AppointmentsTable appointments={filtered} onView={openModal} />
+
+      </div>
+
+      <FloatingAdd />
+
+      <AppointmentModal
+        open={modalOpen}
+        appointment={selected || null}
+        onClose={() => setModalOpen(false)}
       />
-
-      {/* Filter panel animation */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <Doctorfilterpanel
-          q={q}
-          setQ={setQ}
-          type={type}
-          setType={setType}
-          range={range}
-          setRange={setRange}
-        />
-      </motion.div>
-
-      {/* Animated cards grid */}
-      <motion.div
-        layout
-        className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-      >
-        <AnimatePresence>
-          {list.map((a) => (
-            <motion.div
-              key={a.id}
-              layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              <DoctorAppointmentCard
-                appt={a}
-                onViewDetails={() => openDetails(a)}
-              />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </motion.div>
-
-      {open && (
-        <Doctordetailsmodal
-          open={open}
-          onClose={() => setOpen(false)}
-          current={current}
-        />
-      )}
     </div>
   );
-};
-
-export default DoctorAppointments;
+}
