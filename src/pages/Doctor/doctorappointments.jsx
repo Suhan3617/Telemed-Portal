@@ -1,70 +1,91 @@
 import React, { useState, useMemo } from "react";
+import { motion } from "framer-motion";
+
 import SummaryCards from "../../components/Doctor/appointments_page/summarycard";
 import FiltersBar from "../../components/Doctor/appointments_page/appointmentfilterbar";
 import AppointmentsTable from "../../components/Doctor/appointments_page/appointmenttable";
 import AppointmentModal from "../../components/Doctor/appointments_page/appointmentmodal";
 import FloatingAdd from "../../components/Doctor/appointments_page/floatingadd";
 
-// mock data (replace with API)
-import { appointments as mockAppointments } from "../../data/doctor/mockdata.js";
+// mock data
+import { appointments as mockAppointments } from "../../data/doctor/mockdata";
+
 export default function DoctorAppointmentsPage() {
   const [appointments] = useState(mockAppointments);
-  const [filters, setFilters] = useState({
-    range: "today",
-    status: "all",
-    q: "",
-  });
+  const [searchTerm, setSearchTerm] = useState("");
   const [selected, setSelected] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   const todayISO = new Date().toISOString().split("T")[0];
 
-  const filtered = useMemo(() => {
-    let list = appointments;
-    if (filters.range === "today")
-      list = list.filter((a) => a.date === todayISO);
-    if (filters.status !== "all")
-      list = list.filter((a) => a.status === filters.status);
-    if (filters.q)
-      list = list.filter(
-        (a) =>
-          a.patientName.toLowerCase().includes(filters.q.toLowerCase()) ||
-          a.id.includes(filters.q)
-      );
-    return list;
-  }, [appointments, filters, todayISO]);
+  // ✅ Filter logic based on search term
+  const filteredAppointments = useMemo(() => {
+    return appointments.filter(
+      (a) =>
+        a.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        a.id.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [appointments, searchTerm]);
 
-  function openModal(appointment) {
+  // Reset search and filters
+  const handleReset = () => {
+    setSearchTerm("");
+  };
+
+  // Open modal for appointment details
+  const handleOpenModal = (appointment) => {
     setSelected(appointment);
     setModalOpen(true);
-  }
+  };
+
+  // Close modal
+  const handleCloseModal = () => setModalOpen(false);
 
   return (
-    <div className="min-h-screen p-6 bg-gradient-to-br from-blue-50 via-white to-blue-50 text-slate-900">
-      {/* Header is provided by doctor layout (title, subtitle, breadcrumbs) */}
-
-      <div className="space-y-6">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="min-h-screen p-8 bg-gradient-to-br from-blue-50 via-white to-blue-100 text-slate-900"
+    >
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="space-y-8"
+      >
+        {/* 🔹 Quick Stats Cards */}
         <SummaryCards appointments={appointments} />
 
-        <div className="flex items-center justify-between">
-          <h2 className="text-3xl font-semibold tracking-tight text-slate-900">
+        {/* 🔹 Header */}
+        <div className="flex items-center justify-between mt-4">
+          <h2 className="text-3xl font-bold tracking-tight text-blue-700 drop-shadow-sm">
             Appointments
           </h2>
         </div>
 
-        <FiltersBar filters={filters} setFilters={setFilters} />
+        {/* 🔹 Filters Bar (updated props) */}
+        <FiltersBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          onReset={handleReset}
+        />
 
-        <AppointmentsTable appointments={filtered} onView={openModal} />
+        {/* 🔹 Appointments Table */}
+        <AppointmentsTable
+          appointments={filteredAppointments}
+          onView={handleOpenModal}
+        />
+      </motion.div>
 
-      </div>
-
+      {/* Floating Add Button */}
       <FloatingAdd />
 
+      {/* Modal */}
       <AppointmentModal
         open={modalOpen}
-        appointment={selected || null}
-        onClose={() => setModalOpen(false)}
+        appointment={selected}
+        onClose={handleCloseModal}
       />
-    </div>
+    </motion.div>
   );
 }

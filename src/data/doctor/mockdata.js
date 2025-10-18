@@ -4,10 +4,10 @@ export const appointments = [
     id: "ap1",
     patientId: "p1",
     patientName: "John Doe",
-    patientPhoto: "https://i.pravatar.cc/80?img=1",
+    patientPhoto: "https://i.pravatar.cc/50?img=1",
     gender: "Male",
-    date: "13 Aug 2025",
-    time: "11.00 AM",
+    date: "2025-08-13",
+    time: "11:00 AM",
     type: "Video Consultation",
     status: "Scheduled",
     reason: "Skin rash and itching",
@@ -19,19 +19,19 @@ export const appointments = [
     },
     prescriptions: [
       {
-        date: "12 Jul 2025",
+        date: "2025-07-12",
         medicine: "Cetirizine 10mg",
         duration: "5 days",
         notes: "Take after food",
       },
       {
-        date: "20 Jun 2025",
+        date: "2025-06-20",
         medicine: "Amoxicillin",
         duration: "7 days",
         notes: "Take with water",
       },
     ],
-    labReports: [{ title: "Blood Test Report", date: "10 Jul 2025" }],
+    labReports: [{ title: "Blood Test Report", date: "2025-07-10" }],
   },
   {
     id: "ap2",
@@ -39,7 +39,7 @@ export const appointments = [
     patientName: "Aisha Khan",
     patientPhoto: "https://i.pravatar.cc/80?img=5",
     gender: "Female",
-    date: "14 Aug 2025",
+    date: "2025-08-14",
     time: "3:00 PM",
     type: "In-person Consultation",
     status: "Completed",
@@ -52,13 +52,13 @@ export const appointments = [
     },
     prescriptions: [
       {
-        date: "10 Aug 2025",
+        date: "2025-08-10",
         medicine: "Ibuprofen 400mg",
         duration: "3 days",
         notes: "After meals",
       },
     ],
-    labReports: [{ title: "MRI Brain Scan", date: "05 Aug 2025" }],
+    labReports: [{ title: "MRI Brain Scan", date: "2025-08-05" }],
   },
   {
     id: "ap3",
@@ -66,8 +66,8 @@ export const appointments = [
     patientName: "Michael Smith",
     patientPhoto: "https://i.pravatar.cc/80?img=8",
     gender: "Male",
-    date: "15 Aug 2025", // Already in 'DD Mon YYYY' format
-    time: "9:30 AM", // Already in consistent format
+    date: "2025-08-15",
+    time: "9:30 AM",
     type: "Video Consultation",
     status: "Scheduled",
     reason: "Cough and mild fever",
@@ -79,13 +79,13 @@ export const appointments = [
     },
     prescriptions: [
       {
-        date: "14 Aug 2025", // Already in 'DD Mon YYYY' format
+        date: "2025-08-14",
         medicine: "Paracetamol 500mg",
         duration: "5 days",
         notes: "Every 6 hours",
       },
     ],
-    labReports: [{ title: "Chest X-ray", date: "12 Aug 2025" }], // Already in 'DD Mon YYYY' format
+    labReports: [{ title: "Chest X-ray", date: "2025-08-12" }],
   },
   {
     id: "ap4",
@@ -93,26 +93,26 @@ export const appointments = [
     patientName: "Priya Sharma",
     patientPhoto: "https://i.pravatar.cc/80?img=15",
     gender: "Female",
-    date: "16 Aug 2025", // Already in 'DD Mon YYYY' format
-    time: "2:15 PM", // Already in consistent format
+    date: "2025-08-16",
+    time: "2:15 PM",
     type: "In-person Consultation",
     status: "Cancelled",
     reason: "Follow-up for knee pain",
     history: {
       chronicIllnesses: ["Arthritis"],
-      allergies: ["Pollenn"],
+      allergies: ["Pollen"],
       surgeries: ["Knee Arthroscopy - 2020"],
       familyHistory: ["Arthritis"],
     },
     prescriptions: [
       {
-        date: "10 Aug 2025", // Already in 'DD Mon YYYY' format
+        date: "2025-08-10",
         medicine: "Naproxen 250mg",
         duration: "7 days",
         notes: "After meals",
       },
     ],
-    labReports: [{ title: "Knee MRI Scan", date: "09 Aug 2025" }], // Already in 'DD Mon YYYY' format
+    labReports: [{ title: "Knee MRI Scan", date: "2025-08-09" }],
   },
   {
     id: "ap5",
@@ -120,8 +120,8 @@ export const appointments = [
     patientName: "David Johnson",
     patientPhoto: "https://i.pravatar.cc/80?img=20",
     gender: "Male",
-    date: "17 Aug 2025", // Already in 'DD Mon YYYY' format
-    time: "5:00 PM", // Already in consistent format
+    date: "2025-08-17",
+    time: "5:00 PM",
     type: "Video Consultation",
     status: "Scheduled",
     reason: "Seasonal allergies",
@@ -133,13 +133,13 @@ export const appointments = [
     },
     prescriptions: [
       {
-        date: "15 Aug 2025", // Already in 'DD Mon YYYY' format
+        date: "2025-08-15",
         medicine: "Loratadine 10mg",
         duration: "10 days",
         notes: "Once daily",
       },
     ],
-    labReports: [{ title: "Allergy Test", date: "14 Aug 2025" }], // Already in 'DD Mon YYYY' format
+    labReports: [{ title: "Allergy Test", date: "2025-08-14" }],
   },
   {
     id: "ap6",
@@ -147,8 +147,8 @@ export const appointments = [
     patientName: "Meera Patel",
     patientPhoto: "https://i.pravatar.cc/80?img=32",
     gender: "Female",
-    date: "18 Aug 2025", // Already in 'DD Mon YYYY' format
-    time: "10:00 AM", // Already in consistent format
+    date: "2025-08-18",
+    time: "10:00 AM",
     type: "In-person Consultation",
     status: "Completed",
     reason: "Routine health check-up",
@@ -160,15 +160,16 @@ export const appointments = [
     },
     prescriptions: [
       {
-        date: "18 Aug 2025", // Already in 'DD Mon YYYY' format
+        date: "2025-08-18",
         medicine: "Multivitamin",
         duration: "30 days",
         notes: "Once daily in the morning",
       },
     ],
-    labReports: [{ title: "Full Body Blood Test", date: "18 Aug 2025" }], // Already in 'DD Mon YYYY' format
+    labReports: [{ title: "Full Body Blood Test", date: "2025-08-18" }],
   },
 ];
+
 // Patients
 // src/data/doctor/patients.js
 

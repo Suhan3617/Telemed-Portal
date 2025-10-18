@@ -1,61 +1,53 @@
-import React from "react";
-import { CalendarDays, Filter, Search, FileText, Plus } from "lucide-react";
+import { Search, Calendar, Filter, RotateCcw } from "lucide-react";
+import { motion } from "framer-motion";
 
-export default function FiltersBar({ filters, setFilters }) {
+export default function FiltersBar({ searchTerm, setSearchTerm, onReset }) {
   return (
-    <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-      <div className="flex gap-3 items-center flex-wrap">
-        <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
-          <CalendarDays size={18} className="text-blue-500" />
-          <select
-            value={filters.range}
-            onChange={(e) =>
-              setFilters((f) => ({ ...f, range: e.target.value }))
-            }
-            className="bg-transparent outline-none text-sm text-slate-700"
-          >
-            <option value="today">Today</option>
-            <option value="week">This Week</option>
-            <option value="custom">Custom</option>
-          </select>
-        </div>
-
-        <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
-          <Filter size={16} className="text-slate-500" />
-          <select
-            value={filters.status}
-            onChange={(e) =>
-              setFilters((f) => ({ ...f, status: e.target.value }))
-            }
-            className="bg-transparent outline-none text-sm text-slate-700"
-          >
-            <option value="all">All Statuses</option>
-            <option value="Scheduled">Scheduled</option>
-            <option value="Completed">Completed</option>
-            <option value="Cancelled">Cancelled</option>
-            <option value="Pending">Pending</option>
-          </select>
-        </div>
-
-        <div className="relative flex items-center bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
-          <Search size={16} className="text-slate-400 mr-2" />
-          <input
-            placeholder="Search patient or appointment ID"
-            value={filters.q}
-            onChange={(e) => setFilters((f) => ({ ...f, q: e.target.value }))}
-            className="outline-none text-sm bg-transparent placeholder:text-slate-400 text-slate-700 w-48 md:w-72"
-          />
-        </div>
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="flex flex-wrap justify-between items-center mt-8 mb-6 gap-4 p-4 bg-white/80 backdrop-blur-xl shadow-lg rounded-2xl border border-blue-100"
+    >
+      {/* 🔍 Search Bar */}
+      <div className="relative w-full md:w-1/3">
+        <Search className="absolute left-3 top-3 text-blue-500 drop-shadow-sm" size={18} />
+        <input
+          type="text"
+          placeholder="Search by patient name or appointment ID..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-blue-200 focus:ring-2 focus:ring-blue-400 outline-none transition-all bg-gradient-to-r from-white to-blue-50/60 shadow-inner"
+        />
       </div>
 
-      <div className="flex gap-2 items-center">
-        <button className="flex items-center gap-2 bg-white border border-slate-200 px-3 py-2 rounded-xl text-slate-700 hover:bg-slate-50 transition">
-          <FileText size={16} /> Export
-        </button>
-        <button className="flex items-center gap-2 bg-blue-500 px-4 py-2 rounded-xl text-white shadow-lg hover:shadow-xl transition transform active:scale-95">
-          <Plus size={16} /> New
-        </button>
+      {/* 🎛️ Filters */}
+      <div className="flex items-center gap-3">
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.97 }}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-500 text-white hover:shadow-[0_0_15px_rgba(59,130,246,0.5)] transition"
+        >
+          <Calendar size={16} /> Today
+        </motion.button>
+
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.97 }}
+          className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-blue-300 text-blue-700 bg-white hover:bg-blue-50 transition shadow-sm"
+        >
+          <Filter size={16} /> Filters
+        </motion.button>
+
+        <motion.button
+          whileHover={{ rotate: 180, scale: 1.1 }}
+          transition={{ type: "spring", stiffness: 200 }}
+          onClick={onReset}
+          className="p-2.5 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 shadow-sm transition"
+        >
+          <RotateCcw size={16} />
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 }
