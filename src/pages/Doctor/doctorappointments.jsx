@@ -1,11 +1,13 @@
 import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
+import { CalendarDays } from "lucide-react";
 
 import SummaryCards from "../../components/Doctor/appointments_page/summarycard";
 import FiltersBar from "../../components/Doctor/appointments_page/appointmentfilterbar";
 import AppointmentsTable from "../../components/Doctor/appointments_page/appointmenttable";
 import AppointmentModal from "../../components/Doctor/appointments_page/appointmentmodal";
 import FloatingAdd from "../../components/Doctor/appointments_page/floatingadd";
+import PremiumHeader from "../../components/Doctor/allpagesheader";
 
 // mock data
 import { appointments as mockAppointments } from "../../data/doctor/mockdata";
@@ -47,21 +49,22 @@ export default function DoctorAppointmentsPage() {
       animate={{ opacity: 1 }}
       className="min-h-screen p-8 bg-gradient-to-br from-blue-50 via-white to-blue-100 text-slate-900"
     >
+      {/* 🔷 Premium Header */}
+      <PremiumHeader
+        breadcrumb="Doctor Dashboard / Appointments"
+        icon={<CalendarDays size={28} />}
+        title="Appointments Overview"
+        subtitle="Manage, review, and track your patients’ appointments efficiently."
+      />
+
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="space-y-8"
+        className="space-y-10"
       >
         {/* 🔹 Quick Stats Cards */}
         <SummaryCards appointments={appointments} />
-
-        {/* 🔹 Header */}
-        <div className="flex items-center justify-between mt-4">
-          <h2 className="text-3xl font-bold tracking-tight text-blue-700 drop-shadow-sm">
-            Appointments
-          </h2>
-        </div>
 
         {/* 🔹 Filters Bar (updated props) */}
         <FiltersBar
