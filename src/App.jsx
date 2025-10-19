@@ -28,7 +28,6 @@ import Doctorreports from "./pages/Doctor/doctorreports.jsx";
 import Doctorsettings from "./pages/Doctor/doctorsettings.jsx";
 import Doctorprescription from "./pages/Doctor/doctorwriteprescription.jsx";
 import Doctorpatientprofile from "./pages/Doctor/doctorpatientprofile.jsx";
-
 import DoctorLayout from "./layout/doctorlayout.jsx";
 
 // Layout for Navbar hiding logic
@@ -157,6 +156,14 @@ function App() {
               </DoctorLayout>
             }
           />
+          {/* <Route
+            path="/doctor/profile "
+            element={
+              <DoctorLayout>
+                <SettingsContainer />
+              </DoctorLayout>
+            }
+          /> */}
           <Route
             path="/doctor/prescription"
             element={

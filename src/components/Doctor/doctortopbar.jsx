@@ -64,13 +64,13 @@ const DoctorTopbar = ({ name, onToggleSidebar, isSidebarOpen }) => {
           {open && (
             <div className="absolute right-0 mt-3 w-48 bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-blue-200 overflow-hidden z-50 animate-fade-in">
               <Link
-                to="/doctor/settings"
+                to="/doctor/profile"
                 className="w-full flex items-center gap-2 px-4 py-3 hover:bg-blue-100 transition text-blue-700 font-medium"
               >
                 <User size={18} /> Profile
               </Link>
               <Link
-                to=""
+                to="/doctor/settings"
                 className="w-full flex items-center gap-2 px-4 py-3 hover:bg-blue-100 transition text-blue-700 font-medium"
               >
                 <Settings size={18} /> Settings
