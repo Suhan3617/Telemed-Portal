@@ -1,6 +1,6 @@
 import React from "react";
 
-const tabnavigation = () => {
+const tabnavigation = ({ activeTab, setActiveTab }) => {
   return (
     <div className="flex border-b-4 border-blue-100/80 bg-white/70 backdrop-blur-sm rounded-t-3xl p-3 mb-4 sticky top-0 z-10 shadow-lg">
       {TABS.map((tab) => (

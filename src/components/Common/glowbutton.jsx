@@ -1,5 +1,8 @@
-const GlowButton = ({ children, color = 'blue', Icon, onClick, className = '', disabled = false }) => (
-  <motion.button
+import React from 'react'
+
+const glowbutton = ({ children, color = 'blue', Icon, onClick, className = '', disabled = false }) => {
+  return (
+    <motion.button
     onClick={onClick}
     whileHover={{ scale: 1.02, boxShadow: disabled ? 'none' : `0 8px 30px -5px rgba(59, 130, 246, 0.8)` }}
     whileTap={{ scale: disabled ? 1 : 0.98 }}
@@ -11,4 +14,9 @@ const GlowButton = ({ children, color = 'blue', Icon, onClick, className = '', d
     {Icon && <Icon size={20} />}
     <span>{children}</span>
   </motion.button>
-);
+  )
+}
+
+export default glowbutton
+
+
