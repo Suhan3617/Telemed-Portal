@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import GlowButton from '../Utility/GlowButton';
+import GlowButton from '../../Common/glowbutton';
 import { Save, CheckCircle, Clock } from 'lucide-react';
 
 const ActionFooter = () => (

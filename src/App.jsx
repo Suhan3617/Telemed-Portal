@@ -20,6 +20,7 @@ import PatientAppointmentDetails from "./pages/Patient/PatientAppointmentDetails
 import Patientsettings from "./pages/Patient/patientsettings.jsx";
 import Patientdoctordetails from "./pages/Patient/PatientDoctorDetails.jsx";
 
+
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard.jsx";
 import Doctormessages from "./pages/Doctor/doctormessages.jsx";
 import Doctorpatients from "./pages/Doctor/doctorpatients.jsx";
@@ -29,7 +30,7 @@ import Doctorsettings from "./pages/Doctor/doctorsettings.jsx";
 import Doctorprescription from "./pages/Doctor/doctorwriteprescription.jsx";
 import Doctorpatientprofile from "./pages/Doctor/doctorpatientprofile.jsx";
 import DoctorLayout from "./layout/doctorlayout.jsx";
-
+import DoctorConsultation from "./pages/Doctor/doctorconsultation.jsx";
 // Layout for Navbar hiding logic
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -169,6 +170,14 @@ function App() {
             element={
               <DoctorLayout>
                 <Doctorprescription />
+              </DoctorLayout>
+            }
+          />
+          <Route
+            path="/doctor/consultation"
+            element={
+              <DoctorLayout>
+                <DoctorConsultation />
               </DoctorLayout>
             }
           />

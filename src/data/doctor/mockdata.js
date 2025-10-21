@@ -591,14 +591,12 @@ export const records = [
 // Messages
 export const messages = {
   p1: [
-    { from: "patient", text: "Hi doc!", time: "10:00" },
-    {
-      from: "doctor",
-      text: "Hello John, how are you feeling today?",
-      time: "10:01",
-    },
+    { from: "patient", text: "Hi doc! The rash is worse today.", time: "10:00" },
+    { from: "doctor", text: "Thanks for letting me know. Send a photo if possible.", time: "10:01" },
   ],
-  p2: [{ from: "patient", text: "Can I upload my report?", time: "09:20" }],
+  p2: [
+    { from: "patient", text: "Can I upload my report?", time: "09:20" },
+  ],
 };
 
 // Doctors

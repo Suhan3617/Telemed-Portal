@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Calendar, Clock, Search } from 'lucide-react';
-import GlowButton from '../Utility/GlowButton';
-
+import GlowButton from '../../Common/glowbutton';
 const PatientInfoCard = ({ summaryData }) => (
   <motion.div
     initial={{ x: -30, opacity: 0 }}

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Video, PhoneOff, Plus } from 'lucide-react';
-import IconWrapper from '../Utility/IconWrapper';
+import IconWrapper from '../../Common/iconwrapper';
 
 const VideoPlaceholder = ({ patientName }) => (
   <motion.div
