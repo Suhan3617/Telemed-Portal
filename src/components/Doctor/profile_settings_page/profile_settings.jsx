@@ -1,11 +1,27 @@
 // src/pages/DoctorSettings/ProfileSettings.jsx
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Save } from "lucide-react";
+import {
+  User,
+  Mail,
+  Phone,
+  Building2,
+  MapPin,
+  GraduationCap,
+  Languages,
+  Clock,
+  Shield,
+  Stethoscope,
+  Coins,
+} from "lucide-react";
 import mockDoctor from "../../../data/doctor/mockdata";
-
-// import mockDoctor from "./mockDoctor";
 import SaveBar from "../../Common/savebar";
+import PremiumHeader from "../allpagesheader";
+
+const inputMotion = {
+  rest: { scale: 1, boxShadow: "0px 0px 0px rgba(0,0,0,0)" },
+  hover: { scale: 1.02, boxShadow: "0px 0px 20px rgba(59,130,246,0.15)" },
+};
 
 const ProfileSettings = () => {
   const [doctor, setDoctor] = useState(mockDoctor);
@@ -22,148 +38,138 @@ const ProfileSettings = () => {
     setHasChanges(false);
   };
 
+  const InputField = ({ label, icon: Icon, type = "text", field }) => (
+    <motion.div
+      variants={inputMotion}
+      initial="rest"
+      whileHover="hover"
+      className="relative group w-full"
+    >
+      <label className="block text-slate-600 font-medium mb-1">{label}</label>
+      <div className="relative">
+        <Icon
+          className="absolute left-4 top-3 text-blue-400 group-hover:text-blue-500 transition-all duration-200"
+          size={20}
+        />
+        <input
+          type={type}
+          value={doctor[field]}
+          onChange={(e) => handleChange(field, e.target.value)}
+          className="w-full pl-11 pr-4 py-2.5 rounded-xl bg-white/80 border border-blue-100 focus:ring-4 focus:ring-blue-300/40 focus:border-blue-400 outline-none text-gray-700 font-medium shadow-sm hover:shadow-md transition-all duration-300"
+        />
+      </div>
+    </motion.div>
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      className="min-h-screen bg-gradient-to-tr from-blue-50 via-blue-100 to-blue-200 p-10"
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="min-h-screen bg-gradient-to-br from-blue-500/40 via-sky-200/60 to-indigo-200/70 rounded-3xl p-6 flex flex-col items-center"
     >
-      <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl p-8 border border-blue-100">
-        <h2 className="text-3xl font-semibold text-blue-600 mb-6 drop-shadow">
-          👨‍⚕️ Profile Settings
-        </h2>
+      {/* Premium Header */}
+      <div className="w-full max-w-5xl mb-6">
+        <PremiumHeader
+          breadcrumb="Settings / Profile Settings "
+          icon={<User size={28} />}
+          title="Profile Settings"
+          subtitle="Edit your professional, contact, and account details for a personalized experience."
+        />
+      </div>
 
+      {/* Sections container */}
+      <div className="w-full max-w-5xl flex-1 space-y-10">
         {/* Basic Info */}
-        <section className="mb-8">
-          <h3 className="text-xl font-bold text-blue-500 mb-3">Basic Info</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-gray-600 mb-1">Full Name</label>
-              <input
-                type="text"
-                value={doctor.name}
-                onChange={(e) => handleChange("name", e.target.value)}
-                className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-600 mb-1">Specialty</label>
-              <input
-                type="text"
-                value={doctor.specialty}
-                onChange={(e) => handleChange("specialty", e.target.value)}
-                className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-600 mb-1">Experience (Years)</label>
-              <input
-                type="number"
-                value={doctor.experience}
-                onChange={(e) => handleChange("experience", e.target.value)}
-                className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-600 mb-1">Qualifications</label>
-              <input
-                type="text"
-                value={doctor.qualifications}
-                onChange={(e) => handleChange("qualifications", e.target.value)}
-                className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
+        <section>
+          <h3 className="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-2">
+            <Stethoscope size={20} className="text-blue-500" /> Basic
+            Information
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <InputField label="Full Name" icon={User} field="name" />
+            <InputField
+              label="Specialty"
+              icon={GraduationCap}
+              field="specialty"
+            />
+            <InputField
+              label="Experience (Years)"
+              icon={Clock}
+              type="number"
+              field="experience"
+            />
+            <InputField
+              label="Qualifications"
+              icon={Building2}
+              field="qualifications"
+            />
           </div>
         </section>
 
         {/* Contact Info */}
-        <section className="mb-8">
-          <h3 className="text-xl font-bold text-blue-500 mb-3">Contact Info</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-gray-600 mb-1">Email</label>
-              <input
-                type="email"
-                value={doctor.email}
-                onChange={(e) => handleChange("email", e.target.value)}
-                className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-600 mb-1">Phone</label>
-              <input
-                type="tel"
-                value={doctor.phone}
-                onChange={(e) => handleChange("phone", e.target.value)}
-                className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-600 mb-1">Clinic Location</label>
-              <input
-                type="text"
-                value={doctor.location}
-                onChange={(e) => handleChange("location", e.target.value)}
-                className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-600 mb-1">Consultation Hours</label>
-              <input
-                type="text"
-                value={doctor.consultationHours}
-                onChange={(e) => handleChange("consultationHours", e.target.value)}
-                className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
+        <section>
+          <h3 className="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-2">
+            <Mail size={20} className="text-blue-500" /> Contact Information
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <InputField label="Email" icon={Mail} type="email" field="email" />
+            <InputField label="Phone" icon={Phone} type="tel" field="phone" />
+            <InputField
+              label="Clinic Location"
+              icon={MapPin}
+              field="location"
+            />
+            <InputField
+              label="Consultation Hours"
+              icon={Clock}
+              field="consultationHours"
+            />
           </div>
         </section>
 
         {/* Professional Details */}
-        <section className="mb-8">
-          <h3 className="text-xl font-bold text-blue-500 mb-3">Professional Details</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-gray-600 mb-1">Hospital/Clinic</label>
-              <input
-                type="text"
-                value={doctor.hospital}
-                onChange={(e) => handleChange("hospital", e.target.value)}
-                className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-600 mb-1">Consultation Fees (₹)</label>
-              <input
-                type="number"
-                value={doctor.fee}
-                onChange={(e) => handleChange("fee", e.target.value)}
-                className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-600 mb-1">Languages</label>
-              <input
-                type="text"
-                value={doctor.languages}
-                onChange={(e) => handleChange("languages", e.target.value)}
-                className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
+        <section>
+          <h3 className="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-2">
+            <Building2 size={20} className="text-blue-500" /> Professional
+            Details
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <InputField
+              label="Hospital/Clinic"
+              icon={Building2}
+              field="hospital"
+            />
+            <InputField
+              label="Consultation Fees (₹)"
+              icon={Coins}
+              type="number"
+              field="fee"
+            />
+            <InputField label="Languages" icon={Languages} field="languages" />
           </div>
         </section>
 
-        {/* Security */}
+        {/* Security Section */}
         <section>
-          <h3 className="text-xl font-bold text-blue-500 mb-3">Security</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <button className="bg-blue-500 text-white rounded-xl py-2 hover:bg-blue-600 transition">
-              Reset Password
-            </button>
-            <button className="bg-blue-100 text-blue-600 rounded-xl py-2 hover:bg-blue-200 transition">
-              Manage Devices
-            </button>
+          <h3 className="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-2">
+            <Shield size={20} className="text-blue-500" /> Security
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2.5 rounded-xl shadow-md hover:shadow-blue-300/50 transition-all"
+            >
+              <Shield size={18} /> Reset Password
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              className="flex items-center justify-center gap-2 bg-blue-100 text-blue-700 py-2.5 rounded-xl border border-blue-200 hover:bg-blue-200/70 transition-all"
+            >
+              <User size={18} /> Manage Devices
+            </motion.button>
           </div>
         </section>
       </div>
