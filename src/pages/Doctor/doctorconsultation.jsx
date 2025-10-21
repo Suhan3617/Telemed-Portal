@@ -102,7 +102,7 @@ const Consultation = () => {
       initial="initial"
       animate="animate"
       exit="exit"
-      className="min-h-screen p-4 md:p-10 pb-28 font-['Inter']  bg-gradient-to-br from-blue-500/40 via-sky-200/60 to-indigo-200/70 rounded-3xl"
+      className="min-h-screen p-4 md:p-10 pb-28  bg-gradient-to-br from-blue-500/40 via-sky-200/60 to-indigo-200/70 rounded-3xl"
     >
       {/* Blue glowing border & enhanced scrollbar */}
       <style>{`
@@ -121,15 +121,7 @@ const Consultation = () => {
       >
         <PremiumHeader
           breadcrumb="Dashboard / TeleConsultation"
-          icon={
-            <motion.div
-              initial={{ rotate: -30 }}
-              animate={{ rotate: [0, 15, -15, 0] }}
-              transition={{ repeat: Infinity, duration: 4 }}
-            >
-              <Video className="w-6 h-6 text-blue-600" />
-            </motion.div>
-          }
+          icon={<Video className="w-6 h-6 text-blue-600" />}
           title="TeleConsultation"
           subtitle="Live session — patient info, chat, vitals and prescriptions in one place."
         />
