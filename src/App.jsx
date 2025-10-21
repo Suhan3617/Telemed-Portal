@@ -35,6 +35,7 @@ import ProfileSettings from "./components/Doctor/profile_settings_page/profile_s
 import TeleconsultationSettings from "./components/Doctor/profile_settings_page/teleconsulationsettings.jsx";
 import NotificationPreferences from "./components/Doctor/profile_settings_page/notifications_prefercences.jsx";
 import SystemPreferences from "./components/Doctor/profile_settings_page/system_prefernces.jsx";
+import SettingsContainer from "./pages/Doctor/doctorprofilesettings.jsx";
 // Layout for Navbar hiding logic
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -153,22 +154,22 @@ function App() {
             }
           />
 
-          <Route
+          {/* <Route
             path="/doctor/settings"
             element={
               <DoctorLayout>
                 <Doctorsettings />
               </DoctorLayout>
             }
-          />
-          {/* <Route
-            path="/doctor/profile "
+          /> */}
+          <Route
+            path="/doctor/settings"
             element={
               <DoctorLayout>
                 <SettingsContainer />
               </DoctorLayout>
             }
-          /> */}
+          />
           <Route
             path="/doctor/prescription"
             element={

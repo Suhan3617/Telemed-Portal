@@ -1,7 +1,8 @@
 // src/pages/DoctorSettings/NotificationPreferences.jsx
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { mockDoctor } from "../../../data/doctor/mockdata";
+import mockDoctor from "../../../data/doctor/mockdata";
+
 // import mockDoctor from "./mockDoctor";
 import SaveBar from "../../Common/savebar";
 

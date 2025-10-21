@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Save } from "lucide-react";
-import { mockDoctor } from "../../../data/doctor/mockdata";
+import mockDoctor from "../../../data/doctor/mockdata";
+
 // import mockDoctor from "./mockDoctor";
 import SaveBar from "../../Common/savebar";
 

@@ -1,9 +1,9 @@
 // src/pages/DoctorSettings/TeleconsultationSettings.jsx
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { mockDoctor } from "../../../data/doctor/mockdata";
-// import mockDoctor from "./mockDoctor";
 import SaveBar from "../../Common/savebar";
+import mockDoctor from "../../../data/doctor/mockdata";
+
 
 const TeleconsultationSettings = () => {
   const [tele, setTele] = useState(mockDoctor.teleconsultation);
