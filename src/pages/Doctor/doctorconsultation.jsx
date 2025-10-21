@@ -88,7 +88,7 @@ const Consultation = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-10 pb-24 font-['Inter']">
+    <div className="min-h-screen  bg-gradient-to-br from-blue-500/40 via-sky-200/60 to-indigo-200/70 rounded-3xl p-4 md:p-10 pb-24 font-['Inter']">
       <style>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 8px;
@@ -109,7 +109,7 @@ const Consultation = () => {
 
       {/* ✅ Integrated PremiumHeader here */}
       <PremiumHeader
-        breadcrumb="Doctor Dashboard / TeleConsultation"
+        breadcrumb=" Dashboard / TeleConsultation"
         icon={<Video className="w-6 h-6 text-blue-600" />}
         title="TeleConsultation Live Session"
         subtitle="Review patient details, communicate in real-time, and manage prescriptions seamlessly."
@@ -144,7 +144,7 @@ const Consultation = () => {
         </motion.div>
       </div>
 
-      <ActionFooter />
+      {/* <ActionFooter /> */}
 
       <AnimatePresence>
         {isDraftingModalOpen && (
