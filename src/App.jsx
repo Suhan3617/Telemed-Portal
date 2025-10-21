@@ -31,6 +31,10 @@ import Doctorprescription from "./pages/Doctor/doctorwriteprescription.jsx";
 import Doctorpatientprofile from "./pages/Doctor/doctorpatientprofile.jsx";
 import DoctorLayout from "./layout/doctorlayout.jsx";
 import DoctorConsultation from "./pages/Doctor/doctorconsultation.jsx";
+import ProfileSettings from "./components/Doctor/profile_settings_page/profile_settings.jsx";
+import TeleconsultationSettings from "./components/Doctor/profile_settings_page/teleconsulationsettings.jsx";
+import NotificationPreferences from "./components/Doctor/profile_settings_page/notifications_prefercences.jsx";
+import SystemPreferences from "./components/Doctor/profile_settings_page/system_prefernces.jsx";
 // Layout for Navbar hiding logic
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -178,6 +182,38 @@ function App() {
             element={
               <DoctorLayout>
                 <DoctorConsultation />
+              </DoctorLayout>
+            }
+          />
+          <Route
+            path="/doctor/settings/profile"
+            element={
+              <DoctorLayout>
+                <ProfileSettings />
+              </DoctorLayout>
+            }
+          />
+          <Route
+            path="/doctor/settings/notificationspreferences"
+            element={
+              <DoctorLayout>
+                <NotificationPreferences />
+              </DoctorLayout>
+            }
+          />
+          <Route
+            path="/doctor/settings/teleconsultation"
+            element={
+              <DoctorLayout>
+                <TeleconsultationSettings />
+              </DoctorLayout>
+            }
+          />
+          <Route
+            path="/doctor/settings/system"
+            element={
+              <DoctorLayout>
+                <SystemPreferences />
               </DoctorLayout>
             }
           />

@@ -1,6 +1,6 @@
 // Appointments
 
-const Doctor = {
+const mockDoctor = {
   name: "Dr. Aakash Mehta",
   specialty: "Cardiologist",
   experience: 12,
