@@ -14,58 +14,86 @@ const VitalSignCard = ({ label, value, trend, data }) => {
         return `${x},${y}`;
       })
       .join(" ");
-
     return (
-      <svg viewBox="0 0 100 100" className="w-full h-16">
+      <svg viewBox="0 0 100 100" className="w-full h-20">
         <polyline
           fill="none"
           stroke="#3b82f6"
           strokeWidth="3"
           strokeLinecap="round"
           points={points}
-          style={{ filter: "drop-shadow(0px 2px 2px rgba(59, 130, 246, 0.4))" }}
+          style={{
+            filter: "drop-shadow(0 3px 4px rgba(59,130,246,0.45))",
+          }}
         />
       </svg>
     );
   };
 
-  const trendColor =
-    trend.includes("High") || trend.includes("Low")
-      ? "bg-red-100 text-red-700"
-      : trend.includes("Stable")
-      ? "bg-yellow-100 text-yellow-700"
-      : "bg-green-100 text-green-700";
-
   return (
     <motion.div
-      initial={{ scale: 0.96, backgroundColor: "#ffffff" }}
+      initial={{ opacity: 0, y: 30, scale: 0.92 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{
+        type: "spring",
+        stiffness: 230,
+        damping: 18,
+      }}
       whileHover={{
-        scale: 1.02,
-        boxShadow: "0 10px 25px -10px rgba(59,130,246,0.25)",
+        scale: 1.07,
+        y: -6,
+        boxShadow:
+          "0 16px 32px rgba(0, 0, 0, 0.2), 0 0 20px rgba(255,255,255,0.4)",
+        transition: { type: "spring", stiffness: 340, damping: 20 },
       }}
       whileTap={{
         scale: 0.97,
-        backgroundColor: "rgba(191,219,254,0.6)", // light blue press color
         transition: { duration: 0.1 },
       }}
-      transition={{ duration: 0.25 }}
-      className="p-5 rounded-2xl shadow-xl border border-blue-100 flex flex-col justify-between overflow-hidden relative transition-all"
+      className="relative overflow-hidden rounded-2xl p-6 shadow-lg flex flex-col justify-between transition-all duration-200"
+      style={{
+        background: "rgba(255, 255, 255, 0.55)",
+        backdropFilter: "blur(14px)",
+        WebkitBackdropFilter: "blur(14px)",
+        border: "1px solid rgba(255, 255, 255, 0.25)",
+      }}
     >
-      <div className="flex justify-between items-start mb-3">
-        <div>
-          <p className="text-md font-semibold text-blue-600">{label}</p>
-          <p className="text-3xl font-extrabold text-gray-900 leading-none mt-1">
-            {value}
-          </p>
+      {/* Gradient glow background same as PR cards */}
+      <div className="absolute -inset-12 bg-gradient-to-br from-blue-300 to-blue-500 opacity-40 blur-3xl"></div>
+
+      {/* Light reflection overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40 opacity-40"></div>
+
+      {/* Card Content */}
+      <div className="relative z-10">
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="text-sm font-semibold text-gray-600 uppercase">
+              {label}
+            </p>
+            <p className="text-4xl font-bold mt-1 text-gray-900 drop-shadow">
+              {value}
+            </p>
+          </div>
+          <span
+            className={`px-3 py-1 text-xs font-bold rounded-full ${
+              trend.includes("High") || trend.includes("Low")
+                ? "bg-red-100 text-red-700"
+                : trend.includes("Stable")
+                ? "bg-yellow-100 text-yellow-700"
+                : "bg-emerald-100 text-emerald-700"
+            }`}
+          >
+            {trend}
+          </span>
         </div>
-        <span className={`px-3 py-1 text-xs font-bold rounded-full ${trendColor}`}>
-          {trend}
-        </span>
+
+        <div className="mt-6">{renderGraph(data)}</div>
+
+        <p className="text-xs mt-3 text-gray-500">
+          Last recorded: {new Date().toLocaleTimeString()}
+        </p>
       </div>
-      <div className="relative h-16">{renderGraph(data)}</div>
-      <p className="text-xs text-gray-400 mt-2">
-        Last recorded: {new Date().toLocaleTimeString()}
-      </p>
     </motion.div>
   );
 };
