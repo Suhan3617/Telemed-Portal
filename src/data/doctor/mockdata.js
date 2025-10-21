@@ -1,4 +1,53 @@
 // Appointments
+
+const Doctor = {
+  name: "Dr. Aakash Mehta",
+  specialty: "Cardiologist",
+  experience: 12,
+  qualifications: "MBBS, MD (Cardiology)",
+  email: "aakash.mehta@telemedcare.com",
+  phone: "+91-9876543210",
+  location: "Apollo Hospital, Mumbai",
+  consultationHours: "Mon–Sat: 10 AM - 6 PM",
+  hospital: "Apollo Hospitals",
+  fee: 800,
+  languages: "English, Hindi",
+
+  notifications: {
+    types: {
+      appointmentChanges: true,
+      prescriptionUpdates: true,
+      teleconsultationAlerts: true,
+      adminMessages: false,
+    },
+    channels: {
+      webApp: true,
+      email: true,
+      sms: false,
+      pushNotifications: true,
+    },
+  },
+
+  teleconsultation: {
+    waitMessage: "Your doctor will join shortly. Please stay ready.",
+    brandColor: "#3B82F6",
+    features: {
+      enableChat: true,
+      fileSharing: true,
+      prescriptionTab: true,
+      autoPatientRecordView: false,
+    },
+  },
+
+  systemPrefs: {
+    defaultPage: "Dashboard",
+    language: "English",
+  },
+};
+
+export default mockDoctor;
+
+
 export const appointments = [
   {
     id: "ap1",
