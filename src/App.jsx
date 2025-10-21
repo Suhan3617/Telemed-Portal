@@ -26,7 +26,6 @@ import Doctormessages from "./pages/Doctor/doctormessages.jsx";
 import Doctorpatients from "./pages/Doctor/doctorpatients.jsx";
 import Doctorappointments from "./pages/Doctor/doctorappointments.jsx";
 import Doctorreports from "./pages/Doctor/doctorreports.jsx";
-import Doctorsettings from "./pages/Doctor/doctorsettings.jsx";
 import Doctorprescription from "./pages/Doctor/doctorwriteprescription.jsx";
 import Doctorpatientprofile from "./pages/Doctor/doctorpatientprofile.jsx";
 import DoctorLayout from "./layout/doctorlayout.jsx";
