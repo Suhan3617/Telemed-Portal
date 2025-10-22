@@ -24,6 +24,20 @@ const NotificationPreferences = () => {
     setHasChanges(false);
   };
 
+  const SectionCard = ({ children, icon: Icon, title }) => (
+    <motion.section
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="p-6 rounded-2xl bg-white/90 border border-blue-100 shadow-sm hover:shadow-lg hover:shadow-blue-200/50 transition-all"
+    >
+      <h3 className="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-2">
+        <Icon size={20} className="text-blue-500" /> {title}
+      </h3>
+      {children}
+    </motion.section>
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -31,8 +45,8 @@ const NotificationPreferences = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="min-h-screen flex flex-col items-center justify-start py-10 px-4"
     >
-      {/* Gradient container only around content */}
-      <div className="w-full max-w-5xl rounded-3xl bg-gradient-to-br from-blue-500/40 via-sky-200/60 to-indigo-200/70 shadow-xl p-8 flex flex-col">
+      {/* Gradient container */}
+      <div className="w-full max-w-5xl rounded-3xl bg-gradient-to-br from-blue-500/40 via-sky-200/60 to-indigo-200/70 shadow-xl p-8 flex flex-col space-y-10">
         {/* Header */}
         <div className="mb-6">
           <PremiumHeader
@@ -44,13 +58,9 @@ const NotificationPreferences = () => {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 space-y-10">
+        <div className="flex-1 space-y-6">
           {/* Notification Types */}
-          <section>
-            <h3 className="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-2">
-              <Settings size={20} className="text-blue-500" /> Types of Notifications
-            </h3>
-
+          <SectionCard icon={Settings} title="Types of Notifications">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {Object.keys(prefs.types).map((key, index) => (
                 <motion.label
@@ -88,14 +98,10 @@ const NotificationPreferences = () => {
                 </motion.label>
               ))}
             </div>
-          </section>
+          </SectionCard>
 
           {/* Notification Channels */}
-          <section>
-            <h3 className="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-2">
-              <Bell size={20} className="text-blue-500" /> Notification Channels
-            </h3>
-
+          <SectionCard icon={Bell} title="Notification Channels">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {Object.keys(prefs.channels).map((key, index) => (
                 <motion.label
@@ -133,7 +139,7 @@ const NotificationPreferences = () => {
                 </motion.label>
               ))}
             </div>
-          </section>
+          </SectionCard>
         </div>
       </div>
 
