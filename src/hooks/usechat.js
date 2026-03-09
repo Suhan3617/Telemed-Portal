@@ -1,45 +1,46 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 
-// Replace with your backend URL
+// Ensure this matches your backend PORT
 const socket = io("http://localhost:5000");
 
-export const useChat = (selectedPatientId) => {
-  const [messages, setMessages] = useState([]);
+export const useChat = (patientId) => {
+  const [chatMessages, setChatMessages] = useState([]);
 
   useEffect(() => {
-    if (!selectedPatientId) return;
+    if (!patientId) return;
 
-    // Join the specific room for this patient-doctor pair
-    socket.emit("join_chat", { roomId: selectedPatientId });
+    // Join the unique room for this patient
+    socket.emit("join_chat", { roomId: patientId });
 
-    // Listen for incoming messages
-    const handleMessage = (data) => {
-      if (data.senderId !== "doctor_123") { // Don't duplicate if it's from me
-        setMessages((prev) => [...prev, { ...data, isMe: false }]);
+    // Listen for new messages
+    const handleNewMessage = (data) => {
+      // Only add if it's from the other person
+      if (data.sender !== "doctor") {
+        setChatMessages((prev) => [...prev, { ...data, isMe: false }]);
       }
     };
 
-    socket.on("receive_message", handleMessage);
+    socket.on("receive_message", handleNewMessage);
 
     return () => {
-      socket.off("receive_message", handleMessage);
+      socket.off("receive_message", handleNewMessage);
     };
-  }, [selectedPatientId]);
+  }, [patientId]);
 
   const sendMessage = (text) => {
-    if (!text.trim() || !selectedPatientId) return;
+    if (!text.trim() || !patientId) return;
 
     const newMessage = {
-      roomId: selectedPatientId,
-      senderId: "doctor_123", // Actual Doctor ID from Auth
+      roomId: patientId,
+      sender: "doctor",
       text: text,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
 
     socket.emit("send_message", newMessage);
-    setMessages((prev) => [...prev, { ...newMessage, isMe: true }]);
+    setChatMessages((prev) => [...prev, { ...newMessage, isMe: true }]);
   };
 
-  return { messages, sendMessage, setMessages };
+  return { chatMessages, sendMessage, setChatMessages };
 };
