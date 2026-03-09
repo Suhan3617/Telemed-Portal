@@ -1,43 +1,39 @@
 import React from 'react';
-import { Search, Circle } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 export default function ChatSidebar({ patients, onSelect, activeId }) {
   return (
-    <div className="w-full md:w-80 border-r border-slate-200 flex flex-col bg-white/50 backdrop-blur-md">
-      <div className="p-4 border-b border-slate-200">
+    <div className="w-full md:w-80 border-r border-slate-200 flex flex-col bg-white/40 backdrop-blur-md">
+      <div className="p-4 border-b border-slate-200 bg-white/60">
+        <h2 className="text-lg font-bold text-slate-800 mb-3">Consultations</h2>
         <div className="relative">
-          <Search className="absolute left-3 top-3 text-slate-400" size={18} />
+          <Search className="absolute left-3 top-3 text-slate-400" size={16} />
           <input 
             type="text" 
-            placeholder="Search patients..." 
-            className="w-full pl-10 pr-4 py-2 bg-white/80 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none border border-slate-200 transition-all"
+            placeholder="Search patient..." 
+            className="w-full pl-9 pr-4 py-2 bg-slate-100 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none text-sm border-none"
           />
         </div>
       </div>
-      <div className="overflow-y-auto flex-1 custom-scrollbar">
-        {patients.map((patient) => (
+      <div className="overflow-y-auto flex-1">
+        {patients.map((p) => (
           <div 
-            key={patient.id}
-            onClick={() => onSelect(patient)}
+            key={p.id}
+            onClick={() => onSelect(p)}
             className={`p-4 flex items-center gap-3 cursor-pointer transition-all border-b border-slate-50 ${
-              activeId === patient.id ? "bg-blue-500 text-white" : "hover:bg-blue-50 text-slate-700"
+              activeId === p.id ? "bg-blue-500 text-white shadow-lg scale-[1.02] z-10" : "hover:bg-blue-50/50"
             }`}
           >
-            <div className="relative">
-              <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold shadow-sm ${activeId === patient.id ? "bg-white text-blue-500" : "bg-blue-500 text-white"}`}>
-                {patient.patientName[0]}
-              </div>
-              {patient.status === "online" && (
-                <Circle className="absolute bottom-0 right-0 text-green-500 fill-green-500 border-2 border-white rounded-full" size={12} />
-              )}
-            </div>
+            <img src={p.avatar} alt={p.name} className="w-12 h-12 rounded-full border-2 border-white object-cover shadow-sm" />
             <div className="flex-1 overflow-hidden">
               <div className="flex justify-between items-center">
-                <h4 className="font-semibold truncate">{patient.patientName}</h4>
-                <span className={`text-[10px] ${activeId === patient.id ? "text-blue-100" : "text-slate-400"}`}>10:15 AM</span>
+                <h4 className="font-bold truncate text-sm">{p.name}</h4>
+                <span className={`text-[10px] ${activeId === p.id ? "text-blue-100" : "text-slate-400"}`}>
+                  {p.lastVisit}
+                </span>
               </div>
-              <p className={`text-xs truncate ${activeId === patient.id ? "text-blue-50" : "text-slate-500"}`}>
-                {patient.lastMessage || "Click to start chat"}
+              <p className={`text-xs truncate font-medium ${activeId === p.id ? "text-blue-50" : "text-slate-500"}`}>
+                {p.statusPill} • {p.age}y {p.sex}
               </p>
             </div>
           </div>
