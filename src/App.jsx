@@ -20,7 +20,6 @@ import PatientAppointmentDetails from "./pages/Patient/PatientAppointmentDetails
 import Patientsettings from "./pages/Patient/patientsettings.jsx";
 import Patientdoctordetails from "./pages/Patient/PatientDoctorDetails.jsx";
 
-
 import DoctorDashboard from "./pages/Doctor/DoctorDashboard.jsx";
 import Doctormessages from "./pages/Doctor/doctormessages.jsx";
 import Doctorpatients from "./pages/Doctor/doctorpatients.jsx";

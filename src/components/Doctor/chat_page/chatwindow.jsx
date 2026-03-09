@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Phone, Video, ChevronLeft, Paperclip } from 'lucide-react';
+import { Send, Video, ChevronLeft, Paperclip, MoreVertical } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom'; // Navigation ke liye
 
 export default function ChatWindow({ patient, messages, onSendMessage, onBack }) {
   const [text, setText] = useState("");
   const scrollRef = useRef(null);
+  const navigate = useNavigate();
 
+  // Scroll to bottom logic
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -17,59 +20,110 @@ export default function ChatWindow({ patient, messages, onSendMessage, onBack })
     setText("");
   };
 
+  // Video Call Navigation Handler
+  const startVideoConsultation = () => {
+    // Aapke route ke hisaab se path change kar sakte hain
+    // E.g., /doctor/consultation/p1
+    navigate(`/doctor/consultation/${patient.id}`);
+  };
+
   return (
-    <div className="flex-1 flex flex-col h-full">
-      {/* Header */}
-      <div className="p-4 border-b border-slate-200 flex items-center justify-between bg-white/80 backdrop-blur-md">
+    <div className="flex-1 flex flex-col h-full bg-transparent relative">
+      
+      {/* 🏝️ Floating Dynamic Island Header */}
+      <div className="mx-6 mt-6 p-4 rounded-[1.5rem] bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex items-center justify-between z-10">
         <div className="flex items-center gap-3">
-          <button onClick={onBack} className="md:hidden p-2 text-blue-600 hover:bg-blue-50 rounded-full"><ChevronLeft /></button>
-          <img src={patient.avatar} className="w-10 h-10 rounded-full object-cover border-2 border-blue-100" alt="" />
+          <button onClick={onBack} className="md:hidden p-2 text-blue-600 hover:bg-white/80 rounded-full transition-all">
+            <ChevronLeft />
+          </button>
+          
+          <div className="relative">
+            <motion.img 
+              layoutId={`avatar-${patient.id}`}
+              src={patient.avatar} 
+              className="w-11 h-11 rounded-[1rem] object-cover border-2 border-white shadow-sm" 
+            />
+          </div>
+
           <div>
-            <h3 className="font-bold text-slate-800 leading-none">{patient.name}</h3>
-            <span className="text-[10px] text-green-600 font-bold tracking-tight">ACTIVE CONSULTATION</span>
+            <h3 className="font-bold text-slate-800 leading-none tracking-tight">{patient.name}</h3>
+            <div className="flex items-center gap-1.5 mt-1">
+              <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+              <span className="text-[10px] text-slate-500 font-bold tracking-widest uppercase">Consulting</span>
+            </div>
           </div>
         </div>
-        <div className="flex gap-1">
-          <button className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"><Phone size={18} /></button>
-          <button className="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition-colors"><Video size={18} /></button>
+        
+        {/* Actions Area - Phone Removed, Video Linked */}
+        <div className="flex gap-2">
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={startVideoConsultation}
+            title="Start Video Consultation"
+            className="group flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl shadow-lg shadow-blue-200 transition-all hover:bg-blue-700"
+          >
+            <Video size={18} />
+            <span className="text-xs font-bold hidden sm:block">Start Meeting</span>
+          </motion.button>
+          
+          <button className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-slate-600">
+            <MoreVertical size={18} />
+          </button>
         </div>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50/40">
-        <AnimatePresence>
+      {/* 💬 Messages Area */}
+      <div className="flex-1 overflow-y-auto px-8 py-6 space-y-4 custom-scrollbar">
+        <AnimatePresence initial={false}>
           {messages.map((m, i) => (
             <motion.div 
               key={i}
-              initial={{ opacity: 0, x: m.isMe ? 20 : -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
               className={`flex ${m.isMe ? "justify-end" : "justify-start"}`}
             >
-              <div className={`max-w-[70%] px-4 py-2.5 rounded-2xl shadow-sm ${
-                m.isMe ? "bg-blue-500 text-white rounded-tr-none" : "bg-white border border-slate-200 text-slate-800 rounded-tl-none"
+              <div className={`max-w-[70%] px-5 py-3 rounded-[1.75rem] shadow-sm relative ${
+                m.isMe 
+                  ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-tr-none" 
+                  : "bg-white/80 backdrop-blur-md border border-white/50 text-slate-800 rounded-tl-none"
               }`}>
-                <p className="text-sm leading-relaxed">{m.text}</p>
-                <p className={`text-[9px] mt-1 text-right ${m.isMe ? "text-blue-100" : "text-slate-400"}`}>{m.time || "Just now"}</p>
+                <p className="text-[14px] leading-relaxed font-medium">{m.text}</p>
+                <div className={`text-[9px] mt-1.5 flex items-center gap-1 ${m.isMe ? "text-blue-100 justify-end" : "text-slate-400"}`}>
+                  {m.time || "Just now"}
+                </div>
               </div>
             </motion.div>
           ))}
         </AnimatePresence>
-        <div ref={scrollRef} />
+        <div ref={scrollRef} className="h-2" />
       </div>
 
-      {/* Input */}
-      <form onSubmit={handleSend} className="p-4 bg-white/80 border-t border-slate-200 flex items-center gap-3">
-        <button type="button" className="p-2 text-slate-400 hover:text-blue-500"><Paperclip size={20} /></button>
-        <input 
-          value={text} 
-          onChange={(e) => setText(e.target.value)}
-          placeholder={`Reply to ${patient.name.split(' ')[0]}...`} 
-          className="flex-1 px-4 py-3 bg-slate-100 rounded-2xl focus:ring-2 focus:ring-blue-400 outline-none text-sm border-none"
-        />
-        <button type="submit" className="p-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 shadow-lg shadow-blue-200 transition-all active:scale-90">
-          <Send size={20} />
-        </button>
-      </form>
+      {/* ✍️ Floating Input Bar */}
+      <div className="p-6 pt-2">
+        <form 
+          onSubmit={handleSend} 
+          className="bg-white/70 backdrop-blur-xl border border-white/80 rounded-[2rem] p-2 flex items-center gap-2 shadow-2xl shadow-blue-900/5 focus-within:ring-2 ring-blue-400/20 transition-all"
+        >
+          <button type="button" className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-blue-500 hover:bg-white rounded-full transition-all">
+            <Paperclip size={20} />
+          </button>
+          <input 
+            value={text} 
+            onChange={(e) => setText(e.target.value)}
+            placeholder={`Message ${patient.name.split(' ')[0]}...`} 
+            className="flex-1 px-2 py-2 bg-transparent outline-none text-[14px] font-medium text-slate-700 placeholder:text-slate-400"
+          />
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.9 }}
+            type="submit" 
+            className="w-11 h-11 bg-blue-500 text-white rounded-full flex items-center justify-center shadow-lg shadow-blue-200 transition-all"
+          >
+            <Send size={18} />
+          </motion.button>
+        </form>
+      </div>
     </div>
   );
 }
