@@ -1,7 +1,6 @@
 import React from 'react'
-
 import { motion } from 'framer-motion';
-// Assume you've imported the messages and patient data
+import { useNavigate } from 'react-router-dom'; // 1. Import useNavigate
 import { patients } from '../../../data/doctor/mockdata';
 
 const patientMessages = [
@@ -10,7 +9,14 @@ const patientMessages = [
   { pid: 'p1', text: 'Skin rash and itching', name: 'John Doe', avatar: patients.find(p => p.id === 'p1')?.avatar },
 ];
 
-const messagepanel = () => {
+const MessagePanel = () => {
+  const navigate = useNavigate(); // 2. Initialize navigate
+
+  const handleChatClick = (patientId) => {
+    // 3. Navigate to messages page and pass the patientId in state
+    navigate('/doctor/messages', { state: { selectedPatientId: patientId } });
+  };
+
   return (
     <motion.div 
       className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100"
@@ -20,9 +26,11 @@ const messagepanel = () => {
     >
       <h3 className="text-2xl font-bold text-blue-700 mb-4">Messages</h3>
       <div className="flex flex-col gap-3">
-        {patientMessages.map((msg, index) => (
+        {patientMessages.map((msg) => (
           <motion.div
             key={msg.pid}
+            // 4. Add onClick handler
+            onClick={() => handleChatClick(msg.pid)} 
             className="flex items-center gap-3 p-3 -mx-3 rounded-xl cursor-pointer hover:bg-blue-50/50 transition-colors duration-200"
             whileHover={{ x: 5 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
@@ -44,4 +52,4 @@ const messagepanel = () => {
   );
 }
 
-export default messagepanel
+export default MessagePanel;

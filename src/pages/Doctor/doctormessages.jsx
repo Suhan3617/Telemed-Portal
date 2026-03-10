@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom"; // Added for state detection
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { MessageSquare } from "lucide-react";
 
@@ -12,6 +13,19 @@ export default function DoctorMessagingPage() {
   const [selectedPatient, setSelectedPatient] = useState(null);
   const { chatMessages, sendMessage } = useChat(selectedPatient?.id);
   const controls = useAnimation();
+  const location = useLocation(); // Initialize useLocation
+
+  // Handle auto-selection when navigating from Dashboard
+  useEffect(() => {
+    if (location.state?.selectedPatientId) {
+      const patientToSelect = mockPatients.find(
+        (p) => p.id === location.state.selectedPatientId
+      );
+      if (patientToSelect) {
+        setSelectedPatient(patientToSelect);
+      }
+    }
+  }, [location.state]);
 
   useEffect(() => {
     controls.start({
@@ -68,15 +82,15 @@ export default function DoctorMessagingPage() {
         />
       </motion.div>
 
-      {/* 📱 FIXED: Gap removed here for Seamless Glass look */}
+      {/* Glassmorphism Container */}
       <motion.div 
         className="mt-8 flex h-[75vh] bg-white/30 backdrop-blur-3xl rounded-[2.5rem] 
-                   border border-white/60 shadow-2xl overflow-hidden"
+                    border border-white/60 shadow-2xl overflow-hidden"
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.4, type: "spring", stiffness: 100 }}
       >
-        {/* Sidebar with border-r instead of gap */}
+        {/* Sidebar */}
         <div className={`w-full md:w-[380px] border-r border-white/20 flex flex-col ${selectedPatient ? "hidden md:flex" : "flex"}`}>
           <ChatSidebar 
             patients={mockPatients} 
