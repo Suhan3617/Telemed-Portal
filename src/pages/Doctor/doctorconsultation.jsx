@@ -47,12 +47,14 @@ const Consultation = () => {
 
   // Find the specific patient based on the URL parameter
   const PATIENT_DATA_RAW = patients.find((p) => p.id === patientId);
-  const PATIENT_MESSAGES = messages[patientId] || [];
 
   // Redirect if patient is not found
   if (!PATIENT_DATA_RAW) {
     return <Navigate to="/doctor/dashboard" replace />;
   }
+
+  const PATIENT_MESSAGES = messages[patientId] || [];
+
 
   const TabContent = () => (
     <AnimatePresence mode="wait">
