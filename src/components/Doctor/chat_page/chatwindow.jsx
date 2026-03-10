@@ -20,10 +20,9 @@ export default function ChatWindow({ patient, messages, onSendMessage, onBack })
     setText("");
   };
 
-  // Video Call Navigation Handler
+  // Video Call Navigation Handler with dynamic param
   const startVideoConsultation = () => {
-    // Aapke route ke hisaab se path change kar sakte hain
-    // E.g., /doctor/consultation/p1
+    // Navigates to the consultation page with the current patient's ID
     navigate(`/doctor/consultation/${patient.id}`);
   };
 
@@ -54,7 +53,7 @@ export default function ChatWindow({ patient, messages, onSendMessage, onBack })
           </div>
         </div>
         
-        {/* Actions Area - Phone Removed, Video Linked */}
+        {/* Actions Area - Video Linked with Params */}
         <div className="flex gap-2">
           <motion.button 
             whileHover={{ scale: 1.05 }}

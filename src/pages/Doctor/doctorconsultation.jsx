@@ -1,8 +1,8 @@
 // Consultation.jsx
 import React, { useState } from 'react';
+import { useParams, Navigate } from 'react-router-dom'; // Added for dynamic routing
 import { AnimatePresence, motion } from 'framer-motion';
 import { MessageSquare, ClipboardList, NotebookText, HeartPulse, Video } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 import { patients, messages } from '../../data/doctor/mockdata';
 import TabNavigation from '../../components/Doctor/consultation_page/tabnavigation';
@@ -36,42 +36,23 @@ const TABS = [
 ];
 
 const Consultation = () => {
+  // Extract dynamic patientId from URL params
+  const { patientId } = useParams();
+
   const [activeTab, setActiveTab] = useState(TABS[0].id);
   const [notesContent, setNotesContent] = useState(
     'Patient confirms worsening rash on extremities. Subjective: Itching level 7/10. Objective: Rash is erythematous and vesicular. Plan: Review labs and adjust anti-histamine dosage.'
   );
   const [isDraftingModalOpen, setIsDraftingModalOpen] = useState(false);
 
-  const ACTIVE_PATIENT_ID = 'p1';
-  const PATIENT_DATA_RAW = patients.find((p) => p.id === ACTIVE_PATIENT_ID) || {};
-  const PATIENT_MESSAGES = messages[ACTIVE_PATIENT_ID] || [];
+  // Find the specific patient based on the URL parameter
+  const PATIENT_DATA_RAW = patients.find((p) => p.id === patientId);
+  const PATIENT_MESSAGES = messages[patientId] || [];
 
-  const latestVitals = PATIENT_DATA_RAW.vitals?.[0];
-  const PATIENT_VITALS = latestVitals
-    ? [
-        {
-          label: 'Blood Pressure',
-          value: latestVitals.bp,
-          trend: 'Slightly High',
-          unit: 'mmHg',
-          data: [118, 122, 128, 130, 128],
-        },
-        {
-          label: 'Heart Rate',
-          value: `${latestVitals.hr} bpm`,
-          trend: 'Stable',
-          unit: 'bpm',
-          data: [70, 75, 74, 71, 74],
-        },
-        {
-          label: 'SpO2',
-          value: `${latestVitals.spo2}%`,
-          trend: 'Good',
-          unit: '%',
-          data: [97, 98, 98, 99, 98],
-        },
-      ]
-    : [];
+  // Redirect if patient is not found
+  if (!PATIENT_DATA_RAW) {
+    return <Navigate to="/doctor/dashboard" replace />;
+  }
 
   const TabContent = () => (
     <AnimatePresence mode="wait">
@@ -83,7 +64,7 @@ const Consultation = () => {
         transition={{ duration: 0.22, type: 'tween', ease: 'easeInOut' }}
         className="h-full"
       >
-        {activeTab === 'chat' && <ChatPanel messages={PATIENT_MESSAGES} patientId={ACTIVE_PATIENT_ID} />}
+        {activeTab === 'chat' && <ChatPanel messages={PATIENT_MESSAGES} patientId={patientId} />}
         {activeTab === 'prescription' && (
           <PrescriptionPanel
             setIsDraftingModalOpen={setIsDraftingModalOpen}
@@ -91,7 +72,7 @@ const Consultation = () => {
           />
         )}
         {activeTab === 'notes' && <NotesPanel content={notesContent} setContent={setNotesContent} />}
-        {activeTab === 'vitals' && <VitalsPanel vitalsData={PATIENT_VITALS} />}
+        {activeTab === 'vitals' && <VitalsPanel vitalsData={PATIENT_DATA_RAW.vitals || []} />}
       </motion.div>
     </AnimatePresence>
   );
@@ -104,7 +85,6 @@ const Consultation = () => {
       exit="exit"
       className="min-h-screen p-4 md:p-10 pb-28  bg-gradient-to-br from-blue-500/40 via-sky-200/60 to-indigo-200/70 rounded-3xl"
     >
-      {/* Blue glowing border & enhanced scrollbar */}
       <style>{`
         .custom-scrollbar::-webkit-scrollbar { width: 8px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.35); border-radius: 20px; }
@@ -112,7 +92,6 @@ const Consultation = () => {
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
       `}</style>
 
-      {/* Header with video icon animation */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -128,7 +107,6 @@ const Consultation = () => {
       </motion.div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-        {/* Left: Video + Patient Card */}
         <motion.div
           {...cardHover}
           initial={{ y: 20, opacity: 0 }}
@@ -151,7 +129,6 @@ const Consultation = () => {
           />
         </motion.div>
 
-        {/* Right: Tabs + Animated Entry */}
         <motion.div
           {...cardHover}
           initial={{ x: 60, opacity: 0 }}
@@ -167,7 +144,6 @@ const Consultation = () => {
         </motion.div>
       </div>
 
-      {/* Prescription Drawer (Modal Transition) */}
       <AnimatePresence>
         {isDraftingModalOpen && (
           <motion.div

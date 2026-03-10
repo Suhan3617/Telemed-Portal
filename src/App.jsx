@@ -177,7 +177,7 @@ function App() {
             }
           />
           <Route
-            path="/doctor/consultation"
+            path="/doctor/consultation/:patientId"
             element={
               <DoctorLayout>
                 <DoctorConsultation />
