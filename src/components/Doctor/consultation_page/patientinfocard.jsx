@@ -1,8 +1,12 @@
+import React from 'react';
 import { motion } from "framer-motion";
 import { Calendar, Clock, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const PatientInfoCard = ({ summaryData }) => {
+  // Safety check to prevent crash if summaryData is temporarily undefined
+  if (!summaryData) return null;
+
   return (
     <motion.div
       initial={{ y: 40, opacity: 0 }}
@@ -40,13 +44,13 @@ const PatientInfoCard = ({ summaryData }) => {
             {summaryData.name}
           </h2>
           <p className="text-sm font-semibold text-blue-600">
-            {summaryData.condition}
+            {summaryData.condition || "General Consultation"}
           </p>
         </div>
       </div>
 
       {/* 📋 Patient Info */}
-      <div className="space-y-3 text-sm">
+      <div className="space-y-3 text-sm relative">
         <motion.div whileHover={{ x: 5 }} className="text-gray-700 flex items-center">
           <Calendar size={16} className="mr-3 text-blue-400" />
           <span>
@@ -68,13 +72,14 @@ const PatientInfoCard = ({ summaryData }) => {
         </motion.div>
       </div>
 
-      {/* 🔗 Link Instead of Button */}
+      {/* 🔗 Dynamic Link to specific Patient Profile */}
       <motion.div
         whileHover={{ scale: 1.03 }}
-        className="mt-6 w-full text-center"
+        className="mt-6 w-full text-center relative"
       >
         <Link
-          to="/doctor/patients"
+          // Updated to link to the specific patient profile if your route supports it
+          to={`/doctor/patients/${summaryData.id}`} 
           className="inline-flex items-center justify-center gap-2 w-full py-2.5 font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg transition-all hover:from-blue-600 hover:to-blue-700 focus:ring-4 focus:ring-blue-300"
         >
           <Search size={18} />

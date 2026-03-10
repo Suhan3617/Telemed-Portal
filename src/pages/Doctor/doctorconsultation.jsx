@@ -1,38 +1,51 @@
 // Consultation.jsx
-import React, { useState } from 'react';
-import { useParams, Navigate } from 'react-router-dom'; // Added for dynamic routing
-import { AnimatePresence, motion } from 'framer-motion';
-import { MessageSquare, ClipboardList, NotebookText, HeartPulse, Video } from 'lucide-react';
+import React, { useState } from "react";
+import { useParams, Navigate } from "react-router-dom"; // Added for dynamic routing
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  MessageSquare,
+  ClipboardList,
+  NotebookText,
+  HeartPulse,
+  Video,
+} from "lucide-react";
 
-import { patients, messages } from '../../data/doctor/mockdata';
-import TabNavigation from '../../components/Doctor/consultation_page/tabnavigation';
-import VideoPlaceholder from '../../components/Doctor/consultation_page/videoplaceholder';
-import PatientInfoCard from '../../components/Doctor/consultation_page/patientinfocard';
-import ChatPanel from '../../components/Doctor/consultation_page/chatpanel';
-import PrescriptionPanel from '../../components/Doctor/consultation_page/prescriptionpanel';
-import NotesPanel from '../../components/Doctor/consultation_page/notespanel';
-import VitalsPanel from '../../components/Doctor/consultation_page/vitalspanel';
-import PrescriptionDrafterModal from '../../components/Doctor/consultation_page/PrescriptionDraftmodal';
-import PremiumHeader from '../../components/Doctor/allpagesheader';
+import { patients, messages } from "../../data/doctor/mockdata";
+import TabNavigation from "../../components/Doctor/consultation_page/tabnavigation";
+import VideoPlaceholder from "../../components/Doctor/consultation_page/videoplaceholder";
+import PatientInfoCard from "../../components/Doctor/consultation_page/patientinfocard";
+import ChatPanel from "../../components/Doctor/consultation_page/chatpanel";
+import PrescriptionPanel from "../../components/Doctor/consultation_page/prescriptionpanel";
+import NotesPanel from "../../components/Doctor/consultation_page/notespanel";
+import VitalsPanel from "../../components/Doctor/consultation_page/vitalspanel";
+import PrescriptionDrafterModal from "../../components/Doctor/consultation_page/PrescriptionDraftmodal";
+import PremiumHeader from "../../components/Doctor/allpagesheader";
 
 // Variants for global page motion
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.75, ease: 'easeOut' } },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.75, ease: "easeOut" },
+  },
   exit: { opacity: 0, y: -10, transition: { duration: 0.4 } },
 };
 
 // Hover motion for panels
 const cardHover = {
-  whileHover: { scale: 1.03, boxShadow: '0 12px 35px -10px rgba(59,130,246,0.4)' },
-  transition: { type: 'spring', stiffness: 250, damping: 18 },
+  whileHover: {
+    scale: 1.03,
+    boxShadow: "0 12px 35px -10px rgba(59,130,246,0.4)",
+  },
+  transition: { type: "spring", stiffness: 250, damping: 18 },
 };
 
 const TABS = [
-  { id: 'chat', label: 'Chat', icon: MessageSquare },
-  { id: 'prescription', label: 'Prescription', icon: ClipboardList },
-  { id: 'notes', label: 'Summary', icon: NotebookText },
-  { id: 'vitals', label: 'Vitals', icon: HeartPulse },
+  { id: "chat", label: "Chat", icon: MessageSquare },
+  { id: "prescription", label: "Prescription", icon: ClipboardList },
+  { id: "notes", label: "Summary", icon: NotebookText },
+  { id: "vitals", label: "Vitals", icon: HeartPulse },
 ];
 
 const Consultation = () => {
@@ -41,7 +54,7 @@ const Consultation = () => {
 
   const [activeTab, setActiveTab] = useState(TABS[0].id);
   const [notesContent, setNotesContent] = useState(
-    'Patient confirms worsening rash on extremities. Subjective: Itching level 7/10. Objective: Rash is erythematous and vesicular. Plan: Review labs and adjust anti-histamine dosage.'
+    "Patient confirms worsening rash on extremities. Subjective: Itching level 7/10. Objective: Rash is erythematous and vesicular. Plan: Review labs and adjust anti-histamine dosage.",
   );
   const [isDraftingModalOpen, setIsDraftingModalOpen] = useState(false);
 
@@ -55,7 +68,6 @@ const Consultation = () => {
 
   const PATIENT_MESSAGES = messages[patientId] || [];
 
-
   const TabContent = () => (
     <AnimatePresence mode="wait">
       <motion.div
@@ -63,18 +75,24 @@ const Consultation = () => {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -6 }}
-        transition={{ duration: 0.22, type: 'tween', ease: 'easeInOut' }}
+        transition={{ duration: 0.22, type: "tween", ease: "easeInOut" }}
         className="h-full"
       >
-        {activeTab === 'chat' && <ChatPanel messages={PATIENT_MESSAGES} patientId={patientId} />}
-        {activeTab === 'prescription' && (
+        {activeTab === "chat" && (
+          <ChatPanel messages={PATIENT_MESSAGES} patientId={patientId} />
+        )}
+        {activeTab === "prescription" && (
           <PrescriptionPanel
             setIsDraftingModalOpen={setIsDraftingModalOpen}
             activeMeds={PATIENT_DATA_RAW.activeMeds || []}
           />
         )}
-        {activeTab === 'notes' && <NotesPanel content={notesContent} setContent={setNotesContent} />}
-        {activeTab === 'vitals' && <VitalsPanel vitalsData={PATIENT_DATA_RAW.vitals || []} />}
+        {activeTab === "notes" && (
+          <NotesPanel content={notesContent} setContent={setNotesContent} />
+        )}
+        {activeTab === "vitals" && (
+          <VitalsPanel vitalsData={PATIENT_DATA_RAW.vitals || []} />
+        )}
       </motion.div>
     </AnimatePresence>
   );
@@ -97,7 +115,7 @@ const Consultation = () => {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
         className="mb-8"
       >
         <PremiumHeader
@@ -116,17 +134,27 @@ const Consultation = () => {
           transition={{ duration: 0.8, delay: 0.15 }}
           className="lg:col-span-2 space-y-6"
         >
-          <VideoPlaceholder patientName={PATIENT_DATA_RAW.name || '---'} />
+          <VideoPlaceholder patientName={PATIENT_DATA_RAW.name || "---"} />
           <PatientInfoCard
             summaryData={{
+              // Direct fields
               id: PATIENT_DATA_RAW.id,
               name: PATIENT_DATA_RAW.name,
               dob: PATIENT_DATA_RAW.dob,
-              condition: PATIENT_DATA_RAW.problemList?.[0]?.problem,
-              lastVisit: PATIENT_DATA_RAW.lastVisit,
               avatar: PATIENT_DATA_RAW.avatar,
+              lastVisit: PATIENT_DATA_RAW.lastVisit,
+
+              // Nested fields with fallbacks
+              condition:
+                PATIENT_DATA_RAW.problemList?.[0]?.problem ||
+                "No active condition",
               activeMeds: PATIENT_DATA_RAW.activeMeds || [],
               allergies: PATIENT_DATA_RAW.allergies || [],
+
+              // Add these if your card displays them
+              age: PATIENT_DATA_RAW.age,
+              sex: PATIENT_DATA_RAW.sex,
+              uhid: PATIENT_DATA_RAW.uhid,
             }}
           />
         </motion.div>
@@ -135,11 +163,15 @@ const Consultation = () => {
           {...cardHover}
           initial={{ x: 60, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.65, ease: 'easeOut' }}
+          transition={{ duration: 0.65, ease: "easeOut" }}
           className="lg:col-span-1 bg-white/90 rounded-3xl shadow-2xl border border-blue-100 overflow-hidden flex flex-col max-h-[86vh]"
-          style={{ backdropFilter: 'saturate(130%) blur(8px)' }}
+          style={{ backdropFilter: "saturate(130%) blur(8px)" }}
         >
-          <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} tabs={TABS} />
+          <TabNavigation
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            tabs={TABS}
+          />
           <div className="flex-grow overflow-hidden">
             <TabContent />
           </div>
