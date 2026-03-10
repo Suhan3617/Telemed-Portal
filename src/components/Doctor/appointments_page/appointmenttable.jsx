@@ -16,8 +16,11 @@ export default function AppointmentsTable({ appointments, onView }) {
       "bg-gradient-to-r from-amber-100/80 via-yellow-100/70 to-orange-100/80 text-amber-900 shadow-[0_0_15px_rgba(251,191,36,0.35)] border border-amber-300/40",
   };
 
-  const handleStartCall = (patientId) => {
-    navigate(`/doctor/consultation/${patientId}`);
+  const handleStartCall = (pId) => {
+    // We navigate using the Patient ID (e.g., "p6"), not the Appointment ID ("ap6")
+    if (pId) {
+      navigate(`/doctor/consultation/${pId}`);
+    }
   };
 
   return (
@@ -95,7 +98,6 @@ export default function AppointmentsTable({ appointments, onView }) {
 
                 <td className="px-4 sm:px-8 py-5">
                   <div className="flex items-center justify-center gap-3">
-                    {/* View Button */}
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
@@ -105,7 +107,7 @@ export default function AppointmentsTable({ appointments, onView }) {
                       View
                     </motion.button>
 
-                    {/* Start Call Button (Visible only if Scheduled) */}
+                    {/* Logic Fix: Use a.patientId here */}
                     {a.status === "Scheduled" && (
                       <motion.button
                         whileHover={{
@@ -114,7 +116,7 @@ export default function AppointmentsTable({ appointments, onView }) {
                           boxShadow: "0 0 20px rgba(59,130,246,0.5)",
                         }}
                         whileTap={{ scale: 0.95 }}
-                        onClick={() => handleStartCall(a.id)}
+                        onClick={() => handleStartCall(a.patientId)}
                         className="flex items-center gap-1.5 px-4 py-1.5 text-sm font-semibold rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md transition-all"
                       >
                         <VideoIcon size={14} />

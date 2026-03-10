@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom"; // 👈 Import Link
+import { useNavigate } from "react-router-dom"; // Change Link to useNavigate
 import {
   MessageCircle,
   FileText,
@@ -13,48 +13,57 @@ import {
 } from "lucide-react";
 
 export default function Rightbar_QuickActions({ patient }) {
-  // Added a 'path' property to each action
+  const navigate = useNavigate();
+  const patientId = patient?.id || "default";
+
+  // Navigation handler to pass state exactly like the Message Panel
+  const handleActionClick = (path, state = null) => {
+    if (state) {
+      navigate(path, { state });
+    } else {
+      navigate(path);
+    }
+  };
+
   const actions = [
     {
       label: "Send Message",
       Icon: MessageCircle,
       glow: "from-blue-300 to-blue-500",
       iconColor: "text-blue-600",
-      path: `/patient/${patient.id}/message`, // Example path
+      onClick: () =>
+        handleActionClick("/doctor/messages", { selectedPatientId: patientId }),
     },
     {
       label: "New Prescription",
       Icon: PlusCircle,
       glow: "from-emerald-300 to-green-500",
       iconColor: "text-emerald-600",
-      path: `/doctor/prescription`, // Example path
+      onClick: () => handleActionClick("/doctor/prescription"),
     },
     {
       label: "Share Records",
       Icon: FileText,
       glow: "from-indigo-300 to-indigo-500",
       iconColor: "text-indigo-600",
-      path: `/patient/${patient.id}/records/share`, // Example path
+      onClick: () =>
+        handleActionClick(`/doctor/patients/${patientId}/records/share`),
     },
     {
       label: "Print",
       Icon: Printer,
       glow: "from-sky-300 to-sky-500",
       iconColor: "text-sky-600",
-      path: `/patient/${patient.id}/print`, // Example path
+      onClick: () => window.print(), // Direct action
     },
     {
       label: "Add Flag / Alert",
       Icon: Flag,
       glow: "from-amber-300 to-amber-500",
       iconColor: "text-amber-600",
-      path: `/patient/${patient.id}/flag`, // Example path
+      onClick: () => console.log("Flagged"),
     },
   ];
-
-  // Assuming you need the patient ID for dynamic routes, 
-  // ensure the 'patient' prop is passed and has an 'id' property.
-  const patientId = patient?.id || "default";
 
   return (
     <motion.aside
@@ -80,10 +89,9 @@ export default function Rightbar_QuickActions({ patient }) {
         {actions.map((a, i) => {
           const Icon = a.Icon;
           return (
-            // 💡 REPLACED motion.button with Link and wrapped in motion.div 
-            // for Framer Motion effects on the Link
             <motion.div
               key={i}
+              onClick={a.onClick} // Use onClick instead of Link
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1, type: "spring", stiffness: 220 }}
@@ -94,43 +102,35 @@ export default function Rightbar_QuickActions({ patient }) {
                   "0 10px 20px rgba(0,0,0,0.15), 0 0 20px rgba(255,255,255,0.4)",
               }}
               whileTap={{ scale: 0.97 }}
-              className="rounded-2xl shadow-lg transition-all duration-300 cursor-pointer"
+              className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 cursor-pointer px-5 py-4 flex items-center justify-between font-semibold text-gray-900"
               style={{
                 background: "rgba(255, 255, 255, 0.55)",
                 backdropFilter: "blur(14px)",
-                WebkitBackdropFilter: "blur(14px)",
                 border: "1px solid rgba(255, 255, 255, 0.25)",
               }}
             >
-              <Link
-                to={a.path} // 👈 The path property is used here
-                className="relative overflow-hidden block w-full h-full rounded-2xl px-5 py-4 flex items-center justify-between font-semibold text-gray-900"
-              >
-                {/* Glow background */}
-                <div
-                  className={`absolute -inset-10 bg-gradient-to-br ${a.glow} opacity-40 blur-3xl`}
-                ></div>
+              {/* Glow background */}
+              <div
+                className={`absolute -inset-10 bg-gradient-to-br ${a.glow} opacity-40 blur-3xl`}
+              ></div>
 
-                {/* Reflection layer */}
-                <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40 opacity-40"></div>
+              {/* Reflection layer */}
+              <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40 opacity-40"></div>
 
-                {/* Content */}
-                <div className="relative z-10 flex items-center gap-3 text-left">
-                  <motion.div
-                    // Note: whileHover on inner elements will only work if the parent motion component doesn't steal the hover state.
-                    // For the sake of a simpler refactor, I'm keeping the original hover here.
-                    whileHover={{
-                      rotate: 10,
-                      scale: 1.15,
-                      transition: { type: "spring", stiffness: 400 },
-                    }}
-                    className="p-2 rounded-xl bg-white/60 backdrop-blur-sm border border-white/40 shadow-md"
-                  >
-                    <Icon size={22} className={a.iconColor} />
-                  </motion.div>
-                  <span>{a.label}</span>
-                </div>
-              </Link>
+              {/* Content */}
+              <div className="relative z-10 flex items-center gap-3 text-left">
+                <motion.div
+                  whileHover={{
+                    rotate: 10,
+                    scale: 1.15,
+                    transition: { type: "spring", stiffness: 400 },
+                  }}
+                  className="p-2 rounded-xl bg-white/60 backdrop-blur-sm border border-white/40 shadow-md"
+                >
+                  <Icon size={22} className={a.iconColor} />
+                </motion.div>
+                <span>{a.label}</span>
+              </div>
             </motion.div>
           );
         })}
@@ -138,9 +138,6 @@ export default function Rightbar_QuickActions({ patient }) {
 
       {/* 📊 Analytics Section */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
         className="relative overflow-hidden rounded-2xl p-5 shadow-lg"
         style={{
           background: "rgba(255,255,255,0.55)",
@@ -148,10 +145,6 @@ export default function Rightbar_QuickActions({ patient }) {
           border: "1px solid rgba(255,255,255,0.25)",
         }}
       >
-        {/* Glow */}
-        <div className="absolute -inset-10 bg-gradient-to-br from-blue-300 to-blue-500 opacity-40 blur-3xl"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40 opacity-40"></div>
-
         <div className="relative z-10">
           <h4 className="font-semibold text-blue-700 flex items-center gap-2 mb-3">
             <Activity size={18} className="text-blue-500" /> Short Analytics
@@ -174,45 +167,18 @@ export default function Rightbar_QuickActions({ patient }) {
       </motion.div>
 
       {/* 🔐 Admin Actions */}
-      <motion.div
-        initial={{ opacity: 0, y: 25 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="space-y-4"
-      >
+      <div className="space-y-4">
         <h4 className="font-semibold text-lg border-b border-blue-200 pb-2 flex items-center gap-2 text-blue-800">
           <AlertTriangle size={18} className="text-blue-500" /> Admin Actions
         </h4>
-
-        {/* Since these buttons perform an action and not a navigation, 
-            they remain as motion.button. If they navigate, change them to Link. */}
         <motion.button
-          whileHover={{
-            scale: 1.05,
-            boxShadow:
-              "0 10px 20px rgba(239,68,68,0.2), 0 0 10px rgba(239,68,68,0.4)",
-          }}
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.96 }}
-          className="relative overflow-hidden bg-gradient-to-br from-red-500 to-red-600 text-white font-semibold py-2.5 w-full rounded-2xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
-          onClick={() => console.log(`Flagging patient ${patientId} for review`)} // Example action
+          className="bg-gradient-to-br from-red-500 to-red-600 text-white font-semibold py-2.5 w-full rounded-2xl shadow-lg flex items-center justify-center gap-2"
         >
-          <Flag size={18} />
-          Flag for Review
+          <Flag size={18} /> Flag for Review
         </motion.button>
-
-        <motion.button
-          whileHover={{
-            scale: 1.05,
-            boxShadow:
-              "0 10px 20px rgba(156,163,175,0.2), 0 0 10px rgba(255,255,255,0.3)",
-          }}
-          whileTap={{ scale: 0.96 }}
-          className="relative overflow-hidden bg-gradient-to-br from-gray-200 to-gray-100 text-gray-800 font-semibold py-2.5 w-full rounded-2xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
-          onClick={() => console.log(`Archiving patient ${patientId}`)} // Example action
-        >
-          <Archive size={18} /> Archive Patient
-        </motion.button>
-      </motion.div>
+      </div>
     </motion.aside>
   );
 }
