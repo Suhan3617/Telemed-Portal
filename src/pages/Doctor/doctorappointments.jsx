@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react"; // 👈 Added useEffect
+import { useLocation } from "react-router-dom"; // 👈 Added useLocation
 import { motion } from "framer-motion";
 import { CalendarDays } from "lucide-react";
 
@@ -13,6 +14,8 @@ import PremiumHeader from "../../components/Doctor/allpagesheader";
 import { appointments as mockAppointments } from "../../data/doctor/mockdata";
 
 export default function DoctorAppointmentsPage() {
+  const location = useLocation(); // 👈 Hook to read URL search params
+  
   // --------------------- 🔹 States ---------------------
   const [appointments] = useState(mockAppointments);
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,6 +24,17 @@ export default function DoctorAppointmentsPage() {
   const [sortOption, setSortOption] = useState("By Time");
   const [selected, setSelected] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+
+  // --------------------- 🔹 URL Listener Logic ---------------------
+  // Jab calendar se redirect ho kar patient name aayega, ye usse filter kar dega
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const searchParam = params.get("search");
+    if (searchParam) {
+      setSearchTerm(searchParam);
+      setDateRange("All"); // Taaki kisi bhi date ka appointment ho toh dikh jaye
+    }
+  }, [location.search]);
 
   // --------------------- 🔹 Date Utility ---------------------
   const today = new Date();
@@ -32,6 +46,7 @@ export default function DoctorAppointmentsPage() {
     if (dateRange === "Today")
       return date.toDateString() === today.toDateString();
     if (dateRange === "This Week") return date >= startOfWeek && date <= today;
+    if (dateRange === "All") return true; // 👈 Added All case
     return true;
   };
 
