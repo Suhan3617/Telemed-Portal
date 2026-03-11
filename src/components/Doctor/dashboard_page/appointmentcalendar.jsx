@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom'; // Navigation ke liye
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, User, Video, MapPin, Clock } from 'lucide-react';
-// Yaha aap apne file path se import karein
+import { ChevronLeft, ChevronRight, Video, MapPin, Clock } from 'lucide-react';
 import { appointments } from '../../../data/doctor/mockdata';
 import { CalendarIcon } from 'lucide-react';
 
@@ -12,6 +12,7 @@ const MONTHS = [
 ];
 
 const AppointmentCalendar = () => {
+  const navigate = useNavigate();
   const [currDate, setCurrDate] = useState(new Date()); 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [direction, setDirection] = useState(0);
@@ -19,28 +20,24 @@ const AppointmentCalendar = () => {
   const viewMonth = currDate.getMonth();
   const viewYear = currDate.getFullYear();
 
-  // 1. Calendar Grid Logic
   const { daysInMonth, startDay } = useMemo(() => {
     const firstDay = new Date(viewYear, viewMonth, 1).getDay();
     const totalDays = new Date(viewYear, viewMonth + 1, 0).getDate();
     return { daysInMonth: totalDays, startDay: firstDay };
   }, [viewMonth, viewYear]);
 
-  // 2. Filter Appointments for selected date
   const selectedDateAppointments = useMemo(() => {
     const formattedSelected = selectedDate.toISOString().split('T')[0];
     return appointments.filter(app => app.date === formattedSelected);
   }, [selectedDate]);
 
-  // 3. Helper to get appointments for any date (for heatmap)
   const getDayStatus = (day) => {
     const dateStr = `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     const count = appointments.filter(app => app.date === dateStr).length;
-
-    if (count >= 3) return "bg-blue-600 text-white"; // High
-    if (count === 2) return "bg-blue-400 text-white"; // Medium
-    if (count === 1) return "bg-blue-100 text-blue-800 border border-blue-200"; // Low
-    return "text-gray-700 hover:bg-gray-100"; // No appointments
+    if (count >= 3) return "bg-blue-600 text-white"; 
+    if (count === 2) return "bg-blue-400 text-white"; 
+    if (count === 1) return "bg-blue-100 text-blue-800 border border-blue-200"; 
+    return "text-gray-700 hover:bg-gray-100"; 
   };
 
   const paginate = (newDirection) => {
@@ -48,9 +45,14 @@ const AppointmentCalendar = () => {
     setCurrDate(new Date(viewYear, viewMonth + newDirection, 1));
   };
 
+  // Appointment click handler
+  const handleAppointmentClick = (patientName) => {
+    navigate(`/doctor/appointments?search=${encodeURIComponent(patientName)}`);
+  };
+
   return (
     <div className="flex flex-col lg:flex-row gap-6 p-4 max-w-6xl mx-auto">
-      {/* LEFT: CALENDAR CARD */}
+      {/* LEFT: CALENDAR CARD (Original UI) */}
       <motion.div 
         className="bg-white rounded-3xl shadow-xl p-6 border border-gray-100 flex-1"
         initial={{ opacity: 0, x: -20 }}
@@ -66,14 +68,11 @@ const AppointmentCalendar = () => {
 
         <div className="grid grid-cols-7 gap-2">
           {WEEKDAYS.map(d => <div key={d} className="text-center text-xs font-bold text-gray-400 mb-2">{d}</div>)}
-          
           {Array.from({ length: startDay }).map((_, i) => <div key={`empty-${i}`} />)}
-
           {Array.from({ length: daysInMonth }).map((_, i) => {
             const day = i + 1;
             const statusClass = getDayStatus(day);
             const isSelected = selectedDate.getDate() === day && selectedDate.getMonth() === viewMonth && selectedDate.getFullYear() === viewYear;
-
             return (
               <motion.button
                 key={day}
@@ -86,7 +85,6 @@ const AppointmentCalendar = () => {
                 `}
               >
                 {day}
-                {/* Visual indicator dot if appointments exist */}
                 {getDayStatus(day).includes('blue') && !isSelected && (
                   <span className="absolute top-1 right-1 w-2 h-2 bg-orange-400 rounded-full border-2 border-white"></span>
                 )}
@@ -96,13 +94,13 @@ const AppointmentCalendar = () => {
         </div>
       </motion.div>
 
-      {/* RIGHT: APPOINTMENT DETAILS */}
+      {/* RIGHT: APPOINTMENT DETAILS (Added Scroll + Redirection) */}
       <motion.div 
-        className="lg:w-96 space-y-4"
+        className="lg:w-96 flex flex-col"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
       >
-        <div className="flex items-center justify-between px-2">
+        <div className="flex items-center justify-between px-2 mb-4">
           <h4 className="font-bold text-gray-700 flex items-center gap-2">
             <Clock size={18} className="text-blue-500" />
             Schedule for {selectedDate.getDate()} {MONTHS[viewMonth].slice(0, 3)}
@@ -112,52 +110,55 @@ const AppointmentCalendar = () => {
           </span>
         </div>
 
-        <AnimatePresence mode="wait">
-          {selectedDateAppointments.length > 0 ? (
-            <div className="space-y-3">
-              {selectedDateAppointments.map((app) => (
-                <motion.div
-                  key={app.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <img src={app.patientPhoto} alt={app.patientName} className="w-10 h-10 rounded-full border border-blue-100" />
-                    <div>
-                      <h5 className="font-bold text-gray-800 text-sm">{app.patientName}</h5>
-                      <span className="text-xs text-gray-500 font-medium">{app.time} • {app.gender}</span>
+        {/* Fixed height container for scrolling */}
+        <div className="flex-1 overflow-y-auto max-h-[450px] pr-2 space-y-3 custom-scrollbar">
+          <AnimatePresence mode="wait">
+            {selectedDateAppointments.length > 0 ? (
+              <div className="space-y-3">
+                {selectedDateAppointments.map((app) => (
+                  <motion.div
+                    key={app.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    onClick={() => handleAppointmentClick(app.patientName)}
+                    className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all cursor-pointer hover:border-blue-200"
+                  >
+                    <div className="flex items-center gap-3 mb-3">
+                      <img src={app.patientPhoto} alt={app.patientName} className="w-10 h-10 rounded-full border border-blue-100" />
+                      <div className="flex-1 overflow-hidden">
+                        <h5 className="font-bold text-gray-800 text-sm truncate">{app.patientName}</h5>
+                        <span className="text-xs text-gray-500 font-medium">{app.time} • {app.gender}</span>
+                      </div>
+                      <div className={`ml-auto px-2 py-1 rounded-lg text-[10px] font-bold uppercase ${
+                        app.status === 'Completed' ? 'bg-green-100 text-green-600' : 
+                        app.status === 'Cancelled' ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600'
+                      }`}>
+                        {app.status}
+                      </div>
                     </div>
-                    <div className={`ml-auto px-2 py-1 rounded-lg text-[10px] font-bold uppercase ${
-                      app.status === 'Completed' ? 'bg-green-100 text-green-600' : 
-                      app.status === 'Cancelled' ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600'
-                    }`}>
-                      {app.status}
+                    
+                    <div className="flex items-center gap-2 text-xs text-gray-600 bg-gray-50 p-2 rounded-lg">
+                      {app.type === "Video Consultation" ? <Video size={14} className="text-blue-500"/> : <MapPin size={14} className="text-orange-500"/>}
+                      <span className="truncate">{app.reason}</span>
                     </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-2 text-xs text-gray-600 bg-gray-50 p-2 rounded-lg">
-                    {app.type === "Video Consultation" ? <Video size={14} className="text-blue-500"/> : <MapPin size={14} className="text-orange-500"/>}
-                    <span className="truncate">{app.reason}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          ) : (
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }}
-              className="h-48 flex flex-col items-center justify-center text-gray-400 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200"
-            >
-              <CalendarIcon size={40} className="mb-2 opacity-20" />
-              <p className="text-sm font-medium">No appointments for this day</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                className="h-48 flex flex-col items-center justify-center text-gray-400 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200"
+              >
+                <CalendarIcon size={40} className="mb-2 opacity-20" />
+                <p className="text-sm font-medium">No appointments for this day</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-        {/* Legend */}
-        <div className="flex justify-around p-3 bg-white rounded-2xl border border-gray-100 text-[10px] font-bold text-gray-500">
+        {/* Legend (Keep as is) */}
+        <div className="mt-4 flex justify-around p-3 bg-white rounded-2xl border border-gray-100 text-[10px] font-bold text-gray-500">
            <div className="flex items-center gap-1"><span className="w-2 h-2 bg-blue-100 rounded-full"></span> 1 Appt</div>
            <div className="flex items-center gap-1"><span className="w-2 h-2 bg-blue-400 rounded-full"></span> 2 Appts</div>
            <div className="flex items-center gap-1"><span className="w-2 h-2 bg-blue-600 rounded-full"></span> 3+ Appts</div>
