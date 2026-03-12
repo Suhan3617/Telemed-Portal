@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react"; // Added useEffect
-import { useParams } from "react-router-dom"; // Added useParams
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { patients } from "../../data/doctor/mockdata";
 import Topbar from "../../components/Doctor/Patients_page/topbar";
 import DoctorSidebar from "../../components/Doctor/Patients_page/sidebar";
@@ -9,15 +9,13 @@ import Rightbar_QuickActions from "../../components/Doctor/Patients_page/rightba
 import { motion } from "framer-motion";
 
 export default function PatientOverviewPage() {
-  const { patientId } = useParams(); // Get ID from URL /doctor/patient/:patientId
+  const { patientId } = useParams();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   
-  // Initialize state based on URL param or fallback to first patient
   const [selectedPatientId, setSelectedPatientId] = useState(
     patientId || patients[0]?.id
   );
 
-  // Sync state if the URL patientId changes (e.g. clicking a link in the sidebar or table)
   useEffect(() => {
     if (patientId) {
       setSelectedPatientId(patientId);
@@ -25,6 +23,9 @@ export default function PatientOverviewPage() {
   }, [patientId]);
 
   const selectedPatient = patients.find((p) => p.id === selectedPatientId);
+
+  // Toggle function
+  const toggleSidebar = () => setSidebarCollapsed(!sidebarCollapsed);
 
   return (
     <motion.div
@@ -36,7 +37,7 @@ export default function PatientOverviewPage() {
                   backdrop-blur-2xl border border-blue-200/30 shadow-inner"
     >
       {/* ---------- Topbar ---------- */}
-      <Topbar onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)} />
+      <Topbar onToggleSidebar={toggleSidebar} />
 
       <div className="flex flex-1 overflow-hidden gap-4">
         {/* ---------- Sidebar ---------- */}
@@ -45,6 +46,7 @@ export default function PatientOverviewPage() {
           patients={patients}
           onSelectPatient={setSelectedPatientId}
           selectedPatientId={selectedPatientId}
+          onToggleCollapse={toggleSidebar} 
         />
 
         {/* ---------- Main Content ---------- */}
@@ -56,9 +58,8 @@ export default function PatientOverviewPage() {
         >
           {selectedPatient ? (
             <>
-              {/* --------- Patient Summary Card --------- */}
               <motion.div
-                key={`summary-${selectedPatientId}`} // Added key to trigger re-animation on change
+                key={`summary-${selectedPatientId}`}
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -68,9 +69,8 @@ export default function PatientOverviewPage() {
                 <PatientSummary patient={selectedPatient} />
               </motion.div>
 
-              {/* --------- Patient Details --------- */}
               <motion.div
-                key={`details-${selectedPatientId}`} // Added key to trigger re-animation on change
+                key={`details-${selectedPatientId}`}
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -95,7 +95,6 @@ export default function PatientOverviewPage() {
           )}
         </motion.main>
 
-        {/* ---------- Rightbar / Quick Actions ---------- */}
         <motion.div
           className="w-full md:w-72 lg:w-80 flex-shrink-0 sticky top-24 h-fit px-2 md:px-4"
           initial={{ opacity: 0, x: 50 }}

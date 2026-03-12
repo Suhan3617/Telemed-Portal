@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Search, X } from "lucide-react";
+import { Search, X, Menu } from "lucide-react";
 import { pop } from "./animation.js";
-import { Menu } from "lucide-react";
+
 export default function DoctorSidebar({
   collapsed,
   patients,
