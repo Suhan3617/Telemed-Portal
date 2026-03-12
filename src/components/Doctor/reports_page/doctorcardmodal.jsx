@@ -1,10 +1,41 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Download, FileText, ClipboardCheck } from "lucide-react";
+import { X, Download, FileText, ClipboardCheck, BellRing } from "lucide-react";
 
 export default function PR_ShimmerModal({ open, setOpen, record, onMarkReviewed }) {
   const [notes, setNotes] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false); // Action feedback ke liye
+
   if (!open || !record) return null;
+
+  // 📥 Download Functionality
+  const handleDownload = () => {
+    const fileUrl = record.files?.[0]?.url;
+    if (!fileUrl) return alert("File not found!");
+
+    // Hidden link create karke click trigger karna
+    const link = document.createElement("a");
+    link.href = fileUrl;
+    link.setAttribute("download", record.title || "medical-record");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // 🔔 Follow-Up Functionality
+  const handleFollowUp = () => {
+    setIsProcessing(true);
+    
+    // Yahan aap apna API call kar sakte hain
+    console.log("Follow-up scheduled for:", record.patientName, "Notes:", notes);
+
+    // Dummy delay for feedback
+    setTimeout(() => {
+      alert(`Follow-up scheduled for ${record.patientName}`);
+      setIsProcessing(false);
+      setOpen(false);
+    }, 800);
+  };
 
   return (
     <AnimatePresence>
@@ -82,6 +113,7 @@ export default function PR_ShimmerModal({ open, setOpen, record, onMarkReviewed 
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={handleDownload} // Functional
                   className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 
                              text-white font-semibold inline-flex items-center gap-2 
                              shadow-md hover:shadow-blue-300/40 transition-all duration-300"
@@ -127,7 +159,8 @@ export default function PR_ShimmerModal({ open, setOpen, record, onMarkReviewed 
                     className="max-w-full max-h-[440px] object-contain rounded-xl shadow-md border border-blue-100"
                   />
                 ) : (
-                  <div className="text-blue-400/70 italic text-sm text-center">
+                  <div className="flex flex-col items-center gap-3 text-blue-400/70 italic text-sm text-center">
+                    <FileText size={48} className="opacity-20" />
                     PDF preview placeholder — integrate PDF.js or iframe for full preview
                   </div>
                 )}
@@ -153,27 +186,31 @@ export default function PR_ShimmerModal({ open, setOpen, record, onMarkReviewed 
                   placeholder="Add your clinical observations..."
                 />
 
-                <div className="mt-6 flex gap-3">
+                <div className="mt-6 flex flex-col gap-3">
                   <motion.button
-                    whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(34,197,94,0.4)" }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(34,197,94,0.4)" }}
+                    whileTap={{ scale: 0.98 }}
+                    disabled={isProcessing}
                     onClick={() => {
                       onMarkReviewed(record.id);
                       setOpen(false);
                     }}
-                    className="flex-1 px-4 py-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 
+                    className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 
                                text-white font-semibold shadow-md hover:shadow-green-300/40 transition-all"
                   >
                     Mark Reviewed
                   </motion.button>
 
                   <motion.button
-                    whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(250,204,21,0.4)" }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-4 py-3 rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 
-                               text-white font-semibold shadow-md hover:shadow-yellow-300/40 transition-all"
+                    whileHover={{ scale: 1.02, boxShadow: "0 0 15px rgba(250,204,21,0.4)" }}
+                    whileTap={{ scale: 0.98 }}
+                    disabled={isProcessing}
+                    onClick={handleFollowUp} // Functional
+                    className="w-full px-4 py-3 rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 
+                               text-white font-semibold shadow-md hover:shadow-yellow-300/40 transition-all flex items-center justify-center gap-2"
                   >
-                    Follow-Up
+                    <BellRing size={18} />
+                    {isProcessing ? "Processing..." : "Follow-Up"}
                   </motion.button>
                 </div>
               </motion.div>
