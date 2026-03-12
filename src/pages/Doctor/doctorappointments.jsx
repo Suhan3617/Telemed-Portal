@@ -1,6 +1,6 @@
-import React, { useState, useMemo, useEffect } from "react"; 
-import { useLocation } from "react-router-dom"; 
-import { motion, AnimatePresence } from "framer-motion"; // Added AnimatePresence for smooth modal exits
+import React, { useState, useMemo, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { CalendarDays } from "lucide-react";
 
 import SummaryCards from "../../components/Doctor/appointments_page/summarycard";
@@ -15,8 +15,8 @@ import NewAppointmentModal from "../../components/Doctor/appointments_page/newap
 import { appointments as mockAppointments } from "../../data/doctor/mockdata";
 
 export default function DoctorAppointmentsPage() {
-  const location = useLocation(); 
-  
+  const location = useLocation();
+
   // --------------------- 🔹 States ---------------------
   const [appointments, setAppointments] = useState(mockAppointments);
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,15 +25,23 @@ export default function DoctorAppointmentsPage() {
   const [sortOption, setSortOption] = useState("By Time");
   const [selected, setSelected] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // Modal state
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  // --------------------- 🔹 URL Listener Logic ---------------------
+  // --------------------- 🔹 URL & State Listener ---------------------
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const searchParam = params.get("search");
+    const triggerModal = params.get("triggerModal");
+
+    // 1. Sync search if provided in URL
     if (searchParam) {
       setSearchTerm(searchParam);
-      setDateRange("All"); 
+      setDateRange("All");
+    }
+
+    // 2. Open Modal if triggered from Dashboard
+    if (triggerModal === "true") {
+      setIsAddModalOpen(true);
     }
   }, [location.search]);
 
@@ -47,7 +55,7 @@ export default function DoctorAppointmentsPage() {
     if (dateRange === "Today")
       return date.toDateString() === today.toDateString();
     if (dateRange === "This Week") return date >= startOfWeek && date <= today;
-    if (dateRange === "All") return true; 
+    if (dateRange === "All") return true;
     return true;
   };
 
@@ -59,7 +67,7 @@ export default function DoctorAppointmentsPage() {
       data = data.filter(
         (a) =>
           a.patientName.toLowerCase().includes(term) ||
-          a.id.toLowerCase().includes(term)
+          a.id.toLowerCase().includes(term),
       );
     }
     data = data.filter((a) => isInRange(a.date));
@@ -79,7 +87,7 @@ export default function DoctorAppointmentsPage() {
     return data;
   }, [appointments, searchTerm, selectedStatuses, dateRange, sortOption]);
 
-  // --------------------- 🔹 Reset Filters ---------------------
+  // --------------------- 🔹 Handlers ---------------------
   const handleReset = () => {
     setSearchTerm("");
     setSelectedStatuses([]);
@@ -87,17 +95,16 @@ export default function DoctorAppointmentsPage() {
     setSortOption("By Time");
   };
 
-  // --------------------- 🔹 Modal Control ---------------------
   const handleOpenModal = (appointment) => {
     setSelected(appointment);
     setModalOpen(true);
   };
+
   const handleCloseModal = () => {
     setModalOpen(false);
     setSelected(null);
   };
 
-  // --------------------- 🔹 New Appointment Logic ---------------------
   const handleAddNewAppointment = (newApp) => {
     setAppointments([newApp, ...appointments]);
   };
@@ -116,7 +123,6 @@ export default function DoctorAppointmentsPage() {
     }),
   };
 
-  // --------------------- 🔹 Render ---------------------
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -124,7 +130,6 @@ export default function DoctorAppointmentsPage() {
       transition={{ duration: 0.8, ease: "easeInOut" }}
       className="min-h-screen p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-blue-500/40 via-sky-200/60 to-indigo-200/70 rounded-3xl text-slate-900 overflow-hidden"
     >
-      {/* 🔷 Premium Header */}
       <motion.div variants={fadeInUp} initial="hidden" animate="visible">
         <PremiumHeader
           breadcrumb="Doctor Dashboard / Appointments"
@@ -141,12 +146,10 @@ export default function DoctorAppointmentsPage() {
         transition={{ staggerChildren: 0.2 }}
         className="space-y-8 sm:space-y-10 mt-6"
       >
-        {/* 🔹 Summary Cards */}
         <motion.div variants={fadeInUp}>
           <SummaryCards appointments={appointments} />
         </motion.div>
 
-        {/* 🔹 Filter Bar */}
         <motion.div variants={fadeInUp}>
           <FiltersBar
             searchTerm={searchTerm}
@@ -162,7 +165,6 @@ export default function DoctorAppointmentsPage() {
           />
         </motion.div>
 
-        {/* 🔹 Appointments Table */}
         <motion.div variants={fadeInUp}>
           <AppointmentsTable
             appointments={filteredAppointments}
@@ -171,7 +173,7 @@ export default function DoctorAppointmentsPage() {
         </motion.div>
       </motion.div>
 
-      {/* ➕ Floating Add Button - FIXED CLICK HANDLER */}
+      {/* ➕ Floating Add Button */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -182,14 +184,14 @@ export default function DoctorAppointmentsPage() {
         <FloatingAdd />
       </motion.div>
 
-      {/* 📅 New Appointment Modal */}
-      <NewAppointmentModal 
-        isOpen={isAddModalOpen} 
-        onClose={() => setIsAddModalOpen(false)} 
+      {/* 📅 New Appointment Modal with Pre-selection Logic */}
+      <NewAppointmentModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
         onAdd={handleAddNewAppointment}
+        preSelectedData={location.state?.preSelectedPatient} // 👈 Dashboard state passed here
       />
 
-      {/* 📅 Appointment Details Modal */}
       <AnimatePresence>
         {modalOpen && (
           <motion.div

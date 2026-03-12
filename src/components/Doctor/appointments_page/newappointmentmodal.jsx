@@ -1,9 +1,9 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react"; // 👈 useEffect added
 import { motion, AnimatePresence } from "framer-motion";
 import { X, User, Calendar, Clock, Activity, ClipboardList, Search, Check } from "lucide-react";
-import { patients } from "../../../data/doctor/mockdata"; // Path check kar lena
+import { patients } from "../../../data/doctor/mockdata";
 
-export default function NewAppointmentModal({ isOpen, onClose, onAdd }) {
+export default function NewAppointmentModal({ isOpen, onClose, onAdd, preSelectedData }) { // 👈 preSelectedData added
   const [searchTerm, setSearchTerm] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
@@ -15,6 +15,20 @@ export default function NewAppointmentModal({ isOpen, onClose, onAdd }) {
     reason: "",
     status: "Scheduled"
   });
+
+  // --- 🔹 Logic for Pre-selection from Dashboard 🔹 ---
+  useEffect(() => {
+    if (isOpen && preSelectedData) {
+      // Dashboard se data aaya hai toh use set kar do
+      setSelectedPatient(preSelectedData);
+      setSearchTerm(preSelectedData.name);
+      setShowDropdown(false);
+    } else if (isOpen && !preSelectedData) {
+      // Agar normally khula hai toh reset karo
+      setSelectedPatient(null);
+      setSearchTerm("");
+    }
+  }, [isOpen, preSelectedData]);
 
   // Filter patients based on search
   const filteredPatients = useMemo(() => {
@@ -82,12 +96,13 @@ export default function NewAppointmentModal({ isOpen, onClose, onAdd }) {
                 type="text"
                 required
                 value={searchTerm}
-                onFocus={() => setShowDropdown(true)}
+                onFocus={() => !selectedPatient && setShowDropdown(true)}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
                   setShowDropdown(true);
+                  if (selectedPatient) setSelectedPatient(null); // Clear selection if typing starts again
                 }}
-                className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                 placeholder="Name or UHID..."
               />
             </div>
@@ -180,7 +195,7 @@ export default function NewAppointmentModal({ isOpen, onClose, onAdd }) {
 
           <button 
             type="submit"
-            className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-blue-200 transition-all mt-4"
+            className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-blue-200 transition-all mt-4 active:scale-95"
           >
             Create Appointment
           </button>
