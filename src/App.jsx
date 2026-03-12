@@ -34,6 +34,7 @@ import TeleconsultationSettings from "./components/Doctor/profile_settings_page/
 import NotificationPreferences from "./components/Doctor/profile_settings_page/notifications_prefercences.jsx";
 import SystemPreferences from "./components/Doctor/profile_settings_page/system_prefernces.jsx";
 import SettingsContainer from "./pages/Doctor/doctorprofilesettings.jsx";
+
 // Layout for Navbar hiding logic
 const Layout = ({ children }) => {
   const location = useLocation();
@@ -79,7 +80,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
 
-          {/* Patient Routes (same as before) */}
+          {/* Patient Routes */}
           <Route path="/patientdashboard" element={<PatientDashboard />} />
           <Route
             path="/patient/appointments"
@@ -125,8 +126,19 @@ function App() {
             }
           />
 
+          {/* Base Patients Route */}
           <Route
             path="/doctor/patients"
+            element={
+              <DoctorLayout>
+                <Doctorpatients />
+              </DoctorLayout>
+            }
+          />
+
+          {/* Dynamic Patient Route - Specifically added for navigation from table */}
+          <Route
+            path="/doctor/patients/:patientId"
             element={
               <DoctorLayout>
                 <Doctorpatients />
@@ -152,14 +164,6 @@ function App() {
             }
           />
 
-          {/* <Route
-            path="/doctor/settings"
-            element={
-              <DoctorLayout>
-                <Doctorsettings />
-              </DoctorLayout>
-            }
-          /> */}
           <Route
             path="/doctor/settings"
             element={

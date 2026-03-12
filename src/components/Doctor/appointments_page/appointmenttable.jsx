@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Video, Clock, Sparkles, Video as VideoIcon } from "lucide-react";
+import { Video, Clock, Sparkles, Video as VideoIcon, User } from "lucide-react"; // Added User icon for extra flair
 import { useNavigate } from "react-router-dom";
 
 export default function AppointmentsTable({ appointments, onView }) {
@@ -17,10 +17,12 @@ export default function AppointmentsTable({ appointments, onView }) {
   };
 
   const handleStartCall = (pId) => {
-    // We navigate using the Patient ID (e.g., "p6"), not the Appointment ID ("ap6")
-    if (pId) {
-      navigate(`/doctor/consultation/${pId}`);
-    }
+    if (pId) navigate(`/doctor/consultation/${pId}`);
+  };
+
+  // New function to handle patient profile navigation
+  const handlePatientClick = (pId) => {
+    if (pId) navigate(`/doctor/patients/${pId}`);
   };
 
   return (
@@ -53,10 +55,9 @@ export default function AppointmentsTable({ appointments, onView }) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
                 whileHover={{
-                  scale: 1.01,
+                  scale: 1.005,
                   background:
                     "linear-gradient(100deg, rgba(240,248,255,0.9), rgba(224,242,254,0.85), rgba(219,234,254,0.85))",
-                  boxShadow: "0 0 25px rgba(59,130,246,0.1)",
                 }}
                 className="border-b border-blue-100/50 transition-all duration-300"
               >
@@ -64,19 +65,24 @@ export default function AppointmentsTable({ appointments, onView }) {
                   <motion.img
                     src={a.patientPhoto}
                     alt={a.patientName}
-                    whileHover={{ scale: 1.08 }}
-                    className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 border-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.4)] object-cover"
+                    whileHover={{ scale: 1.1 }}
+                    onClick={() => handlePatientClick(a.patientId)} // Clickable Avatar
+                    className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 border-blue-300 shadow-[0_0_15px_rgba(59,130,246,0.4)] object-cover cursor-pointer"
                   />
                   <div>
-                    <p className="font-semibold text-blue-900 text-[15px] sm:text-[16px] tracking-tight">
+                    {/* Updated Patient Name: Clickable with hover effect */}
+                    <button
+                      onClick={() => handlePatientClick(a.patientId)}
+                      className="block font-semibold text-blue-900 text-[15px] sm:text-[16px] tracking-tight hover:text-blue-600 hover:underline decoration-blue-400 decoration-2 underline-offset-4 transition-all text-left"
+                    >
                       {a.patientName}
-                    </p>
+                    </button>
                     <p className="text-xs text-gray-500">{a.reason}</p>
                   </div>
                 </td>
 
-                <td className="px-4 sm:px-8 py-5">
-                  <div className="flex items-center gap-2 text-blue-800 font-medium">
+                <td className="px-4 sm:px-8 py-5 text-blue-800">
+                  <div className="flex items-center gap-2 font-medium">
                     <Clock className="w-4 h-4 text-blue-500" />
                     {a.time}
                   </div>
@@ -107,7 +113,6 @@ export default function AppointmentsTable({ appointments, onView }) {
                       View
                     </motion.button>
 
-                    {/* Logic Fix: Use a.patientId here */}
                     {a.status === "Scheduled" && (
                       <motion.button
                         whileHover={{

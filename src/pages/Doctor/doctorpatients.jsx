@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // Added useEffect
+import { useParams } from "react-router-dom"; // Added useParams
 import { patients } from "../../data/doctor/mockdata";
 import Topbar from "../../components/Doctor/Patients_page/topbar";
 import DoctorSidebar from "../../components/Doctor/Patients_page/sidebar";
@@ -8,10 +9,21 @@ import Rightbar_QuickActions from "../../components/Doctor/Patients_page/rightba
 import { motion } from "framer-motion";
 
 export default function PatientOverviewPage() {
+  const { patientId } = useParams(); // Get ID from URL /doctor/patient/:patientId
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  
+  // Initialize state based on URL param or fallback to first patient
   const [selectedPatientId, setSelectedPatientId] = useState(
-    patients[0]?.id
+    patientId || patients[0]?.id
   );
+
+  // Sync state if the URL patientId changes (e.g. clicking a link in the sidebar or table)
+  useEffect(() => {
+    if (patientId) {
+      setSelectedPatientId(patientId);
+    }
+  }, [patientId]);
+
   const selectedPatient = patients.find((p) => p.id === selectedPatientId);
 
   return (
@@ -46,6 +58,7 @@ export default function PatientOverviewPage() {
             <>
               {/* --------- Patient Summary Card --------- */}
               <motion.div
+                key={`summary-${selectedPatientId}`} // Added key to trigger re-animation on change
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -57,6 +70,7 @@ export default function PatientOverviewPage() {
 
               {/* --------- Patient Details --------- */}
               <motion.div
+                key={`details-${selectedPatientId}`} // Added key to trigger re-animation on change
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -89,7 +103,7 @@ export default function PatientOverviewPage() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           {selectedPatient && (
-            <Rightbar_QuickActions patient={selectedPatient} />
+            <Rightbar_QuickActions key={`actions-${selectedPatientId}`} patient={selectedPatient} />
           )}
         </motion.div>
       </div>
