@@ -1,28 +1,57 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom"; // Change Link to useNavigate
+import React, { useState, useRef } from "react"; // useRef add kiya file input ke liye
+import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   MessageCircle,
-  FileText,
-  Printer,
   Flag,
   Activity,
   AlertTriangle,
-  Archive,
   PlusCircle,
+  CloudUpload,
+  CheckCircle2,
+  Loader2,
+  FileUp, // File selection ke liye icon
 } from "lucide-react";
 
 export default function Rightbar_QuickActions({ patient }) {
   const navigate = useNavigate();
+  const fileInputRef = useRef(null); // File input ko access karne ke liye
+  const [isSharing, setIsSharing] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
   const patientId = patient?.id || "default";
 
-  // Navigation handler to pass state exactly like the Message Panel
-  const handleActionClick = (path, state = null) => {
-    if (state) {
-      navigate(path, { state });
-    } else {
-      navigate(path);
+  // --- File Selection Handler ---
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    setIsSharing(true);
+    console.log("Uploading file:", file.name);
+
+    // Mock API Call (Backend integration ke liye placeholder)
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Fake upload time
+      setIsSharing(false);
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
+    } catch (error) {
+      console.error("Upload failed", error);
+      setIsSharing(false);
     }
+    
+    // Input reset taaki same file dubara select ho sake
+    event.target.value = null;
+  };
+
+  const triggerFileSelect = () => {
+    // Hidden input ko click karwao
+    fileInputRef.current.click();
+  };
+
+  const handleActionClick = (path, state = null) => {
+    if (state) navigate(path, { state });
+    else navigate(path);
   };
 
   const actions = [
@@ -42,26 +71,19 @@ export default function Rightbar_QuickActions({ patient }) {
       onClick: () => handleActionClick("/doctor/prescription"),
     },
     {
-      label: "Share Records",
-      Icon: FileText,
+      label: isSharing ? "Uploading..." : "Share Reports",
+      Icon: isSharing ? Loader2 : FileUp, // Icon badal diya
       glow: "from-indigo-300 to-indigo-500",
       iconColor: "text-indigo-600",
-      onClick: () =>
-        handleActionClick(`/doctor/patients/${patientId}/records/share`),
-    },
-    {
-      label: "Print",
-      Icon: Printer,
-      glow: "from-sky-300 to-sky-500",
-      iconColor: "text-sky-600",
-      onClick: () => window.print(), // Direct action
+      onClick: triggerFileSelect, // File picker trigger karega
+      disabled: isSharing,
     },
     {
       label: "Add Flag / Alert",
       Icon: Flag,
       glow: "from-amber-300 to-amber-500",
       iconColor: "text-amber-600",
-      onClick: () => console.log("Flagged"),
+      onClick: () => console.log("Flagging..."),
     },
   ];
 
@@ -69,115 +91,81 @@ export default function Rightbar_QuickActions({ patient }) {
     <motion.aside
       initial={{ opacity: 0, x: 60 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-72 sticky top-24 h-fit space-y-8"
     >
-      {/* ✨ Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center"
-      >
+      {/* Hidden File Input */}
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        className="hidden"
+        accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" // Sirf reports allowed
+      />
+
+      {/* Success Toast */}
+      <AnimatePresence>
+        {showSuccess && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute -top-12 left-0 right-0 bg-green-500 text-white text-[11px] py-2 px-3 rounded-xl flex items-center justify-center gap-2 shadow-lg z-50 font-bold"
+          >
+            <CheckCircle2 size={14} /> Report Shared Successfully!
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="text-center">
         <h2 className="font-extrabold text-3xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
           Quick Actions
         </h2>
         <div className="h-[2px] w-16 bg-gradient-to-r from-blue-400 to-indigo-400 mx-auto mt-2 rounded-full"></div>
-      </motion.div>
+      </div>
 
-      {/* ⚡ Action Buttons */}
       <div className="flex flex-col gap-5">
         {actions.map((a, i) => {
           const Icon = a.Icon;
           return (
             <motion.div
               key={i}
-              onClick={a.onClick} // Use onClick instead of Link
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, type: "spring", stiffness: 220 }}
-              whileHover={{
-                scale: 1.06,
-                y: -3,
-                boxShadow:
-                  "0 10px 20px rgba(0,0,0,0.15), 0 0 20px rgba(255,255,255,0.4)",
-              }}
-              whileTap={{ scale: 0.97 }}
-              className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 cursor-pointer px-5 py-4 flex items-center justify-between font-semibold text-gray-900"
+              onClick={!a.disabled ? a.onClick : null}
+              whileHover={!a.disabled ? { scale: 1.05, y: -2 } : {}}
+              whileTap={!a.disabled ? { scale: 0.98 } : {}}
+              className={`relative overflow-hidden rounded-2xl shadow-lg transition-all duration-300 px-5 py-4 flex items-center justify-between font-semibold text-gray-900 ${
+                a.disabled ? "cursor-not-allowed opacity-70" : "cursor-pointer"
+              }`}
               style={{
                 background: "rgba(255, 255, 255, 0.55)",
                 backdropFilter: "blur(14px)",
                 border: "1px solid rgba(255, 255, 255, 0.25)",
               }}
             >
-              {/* Glow background */}
-              <div
-                className={`absolute -inset-10 bg-gradient-to-br ${a.glow} opacity-40 blur-3xl`}
-              ></div>
-
-              {/* Reflection layer */}
-              <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40 opacity-40"></div>
-
-              {/* Content */}
-              <div className="relative z-10 flex items-center gap-3 text-left">
-                <motion.div
-                  whileHover={{
-                    rotate: 10,
-                    scale: 1.15,
-                    transition: { type: "spring", stiffness: 400 },
-                  }}
-                  className="p-2 rounded-xl bg-white/60 backdrop-blur-sm border border-white/40 shadow-md"
-                >
-                  <Icon size={22} className={a.iconColor} />
-                </motion.div>
-                <span>{a.label}</span>
+              <div className={`absolute -inset-10 bg-gradient-to-br ${a.glow} opacity-40 blur-3xl`}></div>
+              
+              <div className="relative z-10 flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-white/60 shadow-md">
+                  <Icon 
+                    size={22} 
+                    className={`${a.iconColor} ${isSharing && a.label === "Uploading..." ? "animate-spin" : ""}`} 
+                  />
+                </div>
+                <span className="text-[15px]">{a.label}</span>
               </div>
             </motion.div>
           );
         })}
       </div>
 
-      {/* 📊 Analytics Section */}
-      <motion.div
-        className="relative overflow-hidden rounded-2xl p-5 shadow-lg"
-        style={{
-          background: "rgba(255,255,255,0.55)",
-          backdropFilter: "blur(14px)",
-          border: "1px solid rgba(255,255,255,0.25)",
-        }}
-      >
-        <div className="relative z-10">
-          <h4 className="font-semibold text-blue-700 flex items-center gap-2 mb-3">
-            <Activity size={18} className="text-blue-500" /> Short Analytics
-          </h4>
-          <div className="text-sm text-blue-800/90 font-medium space-y-1">
-            <p>
-              Adherence Score:{" "}
-              <span className="font-semibold text-blue-600">87%</span>
-            </p>
-            <p>
-              Upcoming Meds Due:{" "}
-              <span className="font-semibold text-indigo-600">2</span>
-            </p>
-            <p>
-              Last Sync:{" "}
-              <span className="font-semibold text-blue-500">Oct 10, 2025</span>
-            </p>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* 🔐 Admin Actions */}
-      <div className="space-y-4">
-        <h4 className="font-semibold text-lg border-b border-blue-200 pb-2 flex items-center gap-2 text-blue-800">
-          <AlertTriangle size={18} className="text-blue-500" /> Admin Actions
+      {/* Analytics & Admin Section (Same as before) */}
+      <div className="bg-white/50 backdrop-blur-md rounded-2xl p-5 border border-white/20 shadow-lg">
+        <h4 className="font-semibold text-blue-700 flex items-center gap-2 mb-3 text-sm">
+          <Activity size={18} /> Patient Insights
         </h4>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.96 }}
-          className="bg-gradient-to-br from-red-500 to-red-600 text-white font-semibold py-2.5 w-full rounded-2xl shadow-lg flex items-center justify-center gap-2"
-        >
-          <Flag size={18} /> Flag for Review
-        </motion.button>
+        <div className="text-sm text-blue-900/80 space-y-1 font-medium">
+          <p>Adherence Score: <span className="text-blue-600">87%</span></p>
+          <p>Portal Status: <span className="text-indigo-600">Active</span></p>
+        </div>
       </div>
     </motion.aside>
   );
