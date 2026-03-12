@@ -1,6 +1,6 @@
-import React, { useState, useMemo, useEffect } from "react"; // 👈 Added useEffect
-import { useLocation } from "react-router-dom"; // 👈 Added useLocation
-import { motion } from "framer-motion";
+import React, { useState, useMemo, useEffect } from "react"; 
+import { useLocation } from "react-router-dom"; 
+import { motion, AnimatePresence } from "framer-motion"; // Added AnimatePresence for smooth modal exits
 import { CalendarDays } from "lucide-react";
 
 import SummaryCards from "../../components/Doctor/appointments_page/summarycard";
@@ -9,30 +9,31 @@ import AppointmentsTable from "../../components/Doctor/appointments_page/appoint
 import AppointmentModal from "../../components/Doctor/appointments_page/appointmentmodal";
 import FloatingAdd from "../../components/Doctor/appointments_page/floatingadd";
 import PremiumHeader from "../../components/Doctor/allpagesheader";
+import NewAppointmentModal from "../../components/Doctor/appointments_page/newappointmentmodal";
 
 // mock data
 import { appointments as mockAppointments } from "../../data/doctor/mockdata";
 
 export default function DoctorAppointmentsPage() {
-  const location = useLocation(); // 👈 Hook to read URL search params
+  const location = useLocation(); 
   
   // --------------------- 🔹 States ---------------------
-  const [appointments] = useState(mockAppointments);
+  const [appointments, setAppointments] = useState(mockAppointments);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStatuses, setSelectedStatuses] = useState([]);
   const [dateRange, setDateRange] = useState("Today");
   const [sortOption, setSortOption] = useState("By Time");
   const [selected, setSelected] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // Modal state
 
   // --------------------- 🔹 URL Listener Logic ---------------------
-  // Jab calendar se redirect ho kar patient name aayega, ye usse filter kar dega
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const searchParam = params.get("search");
     if (searchParam) {
       setSearchTerm(searchParam);
-      setDateRange("All"); // Taaki kisi bhi date ka appointment ho toh dikh jaye
+      setDateRange("All"); 
     }
   }, [location.search]);
 
@@ -46,7 +47,7 @@ export default function DoctorAppointmentsPage() {
     if (dateRange === "Today")
       return date.toDateString() === today.toDateString();
     if (dateRange === "This Week") return date >= startOfWeek && date <= today;
-    if (dateRange === "All") return true; // 👈 Added All case
+    if (dateRange === "All") return true; 
     return true;
   };
 
@@ -94,6 +95,11 @@ export default function DoctorAppointmentsPage() {
   const handleCloseModal = () => {
     setModalOpen(false);
     setSelected(null);
+  };
+
+  // --------------------- 🔹 New Appointment Logic ---------------------
+  const handleAddNewAppointment = (newApp) => {
+    setAppointments([newApp, ...appointments]);
   };
 
   // --------------------- 🔹 Motion Variants ---------------------
@@ -165,31 +171,43 @@ export default function DoctorAppointmentsPage() {
         </motion.div>
       </motion.div>
 
-      {/* ➕ Floating Add Button */}
+      {/* ➕ Floating Add Button - FIXED CLICK HANDLER */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.8 }}
+        onClick={() => setIsAddModalOpen(true)}
+        className="cursor-pointer"
       >
         <FloatingAdd />
       </motion.div>
 
-      {/* 📅 Appointment Modal */}
-      {modalOpen && (
-        <motion.div
-          key="modal"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <AppointmentModal
-            open={modalOpen}
-            appointment={selected}
-            onClose={handleCloseModal}
-          />
-        </motion.div>
-      )}
+      {/* 📅 New Appointment Modal */}
+      <NewAppointmentModal 
+        isOpen={isAddModalOpen} 
+        onClose={() => setIsAddModalOpen(false)} 
+        onAdd={handleAddNewAppointment}
+      />
+
+      {/* 📅 Appointment Details Modal */}
+      <AnimatePresence>
+        {modalOpen && (
+          <motion.div
+            key="modal"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center"
+          >
+            <AppointmentModal
+              open={modalOpen}
+              appointment={selected}
+              onClose={handleCloseModal}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
