@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Video, ChevronLeft, Paperclip, MoreVertical } from 'lucide-react';
+import { Send, Video, ChevronLeft, Paperclip, MoreVertical, User, Trash2, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom'; // Navigation ke liye
+import { useNavigate } from 'react-router-dom';
 
 export default function ChatWindow({ patient, messages, onSendMessage, onBack }) {
   const [text, setText] = useState("");
+  const [showMenu, setShowMenu] = useState(false); // Three dots menu state
   const scrollRef = useRef(null);
+  const fileInputRef = useRef(null); // File input ref
   const navigate = useNavigate();
 
   // Scroll to bottom logic
@@ -20,9 +22,17 @@ export default function ChatWindow({ patient, messages, onSendMessage, onBack })
     setText("");
   };
 
-  // Video Call Navigation Handler with dynamic param
+  // 📎 Attachment Handler
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Yahan aap backend API call kar sakte hain file upload ke liye
+      onSendMessage(`📁 Attachment: ${file.name}`); 
+      console.log("File selected:", file);
+    }
+  };
+
   const startVideoConsultation = () => {
-    // Navigates to the consultation page with the current patient's ID
     navigate(`/doctor/consultation/${patient.id}`);
   };
 
@@ -30,7 +40,7 @@ export default function ChatWindow({ patient, messages, onSendMessage, onBack })
     <div className="flex-1 flex flex-col h-full bg-transparent relative">
       
       {/* 🏝️ Floating Dynamic Island Header */}
-      <div className="mx-6 mt-6 p-4 rounded-[1.5rem] bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex items-center justify-between z-10">
+      <div className="mx-6 mt-6 p-4 rounded-[1.5rem] bg-white/60 backdrop-blur-xl border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex items-center justify-between z-20">
         <div className="flex items-center gap-3">
           <button onClick={onBack} className="md:hidden p-2 text-blue-600 hover:bg-white/80 rounded-full transition-all">
             <ChevronLeft />
@@ -53,22 +63,43 @@ export default function ChatWindow({ patient, messages, onSendMessage, onBack })
           </div>
         </div>
         
-        {/* Actions Area - Video Linked with Params */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 relative">
           <motion.button 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={startVideoConsultation}
-            title="Start Video Consultation"
             className="group flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl shadow-lg shadow-blue-200 transition-all hover:bg-blue-700"
           >
             <Video size={18} />
             <span className="text-xs font-bold hidden sm:block">Start Meeting</span>
           </motion.button>
           
-          <button className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-slate-600">
-            <MoreVertical size={18} />
+          {/* 🔘 Three Dots Menu Button */}
+          <button 
+            onClick={() => setShowMenu(!showMenu)}
+            className={`w-10 h-10 flex items-center justify-center rounded-full transition-all ${showMenu ? 'bg-slate-100 text-slate-800' : 'text-slate-400 hover:text-slate-600'}`}
+          >
+            {showMenu ? <X size={18} /> : <MoreVertical size={18} />}
           </button>
+
+          {/* 📝 Dropdown Menu */}
+          <AnimatePresence>
+            {showMenu && (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                className="absolute right-0 top-12 w-48 bg-white/90 backdrop-blur-xl border border-slate-100 rounded-2xl shadow-xl p-2 z-50"
+              >
+                <button className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all">
+                  <User size={16} /> View Profile
+                </button>
+                <button className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-500 hover:bg-red-50 rounded-xl transition-all">
+                  <Trash2 size={16} /> Clear History
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
@@ -104,15 +135,28 @@ export default function ChatWindow({ patient, messages, onSendMessage, onBack })
           onSubmit={handleSend} 
           className="bg-white/70 backdrop-blur-xl border border-white/80 rounded-[2rem] p-2 flex items-center gap-2 shadow-2xl shadow-blue-900/5 focus-within:ring-2 ring-blue-400/20 transition-all"
         >
-          <button type="button" className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-blue-500 hover:bg-white rounded-full transition-all">
+          {/* 📎 Functional Attachment Button */}
+          <input 
+            type="file" 
+            ref={fileInputRef} 
+            onChange={handleFileChange} 
+            className="hidden" 
+          />
+          <button 
+            type="button" 
+            onClick={() => fileInputRef.current.click()}
+            className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-blue-500 hover:bg-white rounded-full transition-all"
+          >
             <Paperclip size={20} />
           </button>
+
           <input 
             value={text} 
             onChange={(e) => setText(e.target.value)}
             placeholder={`Message ${patient.name.split(' ')[0]}...`} 
             className="flex-1 px-2 py-2 bg-transparent outline-none text-[14px] font-medium text-slate-700 placeholder:text-slate-400"
           />
+          
           <motion.button 
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.9 }}
