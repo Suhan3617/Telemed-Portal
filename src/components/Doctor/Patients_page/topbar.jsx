@@ -13,8 +13,6 @@ export default function DoctorTopbar({ onToggleSidebar }) {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
         {/* ---------- Left Section ---------- */}
         <div className="flex items-start sm:items-center gap-5">
-          
-
           {/* Premium Header (reused) */}
           <PremiumHeader
             breadcrumb="Dashboard / Overview"
