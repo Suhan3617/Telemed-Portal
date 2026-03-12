@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 export default function ChatWindow({ patient, messages, onSendMessage, onBack }) {
   const [text, setText] = useState("");
-  const [showMenu, setShowMenu] = useState(false); // Three dots menu state
+  const [showMenu, setShowMenu] = useState(false);
   const scrollRef = useRef(null);
-  const fileInputRef = useRef(null); // File input ref
+  const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
   // Scroll to bottom logic
@@ -26,14 +26,20 @@ export default function ChatWindow({ patient, messages, onSendMessage, onBack })
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Yahan aap backend API call kar sakte hain file upload ke liye
-      onSendMessage(`📁 Attachment: ${file.name}`); 
+      onSendMessage(`📁 Attachment: ${file.name}`);
       console.log("File selected:", file);
     }
   };
 
+  // 📹 Video Call Navigation
   const startVideoConsultation = () => {
     navigate(`/doctor/consultation/${patient.id}`);
+  };
+
+  // 👤 View Profile Navigation (Specific Patient Page)
+  const handleViewProfile = () => {
+    setShowMenu(false); // Menu close karein
+    navigate(`/doctor/patients/${patient.id}`); // URL update hote hi PatientOverviewPage use catch kar lega
   };
 
   return (
@@ -74,7 +80,7 @@ export default function ChatWindow({ patient, messages, onSendMessage, onBack })
             <span className="text-xs font-bold hidden sm:block">Start Meeting</span>
           </motion.button>
           
-          {/* 🔘 Three Dots Menu Button */}
+          {/* 🔘 Three Dots Menu Toggle */}
           <button 
             onClick={() => setShowMenu(!showMenu)}
             className={`w-10 h-10 flex items-center justify-center rounded-full transition-all ${showMenu ? 'bg-slate-100 text-slate-800' : 'text-slate-400 hover:text-slate-600'}`}
@@ -91,7 +97,10 @@ export default function ChatWindow({ patient, messages, onSendMessage, onBack })
                 exit={{ opacity: 0, scale: 0.95, y: 10 }}
                 className="absolute right-0 top-12 w-48 bg-white/90 backdrop-blur-xl border border-slate-100 rounded-2xl shadow-xl p-2 z-50"
               >
-                <button className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all">
+                <button 
+                  onClick={handleViewProfile}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-all"
+                >
                   <User size={16} /> View Profile
                 </button>
                 <button className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-500 hover:bg-red-50 rounded-xl transition-all">
@@ -135,7 +144,7 @@ export default function ChatWindow({ patient, messages, onSendMessage, onBack })
           onSubmit={handleSend} 
           className="bg-white/70 backdrop-blur-xl border border-white/80 rounded-[2rem] p-2 flex items-center gap-2 shadow-2xl shadow-blue-900/5 focus-within:ring-2 ring-blue-400/20 transition-all"
         >
-          {/* 📎 Functional Attachment Button */}
+          {/* Functional File Input */}
           <input 
             type="file" 
             ref={fileInputRef} 
