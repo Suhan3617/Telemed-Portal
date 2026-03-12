@@ -1,8 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FileText, Eye, User, MessageSquare, ClipboardList } from "lucide-react";
+import { useNavigate } from "react-router-dom"; // Navigation ke liye import
 
-export default function LabCard({ r = {}, onView, onPatient, onNote }) {
+export default function LabCard({ r = {}, onView }) {
+  const navigate = useNavigate(); // Hook initialize karein
+
   const patientName = r.patientName || "Unknown Patient";
   const title = r.title || "No Title";
   const date = r.date ? new Date(r.date).toLocaleDateString() : "No Date";
@@ -17,6 +20,23 @@ export default function LabCard({ r = {}, onView, onPatient, onNote }) {
 
   const statusText = r.status || "Unknown";
 
+  // 👤 Patient Page Navigation Handler
+  const handlePatientClick = () => {
+    // Agar r.patientId available hai toh specific ID par navigate karein
+    // PatientOverviewPage ise useParams() se catch kar lega
+    navigate(`/doctor/patients/${r.patientId || 'unknown'}`);
+  };
+
+  // 💬 Message Page Navigation Handler
+  const handleMessageClick = () => {
+    navigate(`/doctor/messages`, {
+      state: { 
+        selectedPatientId: r.patientId,
+        prefillText: `Hi ${patientName.split(' ')[0]}, regarding your "${title}" report uploaded on ${date}: `
+      }
+    });
+  };
+
   return (
     <motion.article
       whileHover={{
@@ -26,9 +46,9 @@ export default function LabCard({ r = {}, onView, onPatient, onNote }) {
       }}
       transition={{ type: "spring", stiffness: 280, damping: 22 }}
       className="relative overflow-hidden rounded-3xl border border-blue-100 shadow-lg
-                 bg-gradient-to-br from-blue-100/70 via-white/80 to-blue-50/70
-                 backdrop-blur-md p-6 sm:p-7 w-full max-w-md mx-auto
-                 transition-all duration-300"
+                  bg-gradient-to-br from-blue-100/70 via-white/80 to-blue-50/70
+                  backdrop-blur-md p-6 sm:p-7 w-full max-w-md mx-auto
+                  transition-all duration-300"
     >
       {/* Top section */}
       <div className="flex justify-between items-start">
@@ -68,7 +88,7 @@ export default function LabCard({ r = {}, onView, onPatient, onNote }) {
             <div
               key={i}
               className="text-xs px-3 py-1.5 bg-white/70 border border-blue-100 rounded-lg
-                         shadow-inner text-blue-700 font-medium "
+                          shadow-inner text-blue-700 font-medium "
             >
               {f.name || "File"}
             </div>
@@ -86,29 +106,33 @@ export default function LabCard({ r = {}, onView, onPatient, onNote }) {
           }}
           whileTap={{ scale: 0.96 }}
           className="flex items-center gap-2 px-5 py-2.5 rounded-2xl
-                     bg-gradient-to-r from-blue-600 to-indigo-600 text-white
-                     font-semibold text-sm shadow-md transition w-full sm:w-auto justify-center"
+                      bg-gradient-to-r from-blue-600 to-indigo-600 text-white
+                      font-semibold text-sm shadow-md transition w-full sm:w-auto justify-center"
         >
           <Eye size={16} /> View Report
         </motion.button>
 
         <div className="flex gap-2">
+          {/* Functional User Button */}
           <motion.button
-            onClick={() => onPatient && onPatient(r)}
+            onClick={handlePatientClick}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className="p-2.5 rounded-2xl bg-white border border-blue-100 shadow-sm
-                       text-blue-600 flex items-center justify-center"
+                        text-blue-600 flex items-center justify-center"
+            title="View Patient Profile"
           >
             <User size={18} />
           </motion.button>
 
+          {/* Functional Message Button */}
           <motion.button
-            onClick={() => onNote && onNote(r)}
+            onClick={handleMessageClick}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className="p-2.5 rounded-2xl bg-white border border-blue-100 shadow-sm
-                       text-blue-600 flex items-center justify-center"
+                        text-blue-600 flex items-center justify-center"
+            title="Message Patient"
           >
             <MessageSquare size={18} />
           </motion.button>
