@@ -64,7 +64,8 @@ const PatientDetailsPremium = ({ patient, onViewReports }) => {
       initial="hidden"
       animate="visible"
       variants={sectionVariants}
-      className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-blue-900 p-8 rounded-3xl shadow-2xl border border-blue-100 relative overflow-hidden bg-gradient-to-br from-blue-500/40 via-sky-300/30 to-indigo-300/25"
+      // FIXED: Removed overflow-hidden and set z-0 so modals can overlap this component
+      className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-blue-900 p-8 rounded-3xl shadow-2xl border border-blue-100 relative z-0 bg-gradient-to-br from-blue-500/40 via-sky-300/30 to-indigo-300/25"
     >
       {/* Gradient background animation */}
       <motion.div
@@ -150,7 +151,6 @@ const PatientDetailsPremium = ({ patient, onViewReports }) => {
 
       {/* Right Column */}
       <section className="flex flex-col gap-8 relative z-10">
-
         {/* Social & Family History */}
         <motion.div
           variants={sectionVariants}
@@ -185,11 +185,11 @@ const PatientDetailsPremium = ({ patient, onViewReports }) => {
           <motion.button
             whileHover={{
               scale: 1.03,
-              boxShadow: "0 0 15px rgba(59, 130, 246, 0.7)", // Intense blue glow
+              boxShadow: "0 0 15px rgba(59, 130, 246, 0.7)",
               transition: { duration: 0.2 },
             }}
             whileTap={{ scale: 0.98 }}
-            onClick={onViewReports} // This handler needs to be passed down or implemented to navigate
+            onClick={onViewReports}
             className="flex items-center gap-3 px-8 py-4 rounded-full bg-blue-600 text-white 
                        font-extrabold text-lg uppercase tracking-wide shadow-xl-custom-blue 
                        transition-all duration-300 ease-in-out hover:bg-blue-700
@@ -208,8 +208,7 @@ const PatientDetailsPremium = ({ patient, onViewReports }) => {
               className="absolute top-0 left-0 w-full h-full bg-white opacity-0 group-hover:opacity-10 
                            transition-all duration-500 ease-out transform scale-0 group-hover:scale-100 
                            rounded-full"
-            ></span>{" "}
-            {/* Sparkle effect */}
+            ></span>
           </motion.button>
         </motion.div>
       </section>
