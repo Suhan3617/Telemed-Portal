@@ -27,15 +27,17 @@ export default function DoctorAppointmentsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  // --------------------- 🔹 URL & State Listener ---------------------
+  // --------------------- 🔹 URL & State Listener (UPDATED LOGIC) ---------------------
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const searchParam = params.get("search");
+    const patientParam = params.get("patient"); // 👈 Added for Patient Card redirection
     const triggerModal = params.get("triggerModal");
 
-    // 1. Sync search if provided in URL
-    if (searchParam) {
-      setSearchTerm(searchParam);
+    // 1. Sync search if provided via 'search' or 'patient' parameter
+    if (searchParam || patientParam) {
+      setSearchTerm(searchParam || patientParam);
+      // Auto-set date range to 'All' to show full history of that patient
       setDateRange("All");
     }
 
@@ -93,6 +95,8 @@ export default function DoctorAppointmentsPage() {
     setSelectedStatuses([]);
     setDateRange("Today");
     setSortOption("By Time");
+    // Clear URL params on reset
+    window.history.replaceState({}, '', window.location.pathname);
   };
 
   const handleOpenModal = (appointment) => {
@@ -184,12 +188,12 @@ export default function DoctorAppointmentsPage() {
         <FloatingAdd />
       </motion.div>
 
-      {/* 📅 New Appointment Modal with Pre-selection Logic */}
+      {/* 📅 New Appointment Modal */}
       <NewAppointmentModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onAdd={handleAddNewAppointment}
-        preSelectedData={location.state?.preSelectedPatient} // 👈 Dashboard state passed here
+        preSelectedData={location.state?.preSelectedPatient}
       />
 
       <AnimatePresence>

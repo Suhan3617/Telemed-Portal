@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom"; // Added for navigation
 import {
   User,
   Mars,
@@ -9,10 +10,10 @@ import {
   Stethoscope,
   MapPin,
   Phone,
+  History, // Added new icon
 } from "lucide-react";
 
 // --- Helper Functions (No changes) ---
-
 const getGenderIcon = (gender) => {
   if (!gender) return <User className="w-5 h-5 text-gray-500" />;
   if (gender.toLowerCase() === "male")
@@ -53,12 +54,21 @@ const renderBadge = (text, color = "blue") => {
 };
 
 const PatientCardPremium = ({ patient }) => {
-  
+  const navigate = useNavigate(); // Hook initialized
+
+  // Navigation Handler
+  const handleViewHistory = () => {
+    // Navigates to history page with patient filter
+    navigate(`/doctor/appointments?patient=${encodeURIComponent(patient.name)}`);
+  };
+
   // --- Mini Card Component ---
-  const MiniCard = ({ icon, label, value, iconColor }) => (
+  const MiniCard = ({ icon, label, value, iconColor, onClick }) => (
     <motion.div
       whileHover={{ scale: 1.05, y: -4, boxShadow: "0 10px 30px rgba(52, 211, 163, 0.3)" }}
-      className="flex items-center gap-3 p-4 rounded-2xl shadow-xl border border-white/50 backdrop-blur-md bg-white/30 transition-all duration-300 cursor-pointer w-full"
+      whileTap={{ scale: 0.95 }}
+      onClick={onClick} // Added onClick support
+      className={`flex items-center gap-3 p-4 rounded-2xl shadow-xl border border-white/50 backdrop-blur-md bg-white/30 transition-all duration-300 w-full ${onClick ? 'cursor-pointer' : 'cursor-default'}`}
     >
       <div className={`p-2 rounded-full ${iconColor} bg-white/70 shadow-inner`}>
         {icon}
@@ -144,12 +154,14 @@ const PatientCardPremium = ({ patient }) => {
                 label="Total Reports"
                 value={patient.reportsCount}
                 iconColor="text-red-600"
+                onClick={() => navigate(`/doctor/reports?patient=${encodeURIComponent(patient.name)}`)}
             />
             <MiniCard
                 icon={<Calendar className="w-5 h-5 text-blue-600" />}
                 label="Last Visit"
                 value={patient.lastVisit}
                 iconColor="text-blue-600"
+                onClick={handleViewHistory}
             />
         </div>
       </div>
@@ -176,13 +188,27 @@ const PatientCardPremium = ({ patient }) => {
             </div>
         </div>
 
-        {/* Location Info */}
-        <div className="flex items-start gap-3 p-4 bg-white/40 rounded-xl shadow-inner border border-white/70 flex-1">
-            <MapPin className="w-5 h-5 text-indigo-600 flex-shrink-0 mt-1" />
-            <div>
-                <strong className="text-gray-900 text-lg">Current Location</strong>
-                <span className="block mt-1 font-semibold text-teal-800 text-sm">{patient.location || "N/A"}</span>
+        {/* Location Info & History Button */}
+        <div className="flex items-start justify-between gap-3 p-4 bg-white/40 rounded-xl shadow-inner border border-white/70 flex-1 relative group">
+            <div className="flex items-start gap-3">
+              <MapPin className="w-5 h-5 text-indigo-600 flex-shrink-0 mt-1" />
+              <div>
+                  <strong className="text-gray-900 text-lg">Current Location</strong>
+                  <span className="block mt-1 font-semibold text-teal-800 text-sm">{patient.location || "N/A"}</span>
+              </div>
             </div>
+
+            {/* History Button Added Here */}
+            <motion.button
+              whileHover={{ scale: 1.1, backgroundColor: "#4F46E5", color: "#fff" }}
+              whileTap={{ scale: 0.9 }}
+              onClick={handleViewHistory}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-indigo-100 text-indigo-700 transition-colors duration-300 self-center"
+              title="View Appointment History"
+            >
+              <History className="w-5 h-5" />
+              <span className="text-xs font-bold uppercase tracking-tighter">History</span>
+            </motion.button>
         </div>
       </div>
     </motion.div>
