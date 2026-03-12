@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { HeartCrack, Dna, Pill, Users, Eye } from "lucide-react";
-import { useNavigate } from "react-router-dom"; // Added for navigation
+import { HeartCrack, Dna, Pill, Users } from "lucide-react";
 
 // Animation variants
 const sectionVariants = {
@@ -41,7 +40,7 @@ const renderListItem = (content, subContent, key, bgColor = "bg-blue-50", textCo
     variants={itemVariants}
     whileHover="hover"
     className={`flex flex-col sm:flex-row sm:justify-between items-start sm:items-center px-4 py-2 rounded-xl
-                ${bgColor}  ${textColor} shadow-sm transition-all duration-300 cursor-pointer`}
+                ${bgColor} ${textColor} shadow-sm transition-all duration-300 cursor-pointer`}
     style={{
       borderLeft: `4px solid ${
         textColor.includes("blue")
@@ -58,15 +57,6 @@ const renderListItem = (content, subContent, key, bgColor = "bg-blue-50", textCo
 );
 
 const PatientDetailsPremium = ({ patient }) => {
-  const navigate = useNavigate(); // Hook initialized
-
-  const handleViewReports = () => {
-    // Navigates to reports page with patient name in URL
-    if (patient?.name) {
-      navigate(`/doctor/reports?patient=${encodeURIComponent(patient.name)}`);
-    }
-  };
-
   return (
     <motion.div
       initial="hidden"
@@ -74,6 +64,7 @@ const PatientDetailsPremium = ({ patient }) => {
       variants={sectionVariants}
       className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-blue-900 p-8 rounded-3xl shadow-2xl border border-blue-100 relative z-0 bg-gradient-to-br from-blue-500/40 via-sky-300/30 to-indigo-300/25"
     >
+      {/* Background Animation */}
       <motion.div
         className="absolute inset-0 -z-10"
         animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
@@ -85,10 +76,12 @@ const PatientDetailsPremium = ({ patient }) => {
         }}
       />
 
+      {/* Left Column: Problems & Allergies */}
       <section className="flex flex-col gap-8 relative z-10">
+        {/* Problem List */}
         <motion.div
           variants={sectionVariants}
-          className="bg-white/70 p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 backdrop-blur-sm"
+          className="bg-white/70 p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 backdrop-blur-sm h-full"
         >
           <h3 className="font-extrabold text-2xl mb-4 flex items-center gap-3 text-indigo-700">
             <HeartCrack className="w-7 h-7 text-red-500" /> Problem List
@@ -104,6 +97,7 @@ const PatientDetailsPremium = ({ patient }) => {
           </ul>
         </motion.div>
 
+        {/* Allergies */}
         <motion.div
           variants={sectionVariants}
           className="bg-white/70 p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 backdrop-blur-sm"
@@ -126,7 +120,11 @@ const PatientDetailsPremium = ({ patient }) => {
             )}
           </div>
         </motion.div>
+      </section>
 
+      {/* Right Column: Medications & History */}
+      <section className="flex flex-col gap-8 relative z-10">
+        {/* Active Medications */}
         <motion.div
           variants={sectionVariants}
           className="bg-white/70 p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 backdrop-blur-sm"
@@ -149,12 +147,11 @@ const PatientDetailsPremium = ({ patient }) => {
             )}
           </div>
         </motion.div>
-      </section>
 
-      <section className="flex flex-col gap-8 relative z-10">
+        {/* Social & Family History */}
         <motion.div
           variants={sectionVariants}
-          className="bg-white/70 p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 backdrop-blur-sm"
+          className="bg-white/70 p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 backdrop-blur-sm h-full"
         >
           <h3 className="font-extrabold text-2xl mb-4 flex items-center gap-3 text-indigo-700">
             <Users className="w-7 h-7 text-purple-500" /> Social & Family History
@@ -175,40 +172,6 @@ const PatientDetailsPremium = ({ patient }) => {
               <span className="text-gray-500 italic">No social or family history recorded.</span>
             )}
           </div>
-        </motion.div>
-        
-        <motion.div
-          variants={sectionVariants}
-          className="flex justify-center mt-8"
-        >
-          <motion.button
-            whileHover={{
-              scale: 1.03,
-              boxShadow: "0 0 15px rgba(59, 130, 246, 0.7)",
-              transition: { duration: 0.2 },
-            }}
-            whileTap={{ scale: 0.98 }}
-            onClick={handleViewReports} // Using the new function
-            className="flex items-center gap-3 px-8 py-4 rounded-full bg-blue-600 text-white 
-                       font-extrabold text-lg uppercase tracking-wide shadow-xl-custom-blue 
-                       transition-all duration-300 ease-in-out hover:bg-blue-700
-                       relative overflow-hidden group"
-            style={{
-              "--tw-shadow-color": "rgba(59, 130, 246, 0.5)",
-              "--tw-shadow":
-                "var(--tw-shadow-ring-inset) 0 4px 15px var(--tw-shadow-color), 0 0 25px var(--tw-shadow-color)",
-              boxShadow:
-                "var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)",
-            }}
-          >
-            <Eye className="w-6 h-6 group-hover:animate-pulse" />
-            View All Medical Reports
-            <span
-              className="absolute top-0 left-0 w-full h-full bg-white opacity-0 group-hover:opacity-10 
-                           transition-all duration-500 ease-out transform scale-0 group-hover:scale-100 
-                           rounded-full"
-            ></span>
-          </motion.button>
         </motion.div>
       </section>
     </motion.div>
