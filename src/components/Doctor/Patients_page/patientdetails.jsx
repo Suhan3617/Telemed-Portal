@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { HeartCrack, Dna, Pill, Users, Eye } from "lucide-react";
+import { useNavigate } from "react-router-dom"; // Added for navigation
 
 // Animation variants
 const sectionVariants = {
@@ -22,7 +23,6 @@ const itemVariants = {
   },
 };
 
-// Animated badge component
 const AnimatedBadge = ({ text, bgColor, textColor }) => (
   <motion.span
     initial={{ opacity: 0, y: -5 }}
@@ -35,7 +35,6 @@ const AnimatedBadge = ({ text, bgColor, textColor }) => (
   </motion.span>
 );
 
-// Helper for list items
 const renderListItem = (content, subContent, key, bgColor = "bg-blue-50", textColor = "text-blue-900") => (
   <motion.li
     key={key}
@@ -58,16 +57,23 @@ const renderListItem = (content, subContent, key, bgColor = "bg-blue-50", textCo
   </motion.li>
 );
 
-const PatientDetailsPremium = ({ patient, onViewReports }) => {
+const PatientDetailsPremium = ({ patient }) => {
+  const navigate = useNavigate(); // Hook initialized
+
+  const handleViewReports = () => {
+    // Navigates to reports page with patient name in URL
+    if (patient?.name) {
+      navigate(`/doctor/reports?patient=${encodeURIComponent(patient.name)}`);
+    }
+  };
+
   return (
     <motion.div
       initial="hidden"
       animate="visible"
       variants={sectionVariants}
-      // FIXED: Removed overflow-hidden and set z-0 so modals can overlap this component
       className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-blue-900 p-8 rounded-3xl shadow-2xl border border-blue-100 relative z-0 bg-gradient-to-br from-blue-500/40 via-sky-300/30 to-indigo-300/25"
     >
-      {/* Gradient background animation */}
       <motion.div
         className="absolute inset-0 -z-10"
         animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
@@ -79,9 +85,7 @@ const PatientDetailsPremium = ({ patient, onViewReports }) => {
         }}
       />
 
-      {/* Left Column */}
       <section className="flex flex-col gap-8 relative z-10">
-        {/* Problem List */}
         <motion.div
           variants={sectionVariants}
           className="bg-white/70 p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 backdrop-blur-sm"
@@ -100,7 +104,6 @@ const PatientDetailsPremium = ({ patient, onViewReports }) => {
           </ul>
         </motion.div>
 
-        {/* Allergies */}
         <motion.div
           variants={sectionVariants}
           className="bg-white/70 p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 backdrop-blur-sm"
@@ -124,7 +127,6 @@ const PatientDetailsPremium = ({ patient, onViewReports }) => {
           </div>
         </motion.div>
 
-        {/* Active Medications */}
         <motion.div
           variants={sectionVariants}
           className="bg-white/70 p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 backdrop-blur-sm"
@@ -149,9 +151,7 @@ const PatientDetailsPremium = ({ patient, onViewReports }) => {
         </motion.div>
       </section>
 
-      {/* Right Column */}
       <section className="flex flex-col gap-8 relative z-10">
-        {/* Social & Family History */}
         <motion.div
           variants={sectionVariants}
           className="bg-white/70 p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 border border-blue-100 backdrop-blur-sm"
@@ -177,8 +177,7 @@ const PatientDetailsPremium = ({ patient, onViewReports }) => {
           </div>
         </motion.div>
         
-        {/* View Reports Button */}
-       <motion.div
+        <motion.div
           variants={sectionVariants}
           className="flex justify-center mt-8"
         >
@@ -189,7 +188,7 @@ const PatientDetailsPremium = ({ patient, onViewReports }) => {
               transition: { duration: 0.2 },
             }}
             whileTap={{ scale: 0.98 }}
-            onClick={onViewReports}
+            onClick={handleViewReports} // Using the new function
             className="flex items-center gap-3 px-8 py-4 rounded-full bg-blue-600 text-white 
                        font-extrabold text-lg uppercase tracking-wide shadow-xl-custom-blue 
                        transition-all duration-300 ease-in-out hover:bg-blue-700
